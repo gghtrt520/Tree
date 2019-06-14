@@ -23,31 +23,6 @@ App({
               }
             }
           })
-          // 登录
-          wx.login({
-            success: res => {
-              console.log(res.code)
-              // 发送 res.code 到后台换取 openId, sessionKey, unionId
-              // if (res.code) {
-              //   //发起网络请求
-              //   wx.request({
-              //     url: 'https://sapling.cnfay.com/site/synchronize-login',
-              //     method: 'post',
-              //     data: {
-              //       js_code: res.code
-              //     },
-              //     success(res) {
-              //       console.log(res.data)
-              //     },
-              //     fail(err) {
-              //       console.log(err)
-              //     },
-              //   })
-              // } else {
-              //   console.log('登录失败！' + res.errMsg)
-              // }
-            }
-          })
         }
       }
     })

@@ -3,22 +3,21 @@
 </cu-custom>
 <view class="margin-xl back-img padding-xl bg-white radius shadow shadow-lg">
   <view class="flex justify-center">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='cu-btn round bg-green shadow'> 重新授权 </button>
-    <block wx:else>
-      <view class='text-center'>
-        <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
-        <view class="padding">{{userInfo.nickName}}</view>
-      </view>
-    </block>
+
+    <view class='text-center'>
+      <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
+      <view class="padding">{{userInfo.nickName}}</view>
+    </view>
+
   </view>
 </view>
 <view class='nav-list'>
-    <navigator open-type="navigate" hover-class='none' url="/pages/{{item.name+'tree'}}/{{item.name+'tree'}}" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:key>
-      <view class="nav-title">{{item.title}}</view>
-      <view class="nav-name">{{item.name}}</view>
-      <text class='cuIcon-{{item.icon}}'></text>
-    </navigator>
-  </view>
+  <navigator open-type="navigate" hover-class='none' url="/pages/{{item.name+'tree'}}/{{item.name+'tree'}}" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:key>
+    <view class="nav-title">{{item.title}}</view>
+    <view class="nav-name">{{item.name}}</view>
+    <text class='cuIcon-{{item.icon}}'></text>
+  </navigator>
+</view>
 <view class="cu-modal {{modalName=='authorization'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
@@ -30,7 +29,7 @@
     <view class="cu-bar bg-white justify-end">
       <view class="action">
         <navigator class="cu-btn line-red" target="miniProgram" open-type="exit">退出</navigator>
-        <button wx:if="{{!hasUserInfo && canIUse}}" class="cu-btn line-green margin-left" open-type="getUserInfo" bindgetuserinfo="getUserInfo">重新授权</button>
+        <button wx:if="{{!hasUserInfo && canIUse}}" class="cu-btn line-green margin-left" open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权</button>
       </view>
     </view>
   </view>

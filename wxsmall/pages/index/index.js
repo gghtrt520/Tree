@@ -10,37 +10,27 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     elements: [{
-        title: '树木列表',
-        name: 'list',
-        color: 'green',
-        icon: 'newsfill'
-      },
-      {
-        title: '树木入库',
-        name: 'add',
-        color: 'blue',
-        icon: 'pick'
-      }
+      title: '树木列表',
+      name: 'list',
+      color: 'green',
+      icon: 'newsfill'
+    },
+    {
+      title: '树木入库',
+      name: 'add',
+      color: 'blue',
+      icon: 'pick'
+    }
     ],
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function() {
-    wx.getSetting({
-      success: res => {
-        if (!res.authSetting['scope.userInfo']) {
-          this.setData({
-            hasUserInfo: false,
-            modalName: 'authorization'
-          })
-        }
-      }
-    })
+  onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -70,8 +60,20 @@ Page({
         }
       })
     }
+    wx.getSetting({
+      success: res => {
+        if (!app.globalData.userInfo && !res.authSetting['scope.userInfo']) {
+          this.setData({
+            hasUserInfo: false,
+            modalName: 'authorization'
+          })
+        } else {
+          loginUser(app.globalData.userInfo)
+        }
+      }
+    })
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     if (e.detail.hasOwnProperty('userInfo')) {
       app.globalData.userInfo = e.detail.userInfo
@@ -80,6 +82,7 @@ Page({
         hasUserInfo: true,
         modalName: ''
       })
+      loginUser(app.globalData.userInfo)
     } else {
       this.setData({
         hasUserInfo: false,
@@ -88,3 +91,34 @@ Page({
     }
   }
 })
+
+function loginUser(userInfo){
+  // 登录
+  wx.login({
+    success: res => {
+      console.log(res.code)
+      // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      if (res.status) {
+        //发起网络请求
+        wx.request({
+          url: 'https://sapling.cnfay.com/site/synchronize-login',
+          method: 'post',
+          data: {
+            nick_name: userInfo.nickName,
+            avatar_url: userInfo.avatarUrl,
+            gender: userInfo.gender,
+            js_code: res.code
+          },
+          success(res) {
+            console.log(res.data)
+          },
+          fail(err) {
+            console.log(err)
+          }
+        })
+      } else {
+        console.log('登录失败')
+      }
+    }
+  })
+}
