@@ -1,11 +1,8 @@
 //app.js
 App({
   onLaunch: function() {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+    // 清除缓存数据
+    wx.clearStorage()
     // 获取用户信息
     wx.getSetting({
       success: res => {

@@ -21,10 +21,10 @@
 <view class="cu-modal {{modalName=='authorization'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
-      <view class="content">授权确认</view>
+      <view class="content">登录确认</view>
     </view>
     <view class="padding-xl">
-      未授权您将不能使用该应用
+      {{errinfo}}
     </view>
     <view class="cu-bar bg-white justify-end">
       <view class="action">

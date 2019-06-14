@@ -9,6 +9,7 @@ Page({
     modalName: '',
     userInfo: {},
     hasUserInfo: false,
+    errinfo: '未授权您将不能使用该应用',
     elements: [{
       title: '树木列表',
       name: 'list',
@@ -32,7 +33,7 @@ Page({
         hasUserInfo: true,
         modalName: ''
       })
-      loginUser(app.globalData.userInfo)
+      loginUser(app.globalData.userInfo, this)
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -42,14 +43,16 @@ Page({
           hasUserInfo: true,
           modalName: ''
         })
-        loginUser(app.globalData.userInfo)
+        loginUser(app.globalData.userInfo, this)
       }
     }
+    // 再次检查授权状态
     wx.getSetting({
       success: res => {
         if (!res.authSetting['scope.userInfo']) {
           this.setData({
             hasUserInfo: false,
+            errinfo: '未授权您将不能使用该应用',
             modalName: 'authorization'
           })
         }
@@ -69,14 +72,19 @@ Page({
     } else {
       this.setData({
         hasUserInfo: false,
+        errinfo: '未授权您将不能使用该应用',
         modalName: 'authorization'
       })
     }
   }
 })
 
-function loginUser(userInfo){
-  console.log(userInfo)
+function loginUser(userInfo,that){
+  var openid = wx.getStorageSync('openid') || ''
+  if(openid){
+    console.log('已存在', openid)
+    return false
+  }
   // 登录
   wx.login({
     success: res => {
@@ -93,16 +101,25 @@ function loginUser(userInfo){
             gender: userInfo.gender,
             js_code: res.code
           },
-          success(data) {
+          success(response) {
+            let data = response.data
             console.log(data)
-            if(data.status){
-              
+            if (data.status){
+              wx.setStorageSync('openid', data.data.openid)
             } else {
-              console.log('登录失败')
+              that.setData({
+                hasUserInfo: true,
+                errinfo: '登录失败，请退出重试',
+                modalName: 'authorization'
+              })
             }
           },
           fail(err) {
-            console.log(err)
+            that.setData({
+              hasUserInfo: true,
+              errinfo: '登录失败，请退出重试',
+              modalName: 'authorization'
+            })
           }
         })
       }

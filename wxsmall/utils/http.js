@@ -1,5 +1,7 @@
 const app = getApp();
+const openid = wx.getStorageSync('openid') || ''
 const http = (params)=>{
+  params.data.openid = openid
   return new Promise((resolve,reject)=>{
     wx.showLoading({
       title: '加载中',
