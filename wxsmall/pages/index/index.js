@@ -24,12 +24,7 @@ Page({
     ],
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+  
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -37,6 +32,7 @@ Page({
         hasUserInfo: true,
         modalName: ''
       })
+      loginUser(app.globalData.userInfo)
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -46,29 +42,16 @@ Page({
           hasUserInfo: true,
           modalName: ''
         })
+        loginUser(app.globalData.userInfo)
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true,
-            modalName: ''
-          })
-        }
-      })
     }
     wx.getSetting({
       success: res => {
-        if (!app.globalData.userInfo && !res.authSetting['scope.userInfo']) {
+        if (!res.authSetting['scope.userInfo']) {
           this.setData({
             hasUserInfo: false,
             modalName: 'authorization'
           })
-        } else {
-          loginUser(app.globalData.userInfo)
         }
       }
     })
@@ -82,7 +65,7 @@ Page({
         hasUserInfo: true,
         modalName: ''
       })
-      loginUser(app.globalData.userInfo)
+      loginUser(e.detail.userInfo)
     } else {
       this.setData({
         hasUserInfo: false,
@@ -93,12 +76,13 @@ Page({
 })
 
 function loginUser(userInfo){
+  console.log(userInfo)
   // 登录
   wx.login({
     success: res => {
       console.log(res.code)
       // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      if (res.status) {
+      if (res.code) {
         //发起网络请求
         wx.request({
           url: 'https://sapling.cnfay.com/site/synchronize-login',
@@ -109,15 +93,18 @@ function loginUser(userInfo){
             gender: userInfo.gender,
             js_code: res.code
           },
-          success(res) {
-            console.log(res.data)
+          success(data) {
+            console.log(data)
+            if(data.status){
+              
+            } else {
+              console.log('登录失败')
+            }
           },
           fail(err) {
             console.log(err)
           }
         })
-      } else {
-        console.log('登录失败')
       }
     }
   })
