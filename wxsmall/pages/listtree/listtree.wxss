@@ -1,0 +1,8 @@
+/* pages/listtree/listtree.wxss */
+page{
+  height: calc(100vh-64px);
+}
+.body-view{
+  text-align: center;
+  line-height: 2;
+}

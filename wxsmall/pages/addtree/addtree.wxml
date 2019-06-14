@@ -1,0 +1,69 @@
+<!--pages/addtree.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">树木入库</view>
+</cu-custom>
+
+<view>
+  <view class="cu-form-group">
+    <view class="title">树木编码</view>
+    <input placeholder="编码输入"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">产权单位</view>
+    <input placeholder="产权单位"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">施工单位</view>
+    <input placeholder="施工单位"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">养护单位</view>
+    <input placeholder="养护单位"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">树种选择</view>
+    <picker bindchange="treeSortChange" value="{{selectInd}}" range-key='name' range="{{treeSort}}">
+      <view class="picker">
+        {{treeSort[selectInd].name}}
+      </view>
+    </picker>
+  </view>
+  <view class="margin-top cu-bar bg-white">
+    <view class="action">
+      树木照片
+    </view>
+  </view>
+  <view class="cu-form-group">
+    <view class="grid col-2 grid-square flex-sub">
+      <view class="solids" bindtap="ChooseImage" wx:if="{{imgPath==''?true:false}}">
+        <text class="cuIcon-cameraadd"></text>
+      </view>
+      <view wx:else class="bg-img">
+        <image src='{{imgPath}}' mode='aspectFill'></image>
+        <view class="cu-tag bg-red" catchtap="DelImg">
+          <text class="cuIcon-close"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-form-group margin-top align-start">
+    <view class="title">其他信息</view>
+    <textarea maxlength="200" disabled="{{modalName!=null}}" bindinput="textareaBInput" placeholder="200字以内"></textarea>
+  </view>
+  <view class="cu-form-group cu-bar bg-white margin-top">
+    <view>
+      树木定位
+    </view>
+    <view bindtap='refreshMap'>
+      <text class="text-orange">如果定位有误请打开GPS重试</text>
+      <text class='cuIcon-refresh text-orange'></text>
+    </view>
+  </view>
+  <map id="myMap" markers="{{[markers]}}" style="width:100%;height:200px;" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='18'>
+  </map>
+</view>
+<view class="padding">
+  <button class="cu-btn block bg-blue margin-tb-sm lg">
+    <text class="cuIcon-upload"></text>上传入库</button>
+</view>
