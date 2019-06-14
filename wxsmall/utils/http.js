@@ -1,7 +1,8 @@
 const app = getApp();
 const openid = wx.getStorageSync('openid') || ''
 const http = (params)=>{
-  params.data.openid = openid
+  params.data = params.data ? params.data : {}
+  params.data['openid'] = openid
   return new Promise((resolve,reject)=>{
     wx.showLoading({
       title: '加载中',
@@ -13,7 +14,7 @@ const http = (params)=>{
       header: params.header,
       data: params.data,
       success(res) {
-        resolve(res)
+        resolve(res.data)
         console.log(res.data)
       },
       fail(err){
@@ -27,6 +28,4 @@ const http = (params)=>{
   })
 }
 
-module.exports = {
-  http: http
-}
+module.exports = http

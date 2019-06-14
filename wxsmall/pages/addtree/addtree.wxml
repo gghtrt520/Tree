@@ -11,21 +11,33 @@
   </view>
   <view class="cu-form-group">
     <view class="title">产权单位</view>
-    <input placeholder="产权单位"></input>
+    <picker bindchange="treeSortChange" id="propertyInd" value="{{propertyInd}}" range-key='name' range="{{propertyUnit}}">
+      <view class="picker">
+        {{propertyUnit[propertyInd].name}}
+      </view>
+    </picker>
   </view>
   <view class="cu-form-group">
     <view class="title">施工单位</view>
-    <input placeholder="施工单位"></input>
+    <picker bindchange="treeSortChange" id="constructionInd" value="{{constructionInd}}" range-key='name' range="{{constructionUnit}}">
+      <view class="picker">
+        {{constructionUnit[constructionInd].name}}
+      </view>
+    </picker>
   </view>
   <view class="cu-form-group">
     <view class="title">养护单位</view>
-    <input placeholder="养护单位"></input>
+    <picker bindchange="treeSortChange" id="conservationInd" value="{{conservationInd}}" range-key='name' range="{{conservationUnit}}">
+      <view class="picker">
+        {{conservationUnit[conservationInd].name}}
+      </view>
+    </picker>
   </view>
   <view class="cu-form-group">
     <view class="title">树种选择</view>
-    <picker bindchange="treeSortChange" value="{{selectInd}}" range-key='name' range="{{treeSort}}">
+    <picker bindchange="treeSortChange" id="categoryInd" value="{{categoryInd}}" range-key='name' range="{{treeCategory}}">
       <view class="picker">
-        {{treeSort[selectInd].name}}
+        {{treeCategory[categoryInd].name}}
       </view>
     </picker>
   </view>
@@ -64,6 +76,6 @@
   </map>
 </view>
 <view class="padding">
-  <button class="cu-btn block bg-blue margin-tb-sm lg">
+  <button bindtap='upload' class="cu-btn block bg-blue margin-tb-sm lg">
     <text class="cuIcon-upload"></text>上传入库</button>
 </view>
