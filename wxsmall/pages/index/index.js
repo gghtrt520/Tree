@@ -89,6 +89,10 @@ function loginUser(userInfo,that){
   wx.login({
     success: res => {
       console.log(res.code)
+      wx.showLoading({
+        title: '登录中',
+        mask: true
+      })
       // 发送 res.code 到后台换取 openId, sessionKey, unionId
       if (res.code) {
         //发起网络请求
@@ -106,6 +110,9 @@ function loginUser(userInfo,that){
             console.log(data)
             if (data.status){
               wx.setStorageSync('openid', data.data.openid)
+              setTimeout(function () {
+                wx.hideLoading()
+              }, 1000)
             } else {
               that.setData({
                 hasUserInfo: true,

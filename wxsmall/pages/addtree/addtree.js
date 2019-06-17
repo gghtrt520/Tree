@@ -1,5 +1,6 @@
 // pages/addtree.js
 const app = getApp()
+const openid = wx.getStorageSync('openid') || ''
 const http = require("../../utils/http.js")
 Page({
   /**
@@ -7,6 +8,7 @@ Page({
    */
   data: {
     imgPath: '',
+    imgUrl: '',
     categoryInd: 0,
     propertyInd: 0,
     constructionInd: 0,
@@ -85,6 +87,7 @@ Page({
   },
   // 拍照
   ChooseImage() {
+    var that = this
     wx.chooseImage({
       count: 1, //默认9
       sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -93,13 +96,70 @@ Page({
         this.setData({
           imgPath: res.tempFilePaths[0]
         })
+        wx.showLoading({
+          title: '上传中',
+          mask: true
+        })
+        wx.uploadFile({
+          url: app.globalData.app_url + '/api/upload', //上传地址
+          filePath: res.tempFilePaths[0],
+          name: 'image',
+          formData: {
+            'openid': openid
+          },
+          success(res) {
+            wx.hideLoading()
+            const data = JSON.parse(res.data)
+            console.log(data)
+            //do something
+            if (res.statusCode === 200 && data.status==1){
+              wx.showToast({
+                title: '上传成功',
+                icon: 'none'
+              })
+              that.data.imgUrl = data.data.path
+            } else {
+              that.data.imgUrl = ''
+              wx.showToast({
+                title: data.message,
+                icon: 'none'
+              })
+            }
+          },
+          fail(err) {
+            that.data.imgUrl = ''
+            console.log(err)
+            wx.hideLoading()
+            wx.showToast({
+              title: '上传失败请重试',
+              icon: 'none'
+            })
+          }
+        })
       }
     });
   },
   // 删除照片
   DelImg(e) {
-    this.setData({
-      imgPath: ''
+    let path = this.data.imgUrl
+    http({
+      url: '/api/delete-image',
+      data: { path: path}
+    }).then(res => {
+      wx.showToast({
+        title: '删除成功',
+        icon: 'none'
+      })
+      this.setData({
+        imgPath: '',
+        imgUrl: ''
+      })
+    }).catch(err => {
+      console.log(err)
+      wx.showToast({
+        title: '删除失败请重试',
+        icon: 'none'
+      })
     })
   },
   // 刷新地图
@@ -109,39 +169,13 @@ Page({
   },
   // 数据入库操作
   upload() {
-    let openid = wx.getStorageSync('openid') || ''
-    if (!this.data.imgPath) {
+    if (!this.data.imgUrl) {
       wx.showToast({
         title: '请上传树木照片',
         icon: 'none'
       })
       return false
     }
-    wx.showLoading({
-      title: '上传中',
-      mask: true
-    })
-    wx.uploadFile({
-      url: app.globalData.app_url + '/api/upload', //上传地址
-      filePath: this.data.imgPath,
-      name: 'image',
-      formData: {
-        'openid': openid
-      },
-      success(res) {
-        const data = res.data
-        //do something
-        this.uploadData()
-      },
-      fail(err) {
-        console.log(err)
-        wx.hideLoading()
-        wx.showToast({
-          title: '上传失败请重试',
-          icon: 'none'
-        })
-      }
-    })
   },
   // 上传数据
   uploadData(filepath) {

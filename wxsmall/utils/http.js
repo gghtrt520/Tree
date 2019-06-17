@@ -1,6 +1,7 @@
 const app = getApp();
-const openid = wx.getStorageSync('openid') || ''
 const http = (params)=>{
+  const openid = wx.getStorageSync('openid') || ''
+  console.log(openid)
   params.data = params.data ? params.data : {}
   params.data['openid'] = openid
   return new Promise((resolve,reject)=>{
@@ -14,8 +15,10 @@ const http = (params)=>{
       header: params.header,
       data: params.data,
       success(res) {
-        resolve(res.data)
-        console.log(res.data)
+        if (res.statusCode === 200){
+          resolve(res.data)
+        }
+        console.log(res)
       },
       fail(err){
         reject(err)
