@@ -7,7 +7,7 @@
 <view>
   <view class="cu-form-group">
     <view class="title"><text class='text-red'>*</text>树木编码</view>
-    <input placeholder="编码输入"></input>
+    <input bindinput='idInput' placeholder="编码输入"></input>
   </view>
   <view class="cu-form-group">
     <view class="title"><text class='text-red'>*</text>产权单位</view>
@@ -76,6 +76,6 @@
   </map>
 </view>
 <view class="padding">
-  <button bindtap='upload' class="cu-btn block bg-blue margin-tb-sm lg">
+  <button bindtap='uploadData' class="cu-btn block bg-blue margin-tb-sm lg">
     <text class="cuIcon-upload"></text>上传入库</button>
 </view>

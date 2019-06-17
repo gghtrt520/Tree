@@ -9,6 +9,8 @@ Page({
   data: {
     imgPath: '',
     imgUrl: '',
+    numberId: '',
+    ohter: '',
     categoryInd: 0,
     propertyInd: 0,
     constructionInd: 0,
@@ -167,8 +169,28 @@ Page({
     var that = this
     getLocPos(that)
   },
-  // 数据入库操作
-  upload() {
+  // 编码输入
+  idInput(e){
+    this.setData({
+      numberId:e.detail.value
+    })
+  },
+  // 其他信息
+  textareaBInput(e){
+    this.setData({
+      ohter:e.detail.value
+    })
+  },
+  // 上传数据
+  uploadData(filepath) {
+    let data = {}
+    if (!this.data.numberId) {
+      wx.showToast({
+        title: '请填写编码',
+        icon: 'none'
+      })
+      return false
+    }
     if (!this.data.imgUrl) {
       wx.showToast({
         title: '请上传树木照片',
@@ -176,17 +198,23 @@ Page({
       })
       return false
     }
-  },
-  // 上传数据
-  uploadData(filepath) {
-    wx.hideLoading()
+    data.number = this.data.numberId
+    data.ohter = this.data.ohter
+    data.latitude = this.data.markers.latitude
+    data.longitude = this.data.markers.longitude
+    data.image = this.data.imgUrl
+    data.property = this.data.propertyUnit[this.data.propertyInd].id
+    data.construction = this.data.constructionUnit[this.data.constructionInd].id
+    data.conservation = this.data.conservationUnit[this.data.conservationInd].id
+    data.category = this.data.treeCategory[this.data.categoryInd].id
+    console.log(data)
     http({
-      url: '',
-      method: 'post',
-      data: ''
+      url: '/api/create',
+      data: data
     }).then(res => {
       wx.showToast({
         title: '上传成功',
+        mask: true,
         icon: 'success'
       })
       backTime()
