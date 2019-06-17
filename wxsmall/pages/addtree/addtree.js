@@ -1,4 +1,5 @@
 // pages/addtree.js
+const app = getApp()
 const http = require("../../utils/http.js")
 Page({
   /**
@@ -51,7 +52,12 @@ Page({
       url: '/api/get-list',
     }).then(res => {
       if (res.status == 1) {
-
+        this.setData({
+          treeCategory: res.data.tree_category,
+          propertyUnit: res.data.property_unit,
+          constructionUnit: res.data.construction_unit,
+          conservationUnit: res.data.conservation_unit,
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -116,9 +122,9 @@ Page({
       mask: true
     })
     wx.uploadFile({
-      url: '', //上传地址
+      url: app.globalData.app_url + '/api/upload', //上传地址
       filePath: this.data.imgPath,
-      name: 'file',
+      name: 'image',
       formData: {
         'openid': openid
       },

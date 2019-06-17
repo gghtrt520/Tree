@@ -6,11 +6,11 @@
 
 <view>
   <view class="cu-form-group">
-    <view class="title">树木编码</view>
+    <view class="title"><text class='text-red'>*</text>树木编码</view>
     <input placeholder="编码输入"></input>
   </view>
   <view class="cu-form-group">
-    <view class="title">产权单位</view>
+    <view class="title"><text class='text-red'>*</text>产权单位</view>
     <picker bindchange="treeSortChange" id="propertyInd" value="{{propertyInd}}" range-key='name' range="{{propertyUnit}}">
       <view class="picker">
         {{propertyUnit[propertyInd].name}}
@@ -18,7 +18,7 @@
     </picker>
   </view>
   <view class="cu-form-group">
-    <view class="title">施工单位</view>
+    <view class="title"><text class='text-red'>*</text>施工单位</view>
     <picker bindchange="treeSortChange" id="constructionInd" value="{{constructionInd}}" range-key='name' range="{{constructionUnit}}">
       <view class="picker">
         {{constructionUnit[constructionInd].name}}
@@ -26,7 +26,7 @@
     </picker>
   </view>
   <view class="cu-form-group">
-    <view class="title">养护单位</view>
+    <view class="title"><text class='text-red'>*</text>养护单位</view>
     <picker bindchange="treeSortChange" id="conservationInd" value="{{conservationInd}}" range-key='name' range="{{conservationUnit}}">
       <view class="picker">
         {{conservationUnit[conservationInd].name}}
@@ -34,7 +34,7 @@
     </picker>
   </view>
   <view class="cu-form-group">
-    <view class="title">树种选择</view>
+    <view class="title"><text class='text-red'>*</text>树种选择</view>
     <picker bindchange="treeSortChange" id="categoryInd" value="{{categoryInd}}" range-key='name' range="{{treeCategory}}">
       <view class="picker">
         {{treeCategory[categoryInd].name}}
@@ -43,7 +43,7 @@
   </view>
   <view class="margin-top cu-bar bg-white">
     <view class="action">
-      树木照片
+      <text class='text-red'>*</text>树木照片
     </view>
   </view>
   <view class="cu-form-group">

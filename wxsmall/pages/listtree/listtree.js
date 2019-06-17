@@ -67,6 +67,14 @@ Page({
       })
     })
   },
+  // 跳转详情页
+  goDetail(e){
+    let id = e.currentTarget.dataset.id
+    console.log(id)
+    wx.navigateTo({
+      url: '/pages/detail/detail?id=' + id
+    })
+  },
   // 搜索输入框
   searchInput(e) {
     this.setData({
