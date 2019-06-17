@@ -10,7 +10,7 @@ Page({
     imgPath: '',
     imgUrl: '',
     numberId: '',
-    ohter: '',
+    other: '',
     categoryInd: 0,
     propertyInd: 0,
     constructionInd: 0,
@@ -178,7 +178,7 @@ Page({
   // 其他信息
   textareaBInput(e){
     this.setData({
-      ohter:e.detail.value
+      other:e.detail.value
     })
   },
   // 上传数据
@@ -199,7 +199,7 @@ Page({
       return false
     }
     data.number = this.data.numberId
-    data.ohter = this.data.ohter
+    data.other = this.data.other
     data.latitude = this.data.markers.latitude
     data.longitude = this.data.markers.longitude
     data.image = this.data.imgUrl
