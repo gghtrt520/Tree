@@ -1,18 +1,51 @@
 // pages/detail/detail.js
+const app = getApp();
+const util = require('../../utils/util.js')
+const http = require("../../utils/http.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    detail:'',
+    markers: {
+      label: {
+        content: '树木位置',
+        anchorX: -24,
+        textAlign: 'left',
+      },
+      latitude: '39.980014',
+      longitude: '116.313972',
+      iconPath: './tree.png', //图标路径
+      width: 20,
+      height: 20
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    var that = this
+    getLocPos(that)
+    // 分类列表
+    http({
+      url: '/api/tree-detail',
+      data: {tree_id: options.id}
+    }).then(res => {
+      if (res.status == 1) {
+        console.log(res.data)
+        this.data.markers.latitude = res.data.latitude
+        this.data.markers.longitude = res.data.longitude
+        this.setData({
+          detail:res.data,
+          markers: this.data.markers
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   },
 
   /**
@@ -64,3 +97,42 @@ Page({
 
   }
 })
+
+// 获取用户定位
+function getLocPos(that) {
+  wx.getSetting({
+    success: res => {
+      if (!res.authSetting['scope.userLocation']) {
+        wx.authorize({
+          scope: 'scope.userLocation',
+          success() {
+            // 用户已经同意小程序使用
+            wx.getLocation({
+              type: 'gcj02',
+              success(res) {
+                console.log(res)
+              }
+            })
+          },
+          fail() {
+            wx.showToast({
+              title: '定位失败',
+              icon: 'none',
+              complete() {
+                backTime()
+              }
+            })
+          }
+        })
+      }
+    }
+  })
+}
+// 定时返回
+function backTime() {
+  setTimeout(() => {
+    wx.navigateBack({
+      delta: 1
+    })
+  }, 1500)
+}

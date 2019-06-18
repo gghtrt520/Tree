@@ -1,7 +1,6 @@
 const app = getApp();
 const http = (params)=>{
   const openid = wx.getStorageSync('openid') || ''
-  console.log(openid)
   params.data = params.data ? params.data : {}
   params.data['openid'] = openid
   return new Promise((resolve,reject)=>{

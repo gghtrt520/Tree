@@ -4,22 +4,22 @@
   <view slot="content">树木详情</view>
 </cu-custom>
 
-<view class="cu-card case no-card">
-  <view class="cu-item shadow">
-    <view class="image" bindtap='goDetail' data-id="{{index}}">
-      <image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" mode="widthFix"></image>
-      <view class="cu-tag bg-blue">史诗</view>
+<view wx:if="{{detail!=''}}" class="cu-card case no-card">
+  <view class="cu-item">
+    <view class="image">
+      <image src="{{detail.tree_image}}" mode="widthFix"></image>
+      <view class="cu-tag bg-blue">{{detail.category}}</view>
       <view class="cu-bar bg-shadeBottom">
-        <text>我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。</text>
+        <text>{{detail.tree_number}}</text>
       </view>
     </view>
     <view class="cu-list menu-avatar">
       <view class="cu-item">
-        <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+        <view class="cu-avatar round lg" style="{{'background-image:url('+detail.avatar_url+');'}}"></view>
         <view class="content flex-sub">
-          <view class="text-grey">正义天使 凯尔</view>
+          <view class="text-grey">{{detail.nick_name}}</view>
           <view class="text-gray text-sm flex justify-between">
-            十天前
+            {{detail.created_at}}
             <view class="text-gray text-sm">
               <button class="cu-btn round bg-red shadow sm">砍伐</button>
               <button class="cu-btn round bg-green shadow sm margin-left">移植</button>
@@ -28,5 +28,26 @@
         </view>
       </view>
     </view>
+  </view>
+  <view class='margin-top'></view>
+  <view class="cu-bar bg-white">
+    <view class="action">
+      <text class="cuIcon-titles text-green"></text>
+      <text class="text-xl text-bold">其他信息</text>
+    </view>
+  </view>
+  <view class="text-content bg-white margin-bottom">{{detail.other}}</view>
+  <view class='margin-top'></view>
+  <view class="cu-bar bg-white">
+    <view class="action">
+      <text class="cuIcon-titles text-green"></text>
+      <text class="text-xl text-bold">树木定位</text>
+    </view>
+    <view class='margin-right'>
+      <button class="cu-btn round bg-blue shadow">导航</button>
+    </view>
+  </view>
+  <view class='padding-bottom bg-white'>
+    <map id="myMap" show-location='true' markers="{{[markers]}}" style="width:100%;height:200px;" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='18'></map>
   </view>
 </view>
