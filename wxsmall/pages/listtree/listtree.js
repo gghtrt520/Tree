@@ -1,7 +1,8 @@
 // pages/listtree/listtree.js
 const app = getApp();
+const util = require('../../utils/util.js')
 const http = require("../../utils/http.js")
-const sizepage = 10
+let sizepage = 10
 Page({
 
   /**
@@ -9,11 +10,12 @@ Page({
    */
   data: {
     TabCur: 0,
-    currentPage: 0,
+    currentPage: 1,
+    categoryId: '',
     CustomBar: app.globalData.CustomBar,  
     listTree:[],
     treeCategory: [{
-      id: 0,
+      id: '',
       name: '全部'
     }],
     titleKey: '',
@@ -24,15 +26,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.search()
     // 分类列表
     http({
       url: '/api/get-list',
     }).then(res => {
       if (res.status == 1) {
+        let arr = this.data.treeCategory.concat(res.data.tree_category)
         this.setData({
-          treeCategory: res.data.tree_category
+          treeCategory: arr
         })
+        this.search()
       }
     }).catch(err => {
       console.log(err)
@@ -49,15 +52,20 @@ Page({
   // 树种分类选择
   tabSelect(e) {
     this.setData({
-      TabCur: e.currentTarget.dataset.id,
-      scrollLeft: (e.currentTarget.dataset.id - 1) * 60
-    })
+      TabCur: e.currentTarget.dataset.index,
+      categoryId: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.index - 1) * 60
+    },()=>{this.search()})
   },
   // 加载更多
   loadMore() {
     this.data.currentPage++
-    getCardData(this.data.currentPage, sizepage, this.data.titleKey).then(res => {
-      let newArr = res.data.tree_list
+    getCardData(this.data.currentPage, this.data.categoryId, this.data.titleKey).then(res => {
+      let newArr = res.data.tree_list.map(item => {
+        let ind = util.getArrInd(this.data.treeCategory, item.tree_category_id, 'id')
+        item.treeCategory = this.data.treeCategory[ind].name
+        return item
+      })
       this.setData({
         listTree: this.data.listTree.concat(newArr)
       })
@@ -68,12 +76,30 @@ Page({
       }
     })
   },
+  // 砍伐
+  cutBtn(e){
+    wx.showToast({
+      title: '此功能研发中',
+      icon: 'none'
+    })
+  },
+  // 移植
+  moveBtn(e) {
+    wx.showToast({
+      title: '此功能研发中',
+      icon: 'none'
+    })
+  },
   // 关键字搜索
   search() {
-    this.data.currentPage = 0
-    getCardData(0, sizepage, this.data.titleKey).then(res => {
-      console.log(res)
-      let newArr = res.data.tree_list
+    this.data.currentPage = 1
+    getCardData(1, this.data.categoryId, this.data.titleKey).then(res => {
+      let newArr = res.data.tree_list.map(item => {
+        let ind = util.getArrInd(this.data.treeCategory, item.tree_category_id, 'id')
+        item.treeCategory = this.data.treeCategory[ind].name
+        return item
+      })
+      sizepage = res.data.per_page
       this.setData({
         listTree: newArr,
         hasdata: true
@@ -83,7 +109,6 @@ Page({
   // 跳转详情页
   goDetail(e){
     let id = e.currentTarget.dataset.id
-    console.log(id)
     wx.navigateTo({
       url: '/pages/detail/detail?id=' + id
     })
@@ -97,12 +122,15 @@ Page({
 })
 
 // 数据库查询
-function getCardData(page, size, key = '') {
-  console.log(page, size, key)
+function getCardData(page = 1, sort = '', key = '') {
+  let data = {}
+  data.page = page
+  data.tree_number = key
+  data.tree_category_id = sort
   return new Promise((resolve,reject)=>{
     http({
       url: '/api/tree-list',
-      data: { page, size, key }
+      data: data
     }).then(res=>{
       if(res.status==1){
         resolve({data:res.data})

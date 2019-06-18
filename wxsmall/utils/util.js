@@ -14,6 +14,21 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+// 获取元素索引
+function getArrInd(arr, val, name) {
+  if (typeof arr[0] == 'object') {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i][name] == val) {
+        return i
+        break;
+      }
+    }
+  } else {
+    return arr.indexOf(val)
+  }
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  getArrInd: getArrInd
 }

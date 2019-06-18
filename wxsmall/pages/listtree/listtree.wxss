@@ -6,3 +6,7 @@ page{
   text-align: center;
   line-height: 2;
 }
+.cu-list.menu-avatar>.cu-item{
+  padding: 0 10rpx;
+  justify-content: space-between;
+}
