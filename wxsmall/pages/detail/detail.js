@@ -54,7 +54,15 @@ Page({
   onReady: function () {
 
   },
-
+  // 调起手机导航
+  openMap(){
+    wx.openLocation({//​使用微信内置地图查看位置。
+      latitude: this.data.markers.latitude - 0,//要去的纬度-地址
+      longitude: this.data.markers.longitude - 0,//要去的经度-地址
+      name: this.data.city + this.data.district,
+      address: this.data.city + this.data.district
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

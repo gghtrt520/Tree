@@ -44,7 +44,7 @@
       <text class="text-xl text-bold">树木定位</text>
     </view>
     <view class='margin-right'>
-      <button class="cu-btn round bg-blue shadow">导航</button>
+      <button class="cu-btn round bg-blue shadow" bindtap='openMap'>导航</button>
     </view>
   </view>
   <view class='padding-bottom bg-white'>
