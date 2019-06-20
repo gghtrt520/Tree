@@ -1,0 +1,57 @@
+/* pages/listtree/listtree.wxss */
+page{
+  height: calc(100vh-64px);
+}
+.map-dialog{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 30%;
+  width: 90%;
+  margin: 0 5%;
+  padding-bottom: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.map-dialog .title{
+  display: flex;
+  padding: 6px 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.map-dialog .title-text{
+  width: 80vw;
+  font-size: 15px;
+}
+.map-dialog button{
+  display: inline-block;
+  font-size: 14px;
+  line-height: 2;
+  width: 80rpx;
+}
+.map-dialog button::after{
+  border: none;
+}
+.map-dialog .cu-btn{
+  min-width: 40rpx;
+  border-radius: 4px;
+}
+.map-dialog .btn-group{
+  margin-top: 10px;
+  text-align: right;
+}
+.map-dialog .line-text{
+  line-height: 2;
+}
+.map-dialog .img{
+  width: 48%;
+  margin-right: 2%;
+  max-height: 200rpx;
+}
+.mark-info{
+  width: 50%;
+}
+.map-dialog .mark-content{
+  display: flex;
+  padding: 0 10px;
+}

@@ -1,6 +1,5 @@
 // pages/addtree.js
 const app = getApp()
-const openid = wx.getStorageSync('openid') || ''
 const http = require("../../utils/http.js")
 Page({
   /**
@@ -90,6 +89,7 @@ Page({
   // 拍照
   ChooseImage() {
     var that = this
+    const openid = wx.getStorageSync('openid') || ''
     wx.chooseImage({
       count: 1, //默认9
       sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有

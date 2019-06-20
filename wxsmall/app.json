@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/home/home",
     "pages/addtree/addtree",
-    "pages/listtree/listtree",
+    "pages/maptree/maptree",
     "pages/detail/detail"
   ],
   "window": {

@@ -7,12 +7,13 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     modalName: '',
+    bgimg: app.globalData.app_url + '/upload/images/mac.jpg',
     userInfo: {},
     hasUserInfo: false,
     errinfo: '未授权您将不能使用该应用',
     elements: [{
-      title: '树木列表',
-      name: 'list',
+      title: '树木地图',
+      name: 'map',
       color: 'green',
       icon: 'newsfill'
     },
@@ -97,7 +98,7 @@ function loginUser(userInfo,that){
       if (res.code) {
         //发起网络请求
         wx.request({
-          url: 'https://sapling.cnfay.com/site/synchronize-login',
+          url: app.globalData.app_url + '/site/synchronize-login',
           method: 'post',
           data: {
             nick_name: userInfo.nickName,
@@ -114,6 +115,7 @@ function loginUser(userInfo,that){
                 wx.hideLoading()
               }, 1000)
             } else {
+              wx.hideLoading()
               that.setData({
                 hasUserInfo: true,
                 errinfo: '登录失败，请退出重试',
@@ -122,6 +124,7 @@ function loginUser(userInfo,that){
             }
           },
           fail(err) {
+            wx.hideLoading()
             that.setData({
               hasUserInfo: true,
               errinfo: '登录失败，请退出重试',

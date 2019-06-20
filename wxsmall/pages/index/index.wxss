@@ -1,5 +1,4 @@
 .back-img{
-  background-image: url('https://www.wishpeng.top/static/index/images/mac.jpg');
   background-size: cover;
   background-position: center;
 }

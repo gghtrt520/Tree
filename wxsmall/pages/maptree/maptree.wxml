@@ -1,0 +1,43 @@
+<!--pages/listtree/listtree.wxml-->
+<cu-custom bgColor="bg-header-color" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">树木列表</view>
+</cu-custom>
+<view class="cu-bar bg-white search solid-bottom">
+  <view class="search-form round">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="树木编码" bindinput='searchInput' confirm-type="search"></input>
+  </view>
+  <view class="action">
+    <button class="cu-btn bg-gradual-green shadow-blur round" bindtap='search'>搜索</button>
+  </view>
+</view>
+<scroll-view scroll-x class="bg-white nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+  <view class="cu-item {{index==TabCur?'text-green cur':''}}" wx:for="{{treeCategory}}" wx:key bindtap="tabSelect" data-index="{{index}}" data-id="{{item.id}}">
+    {{item.name}}
+  </view>
+</scroll-view>
+<view style="height:calc(100vh - {{CustomBar}}px - 95px);">
+  <map id="myMap" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='19'>
+    <cover-view wx:if="{{mapDialog}}" class="map-dialog bg-white">
+      <cover-view class='title'>
+        <cover-view class="title-text text-black text-cut">{{currentTree.tree_number}}</cover-view>
+        <button class="fr bg-white text-red" bindtap='hide'>X</button>
+      </cover-view>
+      <cover-view class='mark-content'>
+        <cover-image bindtap='fullImg' class="img" data-url="{{currentTree.tree_image}}" src="{{currentTree.tree_image}}" />
+        <cover-view class='mark-info'>
+          <cover-view class='line-text'>{{currentTree.treeCategory}}</cover-view>
+          <cover-view class='line-text'>{{currentTree.created_at}}</cover-view>
+          <cover-view class='btn-group'>
+            <button class="bg-blue" bindtap='cutBtn'> 砍伐 </button>
+            <cover-view style='display: inline-block;' class='margin-right'></cover-view>
+            <button class="bg-green" bindtap='moveBtn'> 移植 </button>
+            <cover-view style='display: inline-block;' class='margin-right'></cover-view>
+            <button class="bg-cyan" bindtap='openMap'> 导航 </button>
+          </cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+  </map>
+</view>

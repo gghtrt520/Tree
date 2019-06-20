@@ -1,7 +1,7 @@
 <cu-custom bgColor="bg-header-color">
   <view slot="content">苗木营行</view>
 </cu-custom>
-<view class="margin-xl back-img padding-xl bg-white radius shadow shadow-lg">
+<view class="margin-xl back-img padding-xl bg-white radius shadow shadow-lg" style="background-image: url({{bgimg}});">
   <view class="flex justify-center">
 
     <view class='text-center'>

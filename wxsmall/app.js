@@ -36,6 +36,7 @@ App({
   globalData: {
     userInfo: null,
     app_url: 'https://sapling.cnfay.com',
-    mapKey:'PHDBZ-CPACF-TIRJY-J4UTB-J67TQ-F6BBV'
+    mapKey:'PHDBZ-CPACF-TIRJY-J4UTB-J67TQ-F6BBV',
+    sig: '9ntnqk4RMLdMVT4ffyPTs3ArncH2Jm9y'
   }
 })
