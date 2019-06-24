@@ -1,0 +1,13 @@
+page {
+  padding-top: 100rpx;
+}
+
+.indexes {
+  position: relative;
+}
+
+.indexes .content{
+  background-color:#fff;
+  padding:10px;
+  line-height: 2;
+}

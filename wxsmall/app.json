@@ -4,7 +4,8 @@
     "pages/home/home",
     "pages/addtree/addtree",
     "pages/maptree/maptree",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/indexes/indexes"
   ],
   "window": {
     "backgroundTextStyle": "light",

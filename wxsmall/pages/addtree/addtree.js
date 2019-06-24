@@ -6,30 +6,32 @@ Page({
    * 页面的初始数据
    */
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     imgPath: '',
     imgUrl: '',
     numberId: '',
     other: '',
-    categoryInd: 0,
-    propertyInd: 0,
-    constructionInd: 0,
-    conservationInd: 0,
-    treeCategory: [{
+    categoryInd: {
       id: -1,
       name: '无'
-    }],
-    propertyUnit: [{
+    },
+    propertyInd: {
       id: -1,
       name: '无'
-    }],
-    constructionUnit: [{
+    },
+    constructionInd: {
       id: -1,
       name: '无'
-    }],
-    conservationUnit: [{
+    },
+    conservationInd: {
       id: -1,
       name: '无'
-    }],
+    },
+    treeCategory: [],
+    propertyUnit: [],
+    constructionUnit: [],
+    conservationUnit: [],
     markers: {
       label: {
         content: '您的位置',
@@ -50,20 +52,15 @@ Page({
   onLoad: function() {
     var that = this
     getLocPos(that)
-    // 分类列表
-    http({
-      url: '/api/get-list',
-    }).then(res => {
-      if (res.status == 1) {
-        this.setData({
-          treeCategory: res.data.tree_category,
-          propertyUnit: res.data.property_unit,
-          constructionUnit: res.data.construction_unit,
-          conservationUnit: res.data.conservation_unit,
-        })
-      }
-    }).catch(err => {
-      console.log(err)
+    this.setData({
+      treeCategory: app.globalData.treeCategory,
+      categoryInd: app.globalData.treeCategory[0] ? app.globalData.treeCategory[0] : { id: -1, name: '无' },
+      propertyUnit: app.globalData.propertyUnit ,
+      propertyInd: app.globalData.propertyUnit [0] ? app.globalData.propertyUnit [0] : { id: -1, name: '无' },
+      constructionUnit: app.globalData.constructionUnit,
+      constructionInd: app.globalData.constructionUnit[0] ? app.globalData.constructionUnit[0] : { id: -1, name: '无' },
+      conservationUnit: app.globalData.conservationUnit,
+      conservationInd: app.globalData.conservationUnit[0] ? app.globalData.conservationUnit[0] : { id: -1, name: '无' }
     })
   },
 
@@ -81,10 +78,11 @@ Page({
 
   },
   // 树种选择
-  treeSortChange(e) {
-    let obj = JSON.parse(`{"${e.currentTarget.id}":${e.detail.value}}`)
-    console.log(obj)
-    this.setData(obj)
+  treeSortSelect(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/indexes/indexes?id=' + e.currentTarget.id
+    })
   },
   // 拍照
   ChooseImage() {
@@ -203,10 +201,10 @@ Page({
     data.latitude = this.data.markers.latitude
     data.longitude = this.data.markers.longitude
     data.image = this.data.imgUrl
-    data.property = this.data.propertyUnit[this.data.propertyInd].id
-    data.construction = this.data.constructionUnit[this.data.constructionInd].id
-    data.conservation = this.data.conservationUnit[this.data.conservationInd].id
-    data.category = this.data.treeCategory[this.data.categoryInd].id
+    data.property = this.data.propertyInd.id
+    data.construction = this.data.constructionInd.id
+    data.conservation = this.data.conservationInd.id
+    data.category = this.data.categoryInd.id
     console.log(data)
     http({
       url: '/api/create',

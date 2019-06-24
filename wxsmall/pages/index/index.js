@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+const http = require("../../utils/http.js")
 Page({
   data: {
     StatusBar: app.globalData.StatusBar,
@@ -79,6 +79,22 @@ Page({
     }
   }
 })
+// 分类列表
+function sortList(){
+  http({
+    url: '/api/get-list',
+  }).then(res => {
+    if (res.status == 1) {
+      app.globalData.treeCategory = res.data.tree_category;
+      app.globalData.propertyUnit = res.data.property_unit;
+      app.globalData.conservationUnit = res.data.construction_unit;
+      app.globalData.constructionUnit = res.data.conservation_unit;
+    }
+  }).catch(err => {
+    console.log(err)
+    sortList()
+  })
+}
 
 function loginUser(userInfo,that){
   var openid = wx.getStorageSync('openid') || ''
@@ -111,6 +127,7 @@ function loginUser(userInfo,that){
             console.log(data)
             if (data.status){
               wx.setStorageSync('openid', data.data.openid)
+              sortList()
               setTimeout(function () {
                 wx.hideLoading()
               }, 1000)

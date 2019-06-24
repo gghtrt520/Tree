@@ -68,19 +68,16 @@ Page({
     });
     getLocPos(this)
     // 分类列表
-    http({
-      url: '/api/get-list',
-    }).then(res => {
-      if (res.status == 1) {
-        let arr = this.data.treeCategory.concat(res.data.tree_category)
-        this.setData({
-          treeCategory: arr
-        })
-        this.search()
-      }
-    }).catch(err => {
-      console.log(err)
+    let arr = this.data.treeCategory.concat(app.globalData.treeCategory)
+    this.setData({
+      treeCategory: arr
     })
+    // 初始化
+    this.search()
+  },
+  onReady: function (e) {
+    // 使用 wx.createMapContext 获取 map 上下文
+    this.mapCtx = wx.createMapContext('myMap')
   },
   // 树种分类选择
   tabSelect(e) {
@@ -103,6 +100,29 @@ Page({
       title: '此功能研发中',
       icon: 'none'
     })
+  },
+  // 地图缩放
+  regionchange(e) {
+    console.log(e)
+    if (e.type == 'end' && e.causedBy == 'scale'){
+      this.mapCtx.getScale({
+        success: function (res) {
+          console.log(res.scale)
+          if (res.scale < 9){
+
+          }
+          if (res.scale < 13 && res.scale > 8) {
+
+          }
+          if (res.scale < 17 && res.scale > 12) {
+
+          }
+          if (res.scale > 16) {
+
+          }
+        }
+      })
+    }
   },
   // 全屏预览图片
   fullImg(e){
@@ -168,14 +188,13 @@ Page({
           marks.push(obj)
           return item
         })
-        let centPosition = {
-          latitude: marks[0].latitude,
-          longitude: marks[0].longitude,
-        }
         sizepage = res.data.per_page
+        // let centPosition = {
+        //   latitude: marks[0].latitude,
+        //   longitude: marks[0].longitude,
+        // }
         this.setData({
-          markers: marks,
-          myPosition: centPosition
+          markers: marks
         })
       }
     })
