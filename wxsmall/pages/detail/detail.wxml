@@ -7,7 +7,7 @@
 <view wx:if="{{detail!=''}}" class="cu-card case no-card">
   <view class="cu-item">
     <view class="image">
-      <image src="{{detail.tree_image}}" mode="widthFix"></image>
+      <image src="{{detail.tree_image}}" data-url="{{detail.tree_image}}" bindtap='fullImg' mode="aspectFill"></image>
       <view class="cu-tag bg-blue">{{detail.category}}</view>
       <view class="cu-bar bg-shadeBottom">
         <text>{{detail.tree_number}}</text>
@@ -21,8 +21,8 @@
           <view class="text-gray text-sm flex justify-between">
             {{detail.created_at}}
             <view class="text-gray text-sm">
-              <button class="cu-btn round bg-red shadow sm">砍伐</button>
-              <button class="cu-btn round bg-green shadow sm margin-left">移植</button>
+              <button class="cu-btn round bg-red shadow sm" bindtap='cutBtn'>砍伐</button>
+              <button class="cu-btn round bg-green shadow sm margin-left" bindtap='moveBtn'>移植</button>
             </view>
           </view>
         </view>

@@ -54,6 +54,28 @@ Page({
   onReady: function () {
 
   },
+  // 砍伐
+  cutBtn(e) {
+    wx.showToast({
+      title: '此功能研发中',
+      icon: 'none'
+    })
+  },
+  // 全屏预览图片
+  fullImg(e) {
+    console.log(e.target.dataset.url)
+    wx.previewImage({
+      current: e.target.dataset.url, // 当前显示图片的http链接
+      urls: [e.target.dataset.url] // 需要预览的图片http链接列表
+    })
+  },
+  // 移植
+  moveBtn(e) {
+    wx.showToast({
+      title: '此功能研发中',
+      icon: 'none'
+    })
+  },
   // 调起手机导航
   openMap(){
     wx.openLocation({//​使用微信内置地图查看位置。

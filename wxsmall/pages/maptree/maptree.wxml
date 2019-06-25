@@ -25,16 +25,19 @@
         <button class="fr bg-white text-red" bindtap='hide'>X</button>
       </cover-view>
       <cover-view class='mark-content'>
-        <cover-image bindtap='fullImg' class="img" data-url="{{currentTree.tree_image}}" src="{{currentTree.tree_image}}" />
+        <cover-image bindtap='goDetail' class="img" src="{{currentTree.tree_image}}" />
         <cover-view class='mark-info'>
           <cover-view class='line-text'>{{currentTree.treeCategory}}</cover-view>
           <cover-view class='line-text'>{{currentTree.created_at}}</cover-view>
           <cover-view class='btn-group'>
-            <button class="bg-blue" bindtap='cutBtn'> 砍伐 </button>
+            <button class="bg-red" bindtap='cutBtn'> 砍伐 </button>
             <cover-view style='display: inline-block;' class='margin-right'></cover-view>
             <button class="bg-green" bindtap='moveBtn'> 移植 </button>
+            <cover-view></cover-view>
             <cover-view style='display: inline-block;' class='margin-right'></cover-view>
-            <button class="bg-cyan" bindtap='openMap'> 导航 </button>
+            <button class="bg-blue" bindtap='openMap'> 导航 </button>
+            <cover-view style='display: inline-block;' class='margin-right'></cover-view>
+            <button class="bg-cyan" bindtap='goDetail'> 详情 </button>
           </cover-view>
         </cover-view>
       </cover-view>

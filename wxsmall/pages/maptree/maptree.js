@@ -124,14 +124,6 @@ Page({
       })
     }
   },
-  // 全屏预览图片
-  fullImg(e){
-    console.log(e.target.dataset.url)
-    wx.previewImage({
-      current: e.target.dataset.url, // 当前显示图片的http链接
-      urls: [e.target.dataset.url] // 需要预览的图片http链接列表
-    })
-  },
   // 调起手机导航
   openMap() {
     var that = this
@@ -160,6 +152,29 @@ Page({
       }
     })
   },
+
+  // 坐标地址解析
+  parseLatLon(latLon) {
+    let that = this
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: latLon.latitude - 0,
+        longitude: latLon.longitude - 0
+      },
+      sig: app.globalData.sig,
+      success: function (res) {//成功后的回调
+        console.log(res.result)
+        that.data.myPosition.latitude = latLon.latitude
+        that.data.myPosition.longitude = latLon.longitude
+        that.setData({
+          myPosition: that.data.myPosition
+        })
+      },
+      fail: function (error) {
+        console.error(error)
+      }
+    })
+  },
   // 关键字搜索
   search() {
     this.data.currentPage = 1
@@ -183,6 +198,7 @@ Page({
           marker.created_at = item.created_at
           marker.tree_number = item.tree_number
           marker.tree_image = item.tree_image
+          marker.treeId = item.id
           marker.id = index
           obj = {...marker}
           marks.push(obj)
@@ -201,7 +217,7 @@ Page({
   },
   // 跳转详情页
   goDetail(e){
-    let id = e.currentTarget.dataset.id
+    let id = this.data.currentTree.treeId
     wx.navigateTo({
       url: '/pages/detail/detail?id=' + id
     })
@@ -248,12 +264,7 @@ function getLocPos(that) {
             wx.getLocation({
               type: 'gcj02',
               success(res) {
-                that.data.myPosition.latitude = res.latitude
-                that.data.myPosition.longitude = res.longitude
-                that.setData({
-                  myPosition: that.data.myPosition
-                })
-                console.log(res)
+                that.parseLatLon(res)
               }
             })
           },
@@ -271,11 +282,7 @@ function getLocPos(that) {
         wx.getLocation({
           type: 'gcj02',
           success(res) {
-            that.data.myPosition.latitude = res.latitude
-            that.data.myPosition.longitude = res.longitude
-            that.setData({
-              myPosition: that.data.myPosition
-            })
+            that.parseLatLon(res)
           }
         })
       }

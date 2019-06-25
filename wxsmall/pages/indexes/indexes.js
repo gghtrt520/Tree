@@ -10,7 +10,6 @@ Page({
   },
   onLoad(options) {
     console.log(options)
-    console.log(app.globalData)
     if (options.id == 'categoryInd'){
       this.setData({
         properStr: 'categoryInd',

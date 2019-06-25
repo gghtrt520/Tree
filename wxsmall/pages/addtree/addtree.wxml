@@ -12,17 +12,9 @@
   </view>
   <view class="cu-form-group">
     <view class="title">
-      <text class='text-red'>*</text>产权单位</view>
-    <view bindtap="treeSortSelect" id="propertyInd">
-      {{propertyInd.name}}
-      <text class="cuIcon-right lg text-gray"></text>
-    </view>
-  </view>
-  <view class="cu-form-group">
-    <view class="title">
-      <text class='text-red'>*</text>施工单位</view>
-    <view bindtap="treeSortSelect" id="constructionInd">
-      {{constructionInd.name}}
+      <text class='text-red'>*</text>树种选择</view>
+    <view bindtap="treeSortSelect" id="categoryInd">
+      {{categoryInd.name}}
       <text class="cuIcon-right lg text-gray"></text>
     </view>
   </view>
@@ -36,9 +28,17 @@
   </view>
   <view class="cu-form-group">
     <view class="title">
-      <text class='text-red'>*</text>树种选择</view>
-    <view bindtap="treeSortSelect" id="categoryInd">
-      {{categoryInd.name}}
+      <text class='text-red'>*</text>施工单位</view>
+    <view bindtap="treeSortSelect" id="constructionInd">
+      {{constructionInd.name}}
+      <text class="cuIcon-right lg text-gray"></text>
+    </view>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">
+      <text class='text-red'>*</text>产权单位</view>
+    <view bindtap="treeSortSelect" id="propertyInd">
+      {{propertyInd.name}}
       <text class="cuIcon-right lg text-gray"></text>
     </view>
   </view>
