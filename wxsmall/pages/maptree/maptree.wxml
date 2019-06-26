@@ -18,7 +18,7 @@
   </view>
 </scroll-view>
 <view style="height:calc(100vh - {{CustomBar}}px - 95px);">
-  <map id="myMap" bindregionchange="regionchange" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='10'>
+  <map id="myMap" bindregionchange="regionchange" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='8'>
     <cover-view wx:if="{{mapDialog}}" class="map-dialog bg-white">
       <cover-view class='title'>
         <cover-view class="title-text text-black text-cut">{{currentTree.tree_number}}</cover-view>

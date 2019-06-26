@@ -28,7 +28,7 @@ Page({
     TabCur: 0,
     currentPage: 1,
     categoryId: '',
-    CustomBar: app.globalData.CustomBar,  
+    CustomBar: app.globalData.CustomBar,
     treeCategory: [{
       id: '',
       name: '全部'
@@ -37,20 +37,30 @@ Page({
       latitude: '39.980014',
       longitude: '116.313972',
     },
+    address_component: {
+      city: "",
+      district: "",
+      nation: "",
+      province: "",
+      street: "",
+      street_number: ""
+    },
+    location: 'province',
+    value: '陕西省',
     mapDialog: false,
-    currentTree:{},
+    currentTree: {},
     indTree: 0,
     markers: [],
     titleKey: '',
     scrollLeft: 0
   },
   // 隐藏弹窗
-  hide(){
+  hide() {
     this.setData({
-      mapDialog:false
+      mapDialog: false
     })
   },
-  markerTap(e){
+  markerTap(e) {
     console.log(e)
     this.setData({
       mapDialog: true,
@@ -61,7 +71,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function() {
     // 实例化API核心类
     qqmapsdk = new QQMapWX({
       key: app.globalData.mapKey // 必填
@@ -75,7 +85,7 @@ Page({
     // 初始化
     this.search()
   },
-  onReady: function (e) {
+  onReady: function(e) {
     // 使用 wx.createMapContext 获取 map 上下文
     this.mapCtx = wx.createMapContext('myMap')
   },
@@ -85,10 +95,12 @@ Page({
       TabCur: e.currentTarget.dataset.index,
       categoryId: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.index - 1) * 60
-    },()=>{this.search()})
+    }, () => {
+      this.search()
+    })
   },
   // 砍伐
-  cutBtn(e){
+  cutBtn(e) {
     wx.showToast({
       title: '此功能研发中',
       icon: 'none'
@@ -104,21 +116,29 @@ Page({
   // 地图缩放
   regionchange(e) {
     console.log(e)
-    if (e.type == 'end' && e.causedBy == 'scale'){
+    var that = this
+    if (e.type == 'end' && e.causedBy == 'scale') {
       this.mapCtx.getScale({
-        success: function (res) {
+        success: function(res) {
           console.log(res.scale)
-          if (res.scale < 9){
-
+          if (res.scale < 9) {
+            that.data.location = 'province'
+            that.data.value = that.data.address_component.province
           }
           if (res.scale < 13 && res.scale > 8) {
-
+            that.data.location = 'city'
+            that.data.value = that.data.address_component.city
           }
           if (res.scale < 17 && res.scale > 12) {
-
+            that.data.location = 'district'
+            that.data.value = that.data.address_component.district
           }
           if (res.scale > 16) {
-
+            that.data.location = 'street'
+            that.data.value = that.data.address_component.street
+          }
+          if (that.data.value!=''){
+            that.search()
           }
         }
       })
@@ -134,16 +154,16 @@ Page({
         longitude: that.data.currentTree.longitude - 0
       },
       sig: app.globalData.sig,
-      success: function (res) {//成功后的回调
+      success: function(res) { //成功后的回调
         console.log(res);
-        wx.openLocation({//​使用微信内置地图查看位置。
-          latitude: that.data.currentTree.latitude - 0,//要去的纬度-地址
-          longitude: that.data.currentTree.longitude - 0,//要去的经度-地址
+        wx.openLocation({ //​使用微信内置地图查看位置。
+          latitude: that.data.currentTree.latitude - 0, //要去的纬度-地址
+          longitude: that.data.currentTree.longitude - 0, //要去的经度-地址
           name: res.result.ad_info.name,
           address: res.result.address
         })
       },
-      fail: function (error) {
+      fail: function(error) {
         console.error(error);
         wx.showToast({
           title: '导航失败请重试',
@@ -162,15 +182,16 @@ Page({
         longitude: latLon.longitude - 0
       },
       sig: app.globalData.sig,
-      success: function (res) {//成功后的回调
+      success: function(res) { //成功后的回调
         console.log(res.result)
+        that.data.address_component = res.result.address_component
         that.data.myPosition.latitude = latLon.latitude
         that.data.myPosition.longitude = latLon.longitude
         that.setData({
           myPosition: that.data.myPosition
         })
       },
-      fail: function (error) {
+      fail: function(error) {
         console.error(error)
       }
     })
@@ -178,9 +199,9 @@ Page({
   // 关键字搜索
   search() {
     this.data.currentPage = 1
-    getCardData(1, this.data.categoryId, this.data.titleKey).then(res => {
+    getCardData(1, this.data.categoryId, this.data.titleKey, this.data.location, this.data.value).then(res => {
       let marks = []
-      if (res.data.tree_list.length==0){
+      if (res.data.tree_list.length == 0) {
         wx.showToast({
           title: '未找到树木',
           icon: 'none'
@@ -189,7 +210,7 @@ Page({
           markers: []
         })
       } else {
-        let newArr = res.data.tree_list.map((item, index)=> {
+        let newArr = res.data.tree_list.map((item, index) => {
           let obj = {}
           let ind = util.getArrInd(this.data.treeCategory, item.tree_category_id, 'id')
           marker.treeCategory = this.data.treeCategory[ind].name
@@ -200,7 +221,8 @@ Page({
           marker.tree_image = item.tree_image
           marker.treeId = item.id
           marker.id = index
-          obj = {...marker}
+          obj = { ...marker
+          }
           marks.push(obj)
           return item
         })
@@ -216,7 +238,7 @@ Page({
     })
   },
   // 跳转详情页
-  goDetail(e){
+  goDetail(e) {
     let id = this.data.currentTree.treeId
     wx.navigateTo({
       url: '/pages/detail/detail?id=' + id
@@ -231,22 +253,28 @@ Page({
 })
 
 // 数据库查询
-function getCardData(page = 1, sort = '', key = '') {
+function getCardData(page = 1, sort = '', key = '', location, val) {
   let data = {}
   // data.page = page
   data.tree_number = key
   data.tree_category_id = sort
-  return new Promise((resolve,reject)=>{
+  data.location = location
+  data.value = val
+  return new Promise((resolve, reject) => {
     http({
       url: '/api/tree-list',
       data: data
-    }).then(res=>{
-      if(res.status==1){
-        resolve({data:res.data})
-      }else{
-        resolve({data:[]})
+    }).then(res => {
+      if (res.status == 1) {
+        resolve({
+          data: res.data
+        })
+      } else {
+        resolve({
+          data: []
+        })
       }
-    }).catch(err=>{
+    }).catch(err => {
       reject(err)
     })
   })
