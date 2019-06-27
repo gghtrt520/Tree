@@ -8,11 +8,6 @@ const http = require("../../utils/http.js")
 let sizepage = 10
 var marker = {
   id: 0,
-  label: {
-    content: '树木位置',
-    anchorX: -24,
-    textAlign: 'left',
-  },
   latitude: '39.980014',
   longitude: '116.313972',
   iconPath: './tree.png', //图标路径
@@ -129,14 +124,14 @@ Page({
             that.data.location = 'city'
             that.data.value = that.data.address_component.city
           }
-          if (res.scale < 17 && res.scale > 12) {
+          if (res.scale > 12) {
             that.data.location = 'district'
             that.data.value = that.data.address_component.district
           }
-          if (res.scale > 16) {
-            that.data.location = 'street'
-            that.data.value = that.data.address_component.street
-          }
+          // if (res.scale > 16) {
+          //   that.data.location = 'street'
+          //   that.data.value = that.data.address_component.street
+          // }
           if (that.data.value!=''){
             that.search()
           }

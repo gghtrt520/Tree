@@ -127,6 +127,16 @@ function loginUser(userInfo,that){
             console.log(data)
             if (data.status){
               wx.setStorageSync('openid', data.data.openid)
+              if (data.data.apply_rule == 0){
+                wx.redirectTo({
+                  url: '/pages/home/home?type=0'
+                })
+              }
+              if (data.data.apply_rule == 1) {
+                wx.redirectTo({
+                  url: '/pages/home/home?type=1'
+                })
+              }
               sortList()
               setTimeout(function () {
                 wx.hideLoading()

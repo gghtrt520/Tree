@@ -1,2 +1,11 @@
 <!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<cu-custom bgColor="bg-header-color">
+  <view slot="content">权限管理</view>
+</cu-custom>
+<view class='text-center'>
+  <view style='margin-top:20%;'></view>
+  <view>{{tip}}</view>
+  <view style='margin-top:10%;'></view>
+  <button wx:if="{{type==0}}" class="cu-btn line-green margin-left" bindtap="getApply">申请</button>
+  <navigator wx:else class="cu-btn line-red" target="miniProgram" open-type="exit">退出</navigator>
+</view>

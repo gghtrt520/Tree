@@ -30,10 +30,6 @@
           <cover-view class='line-text'>{{currentTree.treeCategory}}</cover-view>
           <cover-view class='line-text'>{{currentTree.created_at}}</cover-view>
           <cover-view class='btn-group'>
-            <button class="bg-red" bindtap='cutBtn'> 砍伐 </button>
-            <cover-view style='display: inline-block;' class='margin-right'></cover-view>
-            <button class="bg-green" bindtap='moveBtn'> 移植 </button>
-            <cover-view></cover-view>
             <cover-view style='display: inline-block;' class='margin-right'></cover-view>
             <button class="bg-blue" bindtap='openMap'> 导航 </button>
             <cover-view style='display: inline-block;' class='margin-right'></cover-view>
