@@ -21,28 +21,40 @@
           <view class="text-gray text-sm flex justify-between">
             {{detail.created_at}}
             <view class="text-gray text-sm">
-              <button class="cu-btn round bg-red shadow sm" bindtap='cutBtn'>砍伐</button>
-              <button class="cu-btn round bg-green shadow sm margin-left" bindtap='moveBtn'>移植</button>
+              <!-- <button class="cu-btn round bg-red shadow sm" bindtap='cutBtn'>砍伐</button>
+              <button class="cu-btn round bg-green shadow sm margin-left" bindtap='moveBtn'>移植</button> -->
             </view>
           </view>
         </view>
       </view>
     </view>
   </view>
-  <view class='margin-top'></view>
+   <view class='margin-top'></view>
   <view class="cu-bar bg-white">
     <view class="action">
       <text class="cuIcon-titles text-green"></text>
-      <text class="text-xl text-bold">其他信息</text>
+      <text class="text-xl text-bold">单位信息</text>
     </view>
   </view>
-  <view class="text-content bg-white margin-bottom">{{detail.other}}</view>
+  <!-- <view class="text-content bg-white margin-bottom">{{detail.other}}</view> -->
+  <view class='v-unit bg-white'>
+    <view class='unit'>
+      <text class='text-black'>养护单位：</text><text>{{detail.conservation_unit}}</text>
+    </view>
+    <view class='unit'>
+      <text class='text-black'>施工单位：</text><text>{{detail.construction_unit}}</text>
+    </view>
+    <view class='unit'>
+      <text class='text-black'>产权单位：</text><text>{{detail.property_unit}}</text>
+    </view>
+  </view>
   <view class='margin-top'></view>
   <view class="cu-bar bg-white">
     <view class="action">
       <text class="cuIcon-titles text-green"></text>
       <text class="text-xl text-bold">树木定位</text>
     </view>
+    <text>{{detail.city}}{{detail.district}}</text>
     <view class='margin-right'>
       <button class="cu-btn round bg-blue shadow" bindtap='openMap'>导航</button>
     </view>

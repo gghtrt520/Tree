@@ -6,3 +6,9 @@
 	font-size: 30rpx;
 	margin-bottom: 20rpx;
 }
+.v-unit{
+  padding: 0 30rpx;
+}
+.unit{
+  line-height: 2;
+}

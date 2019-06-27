@@ -40,8 +40,8 @@ Page({
       street: "",
       street_number: ""
     },
-    location: 'province',
-    value: '陕西省',
+    location: 'district',
+    value: '雁塔区',
     mapDialog: false,
     currentTree: {},
     indTree: 0,
