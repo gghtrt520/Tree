@@ -11,8 +11,8 @@ var marker = {
   latitude: '39.980014',
   longitude: '116.313972',
   iconPath: './tree.png', //图标路径
-  width: 20,
-  height: 20
+  width: 30,
+  height: 30
 }
 Page({
 
@@ -41,7 +41,7 @@ Page({
       street_number: ""
     },
     location: 'district',
-    value: '雁塔区',
+    value: '',
     mapDialog: false,
     currentTree: {},
     indTree: 0,
@@ -77,8 +77,6 @@ Page({
     this.setData({
       treeCategory: arr
     })
-    // 初始化
-    this.search()
   },
   onReady: function(e) {
     // 使用 wx.createMapContext 获取 map 上下文
@@ -185,6 +183,7 @@ Page({
         that.setData({
           myPosition: that.data.myPosition
         })
+        that.search()
       },
       fail: function(error) {
         console.error(error)
