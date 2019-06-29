@@ -38,5 +38,19 @@
         </cover-view>
       </cover-view>
     </cover-view>
+    <cover-view class='legend bg-white'>
+      <cover-view class='legend-v'>
+        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree00.png" />
+        <cover-view>常绿</cover-view>
+      </cover-view>
+      <cover-view class='legend-v'>
+        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree10.png" />
+        <cover-view>落叶</cover-view>
+      </cover-view>
+      <cover-view class='legend-v'>
+        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/plane.png" />
+        <cover-view>无人机</cover-view>
+      </cover-view>
+    </cover-view>
   </map>
 </view>
