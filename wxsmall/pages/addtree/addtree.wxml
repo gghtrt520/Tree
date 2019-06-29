@@ -17,8 +17,13 @@
   </view>
   <view class="cu-form-group">
     <view class="title">
+      <text class='text-red'>*</text>树木冠幅</view>
+    <input bindinput='crownInput' type='digit' maxlength='30' placeholder="冠幅输入"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">
       <text class='text-red'>*</text>树木胸径</view>
-    <input bindinput='crownInput' type='digit' maxlength='30' placeholder="胸径输入"></input>
+    <input bindinput='diameterInput' type='digit' maxlength='30' placeholder="胸径输入"></input>
   </view>
   <view class="cu-form-group">
     <view class="title">

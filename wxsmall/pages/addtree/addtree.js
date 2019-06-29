@@ -15,11 +15,12 @@ Page({
     numberId: '',
     treeName: '',
     crown: 0,
-    heightTree: '',
+    diameter: 0,
+    heightTree: 0,
     other: '',
     modalName: null,
-    treeState:['非常健康','健康','一般','较差','非常差','死亡'],
-    stateInd:0,
+    treeState: ['非常健康', '健康', '一般', '较差', '非常差', '死亡'],
+    stateInd: 0,
     categoryInd: {
       id: -1,
       name: '无'
@@ -109,7 +110,7 @@ Page({
     })
   },
   // 树木健康状态
-  radioChange: function (e) {
+  radioChange: function(e) {
     this.setData({
       stateInd: e.detail.value
     })
@@ -228,6 +229,7 @@ Page({
       data.image = this.data.imgUrl
       data.video = this.data.videoUrl
       data.crown = this.data.crown
+      data.diameter = this.data.diameter
       data.height = this.data.heightTree
       data.name = this.data.treeName
       data.health = this.data.treeState[this.data.stateInd]
@@ -240,12 +242,20 @@ Page({
         url: '/api/create',
         data: data
       }).then(res => {
-        wx.showToast({
-          title: '上传成功',
-          mask: true,
-          icon: 'success'
-        })
-        backTime()
+        if (res.status) {
+          wx.showToast({
+            title: '上传成功',
+            mask: true,
+            icon: 'success'
+          })
+          backTime()
+        } else {
+          wx.showToast({
+            title: res.message,
+            mask: true,
+            icon: 'none'
+          })
+        }
       }).catch(err => {
         console.log(err)
         wx.showToast({
@@ -343,10 +353,16 @@ Page({
       treeName: e.detail.value
     })
   },
-  // 胸径输入
+  // 冠幅输入
   crownInput(e) {
     this.setData({
       crown: e.detail.value
+    })
+  },
+  // 胸径输入
+  diameterInput(e) {
+    this.setData({
+      diameter: e.detail.value
     })
   },
   // 高度输入
