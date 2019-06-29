@@ -393,6 +393,13 @@ Page({
       })
       return false
     }
+    if (!this.data.diameter) {
+      wx.showToast({
+        title: '请填写冠幅',
+        icon: 'none'
+      })
+      return false
+    }
     if (!this.data.crown) {
       wx.showToast({
         title: '请填写胸径',
