@@ -21,8 +21,8 @@
           <view class="text-gray text-sm flex justify-between">
             {{detail.created_at}}
             <view class="text-gray text-sm">
-              <!-- <button class="cu-btn round bg-red shadow sm" bindtap='cutBtn'>砍伐</button>
-              <button class="cu-btn round bg-green shadow sm margin-left" bindtap='moveBtn'>移植</button> -->
+              <button class="cu-btn round bg-red shadow sm" bindtap='cutBtn'>砍伐</button>
+              <button class="cu-btn round bg-green shadow sm margin-left" bindtap='moveBtn'>移植</button>
             </view>
           </view>
         </view>

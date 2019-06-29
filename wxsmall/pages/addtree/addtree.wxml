@@ -42,19 +42,40 @@
       <text class="cuIcon-right lg text-gray"></text>
     </view>
   </view>
+  <view class="cu-bar bg-white margin-top">
+		<view class="action">
+			<text class='text-red'>*</text>树木照片
+		</view>
+		<view class="action">
+			{{imgList.length}}/4
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index].path}}">
+				<image src='{{imgList[index].path}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
   <view class="margin-top cu-bar bg-white">
     <view class="action">
-      <text class='text-red'>*</text>树木照片
+      树木视频
     </view>
   </view>
   <view class="cu-form-group">
     <view class="grid col-2 grid-square flex-sub">
-      <view class="solids" bindtap="ChooseImage" wx:if="{{imgPath==''?true:false}}">
-        <text class="cuIcon-cameraadd"></text>
+      <view class="solids" bindtap="ChooseVideo" wx:if="{{videoPath==''?true:false}}">
+        <text class="cuIcon-record"></text>
       </view>
       <view wx:else class="bg-img">
-        <image src='{{imgPath}}' mode='aspectFill'></image>
-        <view class="cu-tag bg-red" catchtap="DelImg">
+        <image src='{{videoPath}}' mode='aspectFill'></image>
+        <view class="cu-tag bg-red" catchtap="Delvideo">
           <text class="cuIcon-close"></text>
         </view>
       </view>

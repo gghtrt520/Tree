@@ -8,8 +8,10 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
-    imgPath: '',
-    imgUrl: '',
+    videoPath: '',
+    videoUrl: '',
+    imgList: [],
+    imgUrl: [],
     numberId: '',
     other: '',
     categoryInd: {
@@ -84,83 +86,143 @@ Page({
       url: '/pages/indexes/indexes?id=' + e.currentTarget.id
     })
   },
-  // 拍照
   ChooseImage() {
-    var that = this
-    const openid = wx.getStorageSync('openid') || ''
     wx.chooseImage({
-      count: 1, //默认9
+      count: 4, //默认9
       sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], //从相册选择
       success: (res) => {
-        this.setData({
-          imgPath: res.tempFilePaths[0]
-        })
-        wx.showLoading({
-          title: '上传中',
-          mask: true
-        })
-        wx.uploadFile({
-          url: app.globalData.app_url + '/api/upload', //上传地址
-          filePath: res.tempFilePaths[0],
-          name: 'image',
-          formData: {
-            'openid': openid
-          },
-          success(res) {
-            wx.hideLoading()
-            const data = JSON.parse(res.data)
-            console.log(data)
-            //do something
-            if (res.statusCode === 200 && data.status==1){
-              wx.showToast({
-                title: '上传成功',
-                icon: 'none'
-              })
-              that.data.imgUrl = data.data.path
-            } else {
-              that.data.imgUrl = ''
-              wx.showToast({
-                title: data.message,
-                icon: 'none'
-              })
-            }
-          },
-          fail(err) {
-            that.data.imgUrl = ''
-            console.log(err)
-            wx.hideLoading()
-            wx.showToast({
-              title: '上传失败请重试',
-              icon: 'none'
-            })
-          }
-        })
+        const tempFilePaths = this.data.imgList.concat(res.tempFiles)
+        if (tempFilePaths.length > 4) {
+          wx.showToast({
+            title: '目前只能上传4张',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          this.setData({
+            imgList: tempFilePaths
+          })
+        }
       }
     });
   },
-  // 删除照片
-  DelImg(e) {
-    let path = this.data.imgUrl
-    http({
-      url: '/api/delete-image',
-      data: { path: path}
-    }).then(res => {
-      wx.showToast({
-        title: '删除成功',
-        icon: 'none'
+  // 上传图片数组
+  mapImg(){
+    let promiseList = []
+    wx.showLoading({
+      title: '上传中',
+    })
+    this.data.imgList.map((item, index) => {
+      var p = this.imgUpload(item.path)
+      p.then(res => {
+        console.log(res)
+        this.data.imgUrl[index] = res
       })
-      this.setData({
-        imgPath: '',
-        imgUrl: ''
+      promiseList.push(p)
+    })
+    Promise.all(promiseList).then((res) => {
+      let data = {}
+      wx.hideLoading()
+      data.number = this.data.numberId
+      data.other = this.data.other
+      data.latitude = this.data.markers.latitude
+      data.longitude = this.data.markers.longitude
+      data.image = this.data.imgUrl
+      data.property = this.data.propertyInd.id
+      data.construction = this.data.constructionInd.id
+      data.conservation = this.data.conservationInd.id
+      data.category = this.data.categoryInd.id
+      console.log(data)
+      http({
+        url: '/api/create',
+        data: data
+      }).then(res => {
+        wx.showToast({
+          title: '上传成功',
+          mask: true,
+          icon: 'success'
+        })
+        backTime()
+      }).catch(err => {
+        console.log(err)
+        wx.showToast({
+          title: '上传失败请重试',
+          icon: 'none'
+        })
       })
-    }).catch(err => {
+    }).catch((err) => {
       console.log(err)
-      wx.showToast({
-        title: '删除失败请重试',
-        icon: 'none'
+    })
+  },
+  // 上传拍照
+  imgUpload(tempFilePaths) {
+    var that = this
+    const openid = wx.getStorageSync('openid') || ''
+    var p = new Promise((resolve, reject) => {
+      wx.uploadFile({
+        url: app.globalData.app_url + '/api/upload', //上传地址
+        filePath: tempFilePaths,
+        name: 'image',
+        formData: {
+          'openid': openid
+        },
+        success(res) {
+          const data = JSON.parse(res.data)
+          console.log(data)
+          //do something
+          if (res.statusCode === 200 && data.status == 1) {
+            resolve(data.data)
+          } else {
+            wx.hideLoading()
+            wx.showToast({
+              icon: 'none',
+              title: '上传失败请重试',
+              duration: 2000
+            })
+            reject('上传失败')
+          }
+        },
+        fail(err) {
+          console.log(err)
+          wx.hideLoading()
+          wx.showToast({
+            icon: 'none',
+            title: '上传失败请重试',
+            duration: 2000
+          })
+          reject('上传失败')
+        }
       })
     })
+    return p;
+  },
+  // 删除照片
+  DelImg(e) {
+    this.data.imgList.splice(e.currentTarget.dataset.index, 1);
+    this.setData({
+      imgList: this.data.imgList
+    })
+    // let path = this.data.imgUrl
+    // http({
+    //   url: '/api/delete-image',
+    //   data: { path: path}
+    // }).then(res => {
+    //   wx.showToast({
+    //     title: '删除成功',
+    //     icon: 'none'
+    //   })
+    //   this.setData({
+    //     imgPath: '',
+    //     imgUrl: ''
+    //   })
+    // }).catch(err => {
+    //   console.log(err)
+    //   wx.showToast({
+    //     title: '删除失败请重试',
+    //     icon: 'none'
+    //   })
+    // })
   },
   // 刷新地图
   refreshMap() {
@@ -181,7 +243,6 @@ Page({
   },
   // 上传数据
   uploadData(filepath) {
-    let data = {}
     if (!this.data.numberId) {
       wx.showToast({
         title: '请填写编码',
@@ -189,40 +250,14 @@ Page({
       })
       return false
     }
-    if (!this.data.imgUrl) {
+    if (this.data.imgList.length == 0) {
       wx.showToast({
         title: '请上传树木照片',
         icon: 'none'
       })
       return false
     }
-    data.number = this.data.numberId
-    data.other = this.data.other
-    data.latitude = this.data.markers.latitude
-    data.longitude = this.data.markers.longitude
-    data.image = this.data.imgUrl
-    data.property = this.data.propertyInd.id
-    data.construction = this.data.constructionInd.id
-    data.conservation = this.data.conservationInd.id
-    data.category = this.data.categoryInd.id
-    console.log(data)
-    http({
-      url: '/api/create',
-      data: data
-    }).then(res => {
-      wx.showToast({
-        title: '上传成功',
-        mask: true,
-        icon: 'success'
-      })
-      backTime()
-    }).catch(err => {
-      console.log(err)
-      wx.showToast({
-        title: '上传失败请重试',
-        icon: 'none'
-      })
-    })
+    this.mapImg()
   },
   /**
    * 生命周期函数--监听页面隐藏
