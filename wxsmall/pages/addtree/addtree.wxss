@@ -1,1 +1,19 @@
 /* pages/addtree.wxss */
+.v-video{
+  position: relative;
+  width: 100%;
+  height: 490rpx;
+  text-align: center;
+}
+.v-video .cuIcon-record{
+  font-size: 32px;
+  line-height: 480rpx;
+}
+.v-video video{
+  width: 100%;
+}
+.del-video{
+  position: absolute;
+  top: 0;
+  right: 0;
+}

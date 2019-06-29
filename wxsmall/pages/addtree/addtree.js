@@ -13,7 +13,13 @@ Page({
     imgList: [],
     imgUrl: [],
     numberId: '',
+    treeName: '',
+    crown: 0,
+    heightTree: '',
     other: '',
+    modalName: null,
+    treeState:['非常健康','健康','一般','较差','非常差','死亡'],
+    stateInd:0,
     categoryInd: {
       id: -1,
       name: '无'
@@ -56,13 +62,25 @@ Page({
     getLocPos(that)
     this.setData({
       treeCategory: app.globalData.treeCategory,
-      categoryInd: app.globalData.treeCategory[0] ? app.globalData.treeCategory[0] : { id: -1, name: '无' },
-      propertyUnit: app.globalData.propertyUnit ,
-      propertyInd: app.globalData.propertyUnit [0] ? app.globalData.propertyUnit [0] : { id: -1, name: '无' },
+      categoryInd: app.globalData.treeCategory[0] ? app.globalData.treeCategory[0] : {
+        id: -1,
+        name: '无'
+      },
+      propertyUnit: app.globalData.propertyUnit,
+      propertyInd: app.globalData.propertyUnit[0] ? app.globalData.propertyUnit[0] : {
+        id: -1,
+        name: '无'
+      },
       constructionUnit: app.globalData.constructionUnit,
-      constructionInd: app.globalData.constructionUnit[0] ? app.globalData.constructionUnit[0] : { id: -1, name: '无' },
+      constructionInd: app.globalData.constructionUnit[0] ? app.globalData.constructionUnit[0] : {
+        id: -1,
+        name: '无'
+      },
       conservationUnit: app.globalData.conservationUnit,
-      conservationInd: app.globalData.conservationUnit[0] ? app.globalData.conservationUnit[0] : { id: -1, name: '无' }
+      conservationInd: app.globalData.conservationUnit[0] ? app.globalData.conservationUnit[0] : {
+        id: -1,
+        name: '无'
+      }
     })
   },
 
@@ -78,6 +96,23 @@ Page({
    */
   onShow: function() {
 
+  },
+  // 模态窗
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+  // 树木健康状态
+  radioChange: function (e) {
+    this.setData({
+      stateInd: e.detail.value
+    })
   },
   // 树种选择
   treeSortSelect(e) {
@@ -107,8 +142,29 @@ Page({
       }
     });
   },
+  // 视频选择与删除
+  ChooseVideo() {
+    var that = this
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 10,
+      camera: 'back',
+      success(res) {
+        console.log(res.tempFilePath)
+        that.setData({
+          videoPath: res.tempFilePath
+        })
+      }
+    })
+  },
+  Delvideo() {
+    this.setData({
+      videoPath: ''
+    })
+  },
   // 上传图片数组
-  mapImg(){
+  mapImg() {
+    var that = this
     let promiseList = []
     wx.showLoading({
       title: '上传中',
@@ -121,6 +177,47 @@ Page({
       })
       promiseList.push(p)
     })
+    if (this.data.videoPath) {
+      const openid = wx.getStorageSync('openid')
+      var vp = new Promise((resolve, reject) => {
+        wx.uploadFile({
+          url: app.globalData.app_url + '/api/video', //上传地址
+          filePath: that.data.videoPath,
+          name: 'video',
+          formData: {
+            'openid': openid
+          },
+          success(res) {
+            const data = JSON.parse(res.data)
+            console.log(data)
+            //do something
+            if (res.statusCode === 200 && data.status == 1) {
+              resolve(data.data)
+              that.data.videoUrl = data.data.path
+            } else {
+              wx.hideLoading()
+              wx.showToast({
+                icon: 'none',
+                title: '上传失败请重试',
+                duration: 2000
+              })
+              reject('上传失败')
+            }
+          },
+          fail(err) {
+            console.log(err)
+            wx.hideLoading()
+            wx.showToast({
+              icon: 'none',
+              title: '上传失败请重试',
+              duration: 2000
+            })
+            reject('上传失败')
+          }
+        })
+      })
+      promiseList.push(vp)
+    }
     Promise.all(promiseList).then((res) => {
       let data = {}
       wx.hideLoading()
@@ -129,6 +226,11 @@ Page({
       data.latitude = this.data.markers.latitude
       data.longitude = this.data.markers.longitude
       data.image = this.data.imgUrl
+      data.video = this.data.videoUrl
+      data.crown = this.data.crown
+      data.height = this.data.heightTree
+      data.name = this.data.treeName
+      data.health = this.data.treeState[this.data.stateInd]
       data.property = this.data.propertyInd.id
       data.construction = this.data.constructionInd.id
       data.conservation = this.data.conservationInd.id
@@ -230,15 +332,33 @@ Page({
     getLocPos(that)
   },
   // 编码输入
-  idInput(e){
+  idInput(e) {
     this.setData({
-      numberId:e.detail.value
+      numberId: e.detail.value
+    })
+  },
+  // 名称输入
+  nameInput(e) {
+    this.setData({
+      treeName: e.detail.value
+    })
+  },
+  // 胸径输入
+  crownInput(e) {
+    this.setData({
+      crown: e.detail.value
+    })
+  },
+  // 高度输入
+  heightInput(e) {
+    this.setData({
+      heightTree: e.detail.value
     })
   },
   // 其他信息
-  textareaBInput(e){
+  textareaBInput(e) {
     this.setData({
-      other:e.detail.value
+      other: e.detail.value
     })
   },
   // 上传数据
@@ -246,6 +366,27 @@ Page({
     if (!this.data.numberId) {
       wx.showToast({
         title: '请填写编码',
+        icon: 'none'
+      })
+      return false
+    }
+    if (!this.data.treeName) {
+      wx.showToast({
+        title: '请填写名称',
+        icon: 'none'
+      })
+      return false
+    }
+    if (!this.data.crown) {
+      wx.showToast({
+        title: '请填写胸径',
+        icon: 'none'
+      })
+      return false
+    }
+    if (!this.data.heightTree) {
+      wx.showToast({
+        title: '请填写高度',
         icon: 'none'
       })
       return false

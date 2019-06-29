@@ -8,7 +8,22 @@
   <view class="cu-form-group">
     <view class="title">
       <text class='text-red'>*</text>树木编码</view>
-    <input bindinput='idInput' maxlength='30' placeholder="编码输入"></input>
+    <input bindinput='idInput' maxlength='32' placeholder="编码输入"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">
+      <text class='text-red'>*</text>树木名称</view>
+    <input bindinput='nameInput' maxlength='30' placeholder="名称输入"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">
+      <text class='text-red'>*</text>树木胸径</view>
+    <input bindinput='crownInput' type='digit' maxlength='30' placeholder="胸径输入"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">
+      <text class='text-red'>*</text>树木高度</view>
+    <input bindinput='heightInput' type='digit' maxlength='30' placeholder="高度输入"></input>
   </view>
   <view class="cu-form-group">
     <view class="title">
@@ -42,6 +57,14 @@
       <text class="cuIcon-right lg text-gray"></text>
     </view>
   </view>
+  <view class="cu-form-group">
+    <view class="title">
+      <text class='text-red'>*</text>树木健康状态</view>
+    <view bindtap="showModal" data-target="RadioModal">
+      {{treeState[stateInd]}}
+      <text class="cuIcon-right lg text-gray"></text>
+    </view>
+  </view>
   <view class="cu-bar bg-white margin-top">
 		<view class="action">
 			<text class='text-red'>*</text>树木照片
@@ -69,13 +92,13 @@
     </view>
   </view>
   <view class="cu-form-group">
-    <view class="grid col-2 grid-square flex-sub">
+    <view class="v-video">
       <view class="solids" bindtap="ChooseVideo" wx:if="{{videoPath==''?true:false}}">
-        <text class="cuIcon-record"></text>
+        <text class="cuIcon-record text-gray"></text>
       </view>
       <view wx:else class="bg-img">
-        <image src='{{videoPath}}' mode='aspectFill'></image>
-        <view class="cu-tag bg-red" catchtap="Delvideo">
+        <video src="{{videoPath}}" controls></video>
+        <view class="cu-tag bg-red del-video" catchtap="Delvideo">
           <text class="cuIcon-close"></text>
         </view>
       </view>
@@ -99,5 +122,21 @@
   <view class="padding">
     <button bindtap='uploadData' class="cu-btn block bg-blue margin-tb-sm lg">
       <text class="cuIcon-upload"></text>上传入库</button>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='RadioModal'?'show':''}}" bindtap="hideModal">
+  <!-- catch事件绑定可以阻止冒泡事件向上冒泡 -->
+  <view class="cu-dialog">
+    <radio-group class="block" bindchange="radioChange">
+      <view class="cu-list menu text-left">
+        <view class="cu-item" wx:for="{{treeState}}" wx:key>
+          <label class="flex justify-between align-center flex-sub">
+            <view class="flex-sub">{{treeState[index]}}</view>
+            <radio value='{{index}}'  checked="{{stateInd == index}}" class="round"></radio>
+          </label>
+        </view>
+      </view>
+    </radio-group>
   </view>
 </view>

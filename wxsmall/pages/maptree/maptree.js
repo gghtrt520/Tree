@@ -108,7 +108,6 @@ Page({
   },
   // 地图缩放
   regionchange(e) {
-    console.log(e)
     var that = this
     if (e.type == 'end' && e.causedBy == 'scale') {
       this.mapCtx.getScale({
