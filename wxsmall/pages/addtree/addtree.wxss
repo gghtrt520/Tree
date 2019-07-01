@@ -17,3 +17,6 @@
   top: 0;
   right: 0;
 }
+.local-info{
+  line-height: 2;
+}

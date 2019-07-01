@@ -1,5 +1,7 @@
 // pages/addtree.js
 const app = getApp()
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+var qqmapsdk = ''
 const http = require("../../utils/http.js")
 Page({
   /**
@@ -42,17 +44,13 @@ Page({
     constructionUnit: [],
     conservationUnit: [],
     markers: {
-      label: {
-        content: '您的位置',
-        anchorX: -24,
-        textAlign: 'left',
-      },
       latitude: '39.980014',
       longitude: '116.313972',
       iconPath: './markers.png', //图标路径
       width: 20,
       height: 20
     },
+    localInfo:''
   },
 
   /**
@@ -60,6 +58,10 @@ Page({
    */
   onLoad: function() {
     var that = this
+    // 实例化API核心类
+    qqmapsdk = new QQMapWX({
+      key: app.globalData.mapKey // 必填
+    });
     getLocPos(that)
     this.setData({
       treeCategory: app.globalData.treeCategory,
@@ -89,7 +91,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    this.mapCtx = wx.createMapContext('myMap')
   },
 
   /**
@@ -97,6 +99,22 @@ Page({
    */
   onShow: function() {
 
+  },
+  // 获取中心定位
+  getCenterLocation: function (e) {
+    var that = this
+    if (e.type == 'end' && e.causedBy == 'drag'){
+      this.mapCtx.getCenterLocation({
+        success: function (res) {
+          that.data.markers.latitude = res.latitude
+          that.data.markers.longitude = res.longitude
+          that.setData({
+            markers: that.data.markers
+          })
+          that.getLocalInfo(res)
+        }
+      })
+    }
   },
   // 模态窗
   showModal(e) {
@@ -423,6 +441,31 @@ Page({
     }
     this.mapImg()
   },
+  // 地址解析
+  getLocalInfo(latLon){
+    var that = this
+    // 坐标地址解析
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: latLon.latitude - 0,
+        longitude: latLon.longitude - 0
+      },
+      sig: app.globalData.sig,
+      success: function (res) { //成功后的回调
+        console.log(res);
+        that.setData({
+          localInfo: res.result.formatted_addresses ? res.result.formatted_addresses.recommend : res.result.address
+        })
+      },
+      fail: function (error) {
+        console.error(error);
+        wx.showToast({
+          title: '导航失败请重试',
+          icon: 'none'
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -455,7 +498,7 @@ function getLocPos(that) {
                 that.setData({
                   markers: that.data.markers
                 })
-                console.log(res)
+                that.getLocalInfo(res)
               }
             })
           },
@@ -478,6 +521,7 @@ function getLocPos(that) {
             that.setData({
               markers: that.data.markers
             })
+            that.getLocalInfo(res)
           }
         })
       }

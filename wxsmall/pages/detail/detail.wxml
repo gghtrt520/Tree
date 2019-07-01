@@ -7,7 +7,13 @@
 <view wx:if="{{detail!=''}}" class="cu-card case no-card">
   <view class="cu-item">
     <view class="image">
-      <image src="{{detail.tree_image}}" data-url="{{detail.tree_image}}" bindtap='fullImg' mode="aspectFill"></image>
+      <swiper class="screen-swiper square-dot}}" indicator-dots="true" circular="true">
+        <swiper-item wx:for="{{swiperList}}" wx:key>
+          <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+          <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+        </swiper-item>
+      </swiper>
+      <!-- <image src="{{detail.tree_image}}" data-url="{{detail.tree_image}}" bindtap='fullImg' mode="aspectFill"></image> -->
       <view class="cu-tag bg-blue">{{detail.category}}</view>
       <view class="cu-bar bg-shadeBottom">
         <text>{{detail.tree_number}}</text>
@@ -27,6 +33,9 @@
           </view>
         </view>
       </view>
+    </view>
+    <view>
+      <!-- shu -->
     </view>
   </view>
    <view class='margin-top'></view>
