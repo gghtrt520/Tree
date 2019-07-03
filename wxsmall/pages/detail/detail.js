@@ -1,5 +1,8 @@
 // pages/detail/detail.js
 const app = getApp();
+// 引入SDK核心类
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+var qqmapsdk = ''
 const util = require('../../utils/util.js')
 const http = require("../../utils/http.js")
 Page({
@@ -9,35 +12,6 @@ Page({
    */
   data: {
     detail:'',
-    swiperList: [{
-      id: 0,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-    }, {
-      id: 1,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
-    }, {
-      id: 2,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-    }, {
-      id: 3,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-    }, {
-      id: 4,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-    }, {
-      id: 5,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-    }, {
-      id: 6,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-    }],
     markers: {
       label: {
         content: '树木位置',
@@ -57,6 +31,10 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    // 实例化API核心类
+    qqmapsdk = new QQMapWX({
+      key: app.globalData.mapKey // 必填
+    });
     getLocPos(that)
     // 分类列表
     http({
@@ -67,6 +45,15 @@ Page({
         console.log(res.data)
         this.data.markers.latitude = res.data.latitude
         this.data.markers.longitude = res.data.longitude
+        if (res.data.tree_image && res.data.tree_image.length>0){
+          res.data.tree_image = res.data.tree_image.map(item=>{
+            item.tree_image = app.globalData.app_url + item.tree_image
+            return item
+          })
+        }
+        if (res.data.tree_video){
+          res.data.tree_video = app.globalData.app_url + res.data.tree_video
+        }
         this.setData({
           detail:res.data,
           markers: this.data.markers
@@ -107,11 +94,30 @@ Page({
   },
   // 调起手机导航
   openMap(){
-    wx.openLocation({//​使用微信内置地图查看位置。
-      latitude: this.data.markers.latitude - 0,//要去的纬度-地址
-      longitude: this.data.markers.longitude - 0,//要去的经度-地址
-      name: this.data.city + this.data.district,
-      address: this.data.city + this.data.district
+    var that = this
+    // 坐标地址解析
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: that.data.markers.latitude - 0,
+        longitude: that.data.markers.longitude - 0
+      },
+      sig: app.globalData.sig,
+      success: function (res) { //成功后的回调
+        console.log(res);
+        wx.openLocation({ //​使用微信内置地图查看位置。
+          latitude: that.data.markers.latitude - 0, //要去的纬度-地址
+          longitude: that.data.markers.longitude - 0, //要去的经度-地址
+          name: res.result.ad_info.name,
+          address: res.result.address
+        })
+      },
+      fail: function (error) {
+        console.error(error);
+        wx.showToast({
+          title: '导航失败请重试',
+          icon: 'none'
+        })
+      }
     })
   },
   /**

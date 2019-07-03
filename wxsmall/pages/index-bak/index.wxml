@@ -1,5 +1,8 @@
-<view class="back-img" style="background-image: url({{bgimg}});">
-  <!-- <view class="flex justify-center">
+<cu-custom bgColor="bg-header-color">
+  <view slot="content">苗木营行</view>
+</cu-custom>
+<view class="margin-xl back-img padding-xl bg-white radius shadow shadow-lg" style="background-image: url({{bgimg}});">
+  <view class="flex justify-center">
 
     <view class='text-center'>
       <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
@@ -13,7 +16,7 @@
     <view class="nav-title">{{item.title}}</view>
     <view class="nav-name">{{item.name}}</view>
     <text class='cuIcon-{{item.icon}}'></text>
-  </navigator> -->
+  </navigator>
 </view>
 <view class="cu-modal {{modalName=='authorization'?'show':''}}">
   <view class="cu-dialog">

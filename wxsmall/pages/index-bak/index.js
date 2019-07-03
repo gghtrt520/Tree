@@ -1,5 +1,4 @@
 //index.js
-// '/upload/images/mac.jpg'
 //获取应用实例
 const app = getApp()
 const http = require("../../utils/http.js")
@@ -8,7 +7,7 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     modalName: '',
-    bgimg: app.globalData.app_url + '/upload/marker/login.jpg',
+    bgimg: app.globalData.app_url + '/upload/images/mac.jpg',
     userInfo: {},
     hasUserInfo: false,
     errinfo: '未授权您将不能使用该应用',
@@ -128,25 +127,14 @@ function loginUser(userInfo,that){
             console.log(data)
             if (data.status){
               wx.setStorageSync('openid', data.data.openid)
-              if (data.data.rule == 0){
-                if (data.data.apply_rule == 0){
-                  wx.redirectTo({
-                    url: '/pages/home/home?type=0'
-                  })
-                }
-                if (data.data.apply_rule == 1) {
-                  wx.redirectTo({
-                    url: '/pages/home/home?type=1'
-                  })
-                }
-              }
-              if (data.data.rule == 2) {
+              if (data.data.apply_rule == 0){
                 wx.redirectTo({
-                  url: '/pages/addtree/addtree'
+                  url: '/pages/home/home?type=0'
                 })
-              } else {
+              }
+              if (data.data.apply_rule == 1) {
                 wx.redirectTo({
-                  url: '/pages/maptree/maptree'
+                  url: '/pages/home/home?type=1'
                 })
               }
               sortList()

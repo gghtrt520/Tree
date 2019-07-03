@@ -20,3 +20,17 @@
 .local-info{
   line-height: 2;
 }
+.number-tree{
+  display: flex;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+.number-tree .cu-tag{
+  padding: 0;
+}
+.number-tree .cu-form-group{
+  border-top: 0;
+}
+.cu-form-group .title,.cu-form-group input {
+  padding-right: 14rpx;
+}

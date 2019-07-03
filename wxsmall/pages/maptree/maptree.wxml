@@ -19,6 +19,23 @@
 </scroll-view>
 <view style="height:calc(100vh - {{CustomBar}}px - 95px);">
   <map id="myMap" bindregionchange="regionchange" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='13'>
+    <cover-view class='legend bg-white'>
+      <cover-view class='legend-v'>
+        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree00.png" />
+        <cover-view>常绿</cover-view>
+      </cover-view>
+      <cover-view class='legend-v'>
+        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree10.png" />
+        <cover-view>落叶</cover-view>
+      </cover-view>
+      <cover-view class='legend-v'>
+        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/plane.png" />
+        <cover-view>无人机</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view catchtap='getMyPosition' class='mypos bg-white'>
+      <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/local.png" />
+    </cover-view>
     <cover-view wx:if="{{mapDialog}}" class="map-dialog bg-white">
       <cover-view class='title'>
         <cover-view class="title-text text-black text-cut">{{currentTree.tree_number}}</cover-view>
@@ -36,20 +53,6 @@
             <button class="bg-cyan" bindtap='goDetail'> 详情 </button>
           </cover-view>
         </cover-view>
-      </cover-view>
-    </cover-view>
-    <cover-view class='legend bg-white'>
-      <cover-view class='legend-v'>
-        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree00.png" />
-        <cover-view>常绿</cover-view>
-      </cover-view>
-      <cover-view class='legend-v'>
-        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree10.png" />
-        <cover-view>落叶</cover-view>
-      </cover-view>
-      <cover-view class='legend-v'>
-        <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/plane.png" />
-        <cover-view>无人机</cover-view>
       </cover-view>
     </cover-view>
   </map>

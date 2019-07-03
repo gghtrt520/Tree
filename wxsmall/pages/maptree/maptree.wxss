@@ -60,7 +60,8 @@ page{
   text-align: center;
   bottom: 50%;
   left: 2px;
-  padding: 2px 2px 0 2px;
+  border-radius: 3px;
+  padding: 4px 4px 0 4px;
 }
 .legend-v{
   display: flex;
@@ -71,6 +72,16 @@ page{
   padding-bottom: 2px
 }
 .legend .img{
+  width: 30px;
+  height: 30px;
+}
+.mypos{
+  position: absolute;
+  bottom: 10%;
+  right: 10px;
+  border-radius: 50%;
+}
+.mypos .img{
   width: 30px;
   height: 30px;
 }

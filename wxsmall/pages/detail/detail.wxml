@@ -8,12 +8,13 @@
   <view class="cu-item">
     <view class="image">
       <swiper class="screen-swiper square-dot}}" indicator-dots="true" circular="true">
-        <swiper-item wx:for="{{swiperList}}" wx:key>
-          <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-          <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+        <swiper-item wx:if="{{detail.tree_video}}">
+          <video src="{{detail.tree_video}}" controls objectFit="cover"></video>
+        </swiper-item>
+        <swiper-item catchtap='fullImg' data-url='{{item.tree_image}}' wx:for="{{detail.tree_image}}" wx:key>
+          <image src="{{item.tree_image}}" mode="aspectFill"></image>
         </swiper-item>
       </swiper>
-      <!-- <image src="{{detail.tree_image}}" data-url="{{detail.tree_image}}" bindtap='fullImg' mode="aspectFill"></image> -->
       <view class="cu-tag bg-blue">{{detail.category}}</view>
       <view class="cu-bar bg-shadeBottom">
         <text>{{detail.tree_number}}</text>
@@ -34,11 +35,14 @@
         </view>
       </view>
     </view>
-    <view>
-      <!-- shu -->
+    <view class='margin tree-desc'>
+      <view>冠幅：{{detail.crown}}m</view>
+      <view><text>胸径：</text>{{detail.diameter}}cm</view>
+      <view>高度：{{detail.height}}m</view>
+      <view><text>健康状态：</text>{{detail.health}}</view>
     </view>
   </view>
-   <view class='margin-top'></view>
+  <view class='margin-top'></view>
   <view class="cu-bar bg-white">
     <view class="action">
       <text class="cuIcon-titles text-green"></text>
@@ -48,13 +52,16 @@
   <!-- <view class="text-content bg-white margin-bottom">{{detail.other}}</view> -->
   <view class='v-unit bg-white'>
     <view class='unit'>
-      <text class='text-black'>养护单位：</text><text>{{detail.conservation_unit}}</text>
+      <text class='text-black'>养护单位：</text>
+      <text>{{detail.conservation_unit}}</text>
     </view>
     <view class='unit'>
-      <text class='text-black'>施工单位：</text><text>{{detail.construction_unit}}</text>
+      <text class='text-black'>施工单位：</text>
+      <text>{{detail.construction_unit}}</text>
     </view>
     <view class='unit'>
-      <text class='text-black'>产权单位：</text><text>{{detail.property_unit}}</text>
+      <text class='text-black'>产权单位：</text>
+      <text>{{detail.property_unit}}</text>
     </view>
   </view>
   <view class='margin-top'></view>

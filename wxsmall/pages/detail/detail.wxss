@@ -12,3 +12,15 @@
 .unit{
   line-height: 2;
 }
+.tree-desc{
+  display: flex;
+  flex-wrap: wrap;
+}
+.tree-desc view{
+  width: 50%;
+}
+.tree-desc text{
+  display: inline-block;
+  width: 200rpx;
+  text-align: right;
+}

@@ -136,6 +136,10 @@ Page({
       })
     }
   },
+  // 我的位置
+  getMyPosition(){
+    getLocPos(this)
+  },
   // 调起手机导航
   openMap() {
     var that = this
@@ -205,13 +209,45 @@ Page({
       } else {
         let newArr = res.data.tree_list.map((item, index) => {
           let obj = {}
-          let ind = util.getArrInd(this.data.treeCategory, item.tree_category_id, 'id')
-          marker.treeCategory = this.data.treeCategory[ind].name
+          marker.treeCategory = item.treeCategory.name
+          if (item.treeCategory.category == '常绿'){
+            if (item.health == '死亡') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree05.png'
+            } else if (item.health == '非常差') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree04.png'
+            } else if (item.health == '较差') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree03.png'
+            } else if (item.health == '一般') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree02.png'
+            } else if (item.health == '健康') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree01.png'
+            } else {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree00.png'
+            }
+          }
+          if (item.treeCategory.category == '落叶') {
+            if (item.health == '死亡') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree15.png'
+            } else if (item.health == '非常差') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree14.png'
+            } else if (item.health == '较差') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree13.png'
+            } else if (item.health == '一般') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree12.png'
+            } else if (item.health == '健康') {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree11.png'
+            } else {
+              marker.iconPath = app.globalData.app_url + '/upload/marker/tree10.png'
+            }
+          }
+          if (item.treeCategory.category == '无人机') {
+            marker.iconPath = app.globalData.app_url + '/upload/marker/plane.png'
+          }
           marker.latitude = item.latitude
           marker.longitude = item.longitude
           marker.created_at = item.created_at
           marker.tree_number = item.tree_number
-          marker.tree_image = item.tree_image
+          marker.tree_image = app.globalData.app_url + item.treeImage.tree_image
           marker.treeId = item.id
           marker.id = index
           obj = { ...marker
