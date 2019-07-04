@@ -5,6 +5,7 @@
     "pages/addtree/addtree",
     "pages/maptree/maptree",
     "pages/detail/detail",
+    "pages/admin/admin",
     "pages/indexes/indexes"
   ],
   "window": {

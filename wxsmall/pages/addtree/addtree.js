@@ -10,6 +10,7 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
+    rule: app.globalData.rule,
     videoPath: '',
     videoUrl: '',
     imgList: [],
@@ -64,6 +65,7 @@ Page({
     });
     getLocPos(that)
     this.setData({
+      rule: app.globalData.rule,
       treeCategory: app.globalData.treeCategory,
       categoryInd: app.globalData.treeCategory[0] ? app.globalData.treeCategory[0] : {
         id: -1,

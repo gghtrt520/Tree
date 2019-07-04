@@ -125,9 +125,10 @@ function loginUser(userInfo,that){
           },
           success(response) {
             let data = response.data
-            console.log(data)
             if (data.status){
               wx.setStorageSync('openid', data.data.openid)
+              app.globalData.rule = data.data.rule
+              console.log(app.globalData)
               if (data.data.rule == 0){
                 if (data.data.apply_rule == 0){
                   wx.redirectTo({
@@ -140,7 +141,11 @@ function loginUser(userInfo,that){
                   })
                 }
               }
-              if (data.data.rule == 2) {
+              if (data.data.rule == 1) {
+                wx.redirectTo({
+                  url: '/pages/admin/admin'
+                })
+              } else if(data.data.rule == 2) {
                 wx.redirectTo({
                   url: '/pages/addtree/addtree'
                 })

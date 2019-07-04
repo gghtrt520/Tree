@@ -35,6 +35,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    rule: 0, // 权限
     app_url: 'https://sapling.cnfay.com', // 后台
     mapKey: 'PHDBZ-CPACF-TIRJY-J4UTB-J67TQ-F6BBV',// 腾讯地图
     sig: '9ntnqk4RMLdMVT4ffyPTs3ArncH2Jm9y',// 腾讯地图

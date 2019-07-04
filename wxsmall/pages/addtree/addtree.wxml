@@ -1,6 +1,6 @@
 <!--pages/addtree.wxml-->
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-  <view slot="backText">返回</view>
+<cu-custom bgColor="bg-gradual-blue"  isBack="{{rule==1}}">
+  <view wx:if="{{rule==1}}" slot="backText">返回</view>
   <view slot="content">树木入库</view>
 </cu-custom>
 

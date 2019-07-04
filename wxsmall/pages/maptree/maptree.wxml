@@ -1,7 +1,7 @@
 <!--pages/listtree/listtree.wxml-->
-<cu-custom bgColor="bg-header-color" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">树木列表</view>
+<cu-custom bgColor="bg-gradual-blue"  isBack="{{rule==1}}">
+  <view wx:if="{{rule==1}}" slot="backText">返回</view>
+  <view slot="content">树木地图</view>
 </cu-custom>
 <view class="cu-bar bg-white search solid-bottom">
   <view class="search-form round">
@@ -54,6 +54,21 @@
           </cover-view>
         </cover-view>
       </cover-view>
+    </cover-view>
+    <cover-view wx:if="{{exportDialog}}" class="map-dialog bg-white">
+      <cover-view class='title'>
+        <cover-view class="title-text text-black text-cut">导出搜索结果</cover-view>
+        <button class="fr bg-white text-red" bindtap='hideModal'>X</button>
+      </cover-view>
+      <cover-view class="padding-xl">
+          5秒后关闭，是否导出搜索结果？
+        </cover-view>
+        <cover-view class="cu-bar bg-white justify-end">
+          <cover-view class="action">
+            <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+            <button class="cu-btn bg-green margin-left" bindtap="exportData">导出</button>
+          </cover-view>
+        </cover-view>
     </cover-view>
   </map>
 </view>

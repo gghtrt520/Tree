@@ -23,6 +23,7 @@ Page({
     TabCur: 0,
     currentPage: 1,
     categoryId: '',
+    rule: app.globalData.rule,
     CustomBar: app.globalData.CustomBar,
     treeCategory: [{
       id: '',
@@ -43,6 +44,7 @@ Page({
     location: 'district',
     value: '',
     mapDialog: false,
+    exportDialog: false,
     currentTree: {},
     indTree: 0,
     markers: [],
@@ -72,10 +74,12 @@ Page({
       key: app.globalData.mapKey // 必填
     });
     getLocPos(this)
+    this.search(false)
     // 分类列表
     let arr = this.data.treeCategory.concat(app.globalData.treeCategory)
     this.setData({
-      treeCategory: arr
+      treeCategory: arr,
+      rule: app.globalData.rule
     })
   },
   onReady: function(e) {
@@ -89,21 +93,7 @@ Page({
       categoryId: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.index - 1) * 60
     }, () => {
-      this.search()
-    })
-  },
-  // 砍伐
-  cutBtn(e) {
-    wx.showToast({
-      title: '此功能研发中',
-      icon: 'none'
-    })
-  },
-  // 移植
-  moveBtn(e) {
-    wx.showToast({
-      title: '此功能研发中',
-      icon: 'none'
+      this.search(false)
     })
   },
   // 地图缩放
@@ -130,7 +120,7 @@ Page({
           //   that.data.value = that.data.address_component.street
           // }
           if (that.data.value!=''){
-            that.search()
+            that.search(false)
           }
         }
       })
@@ -186,15 +176,37 @@ Page({
         that.setData({
           myPosition: that.data.myPosition
         })
-        that.search()
       },
       fail: function(error) {
         console.error(error)
       }
     })
   },
+  // 导出数据
+  exportData(){
+    wx.downloadFile({
+      url: app.globalData.app_url + '/upload/marker/student.xlsx', //仅为示例，并非真实的资源
+      success(res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        if (res.statusCode === 200) {
+          wx.saveFile({
+            tempFilePath: res.tempFilePath,
+            success(res) {
+              wx.openDocument({
+                filePath: res.savedFilePath,
+                success: function (res) {
+                  console.log('打开文档成功')
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  },
   // 关键字搜索
-  search() {
+  search(e) {
+    this.hide()
     this.data.currentPage = 1
     getCardData(1, this.data.categoryId, this.data.titleKey, this.data.location, this.data.value).then(res => {
       let marks = []
@@ -207,6 +219,12 @@ Page({
           markers: []
         })
       } else {
+        if (e) {
+          this.showModal()
+          setTimeout(() => {
+            this.hideModal()
+          }, 5000)
+        }
         let newArr = res.data.tree_list.map((item, index) => {
           let obj = {}
           marker.treeCategory = item.treeCategory.name
@@ -264,6 +282,16 @@ Page({
           markers: marks
         })
       }
+    })
+  },
+  showModal(e) {
+    this.setData({
+      exportDialog: true
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      exportDialog: false
     })
   },
   // 跳转详情页
