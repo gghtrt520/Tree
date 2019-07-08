@@ -18,7 +18,7 @@
   </view>
 </scroll-view>
 <view style="height:calc(100vh - {{CustomBar}}px - 95px);">
-  <map id="myMap" bindregionchange="regionchange" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='13'>
+  <map id="myMap" bindregionchange="regionchange" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" circles="{{circles?[circles]:''}}" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='13'>
     <cover-view class='legend bg-white'>
       <cover-view class='legend-v'>
         <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree00.png" />
@@ -44,6 +44,7 @@
       <cover-view class='mark-content'>
         <cover-image bindtap='goDetail' class="img" src="{{currentTree.tree_image}}" />
         <cover-view class='mark-info'>
+          <cover-view class='line-text'>{{currentTree.tree_name}}</cover-view>
           <cover-view class='line-text'>{{currentTree.treeCategory}}</cover-view>
           <cover-view class='line-text'>{{currentTree.created_at}}</cover-view>
           <cover-view class='btn-group'>
@@ -61,7 +62,7 @@
         <button class="fr bg-white text-red" bindtap='hideModal'>X</button>
       </cover-view>
       <cover-view class="padding-xl">
-          5秒后关闭，是否导出搜索结果？
+          10秒后关闭，是否导出搜索结果？
         </cover-view>
         <cover-view class="cu-bar bg-white justify-end">
           <cover-view class="action">

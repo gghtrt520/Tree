@@ -26,7 +26,23 @@ Page({
     ],
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  
+  // 页面跳转
+  goPage(e){
+    console.log(e)
+    let url = e.currentTarget.dataset.url
+    if (url =="/pages/addtree/addtree"){
+      if (app.globalData.is_write == '不可录入'){
+        wx.showToast({
+          title: '请管理员开通录入权限',
+          icon: 'none'
+        })
+        return false
+      }
+    }
+    wx.navigateTo({
+      url: url
+    })
+  },
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({

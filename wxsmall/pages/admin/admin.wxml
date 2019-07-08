@@ -12,11 +12,11 @@
   </view>
 </view>
 <view class='nav-list'>
-  <navigator open-type="navigate" hover-class='none' url="/pages/{{item.name+'tree'}}/{{item.name+'tree'}}" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:key>
+  <view bindtap='goPage' data-url="/pages/{{item.name+'tree'}}/{{item.name+'tree'}}" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:key>
     <view class="nav-title">{{item.title}}</view>
     <view class="nav-name">{{item.name}}</view>
     <text class='cuIcon-{{item.icon}}'></text>
-  </navigator>
+  </view>
 </view>
 <view class="cu-modal {{modalName=='authorization'?'show':''}}">
   <view class="cu-dialog">
@@ -34,3 +34,4 @@
     </view>
   </view>
 </view>
+<view class='fixd-bottom'>2019@treebanl.com</view>

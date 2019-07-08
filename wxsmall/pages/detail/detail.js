@@ -12,6 +12,8 @@ Page({
    */
   data: {
     detail:'',
+    tree_id: '',
+    is_write: '不可录入',
     markers: {
       label: {
         content: '树木位置',
@@ -36,7 +38,7 @@ Page({
       key: app.globalData.mapKey // 必填
     });
     getLocPos(that)
-    // 分类列表
+    // 树木详情
     http({
       url: '/api/tree-detail',
       data: {tree_id: options.id}
@@ -56,11 +58,19 @@ Page({
         }
         this.setData({
           detail:res.data,
+          tree_id: options.id,
+          is_write: app.globalData.is_write,
           markers: this.data.markers
         })
       }
     }).catch(err => {
       console.log(err)
+    })
+  },
+  // 跳转修改页面
+  goEditePage(e){
+    wx.navigateTo({
+      url: "/pages/addtree/addtree?id=" + this.data.tree_id
     })
   },
 

@@ -8,16 +8,14 @@
   <view class="cu-item">
     <view class="image">
       <swiper class="screen-swiper square-dot}}" indicator-dots="true" circular="true">
-        <swiper-item wx:if="{{detail.tree_video}}">
-          <video src="{{detail.tree_video}}" controls objectFit="cover"></video>
-        </swiper-item>
         <swiper-item catchtap='fullImg' data-url='{{item.tree_image}}' wx:for="{{detail.tree_image}}" wx:key>
           <image src="{{item.tree_image}}" mode="aspectFill"></image>
         </swiper-item>
       </swiper>
-      <view class="cu-tag bg-blue">{{detail.category}}</view>
+      <view class="cu-tag bg-blue" wx:if="{{is_write == '不可录入'}}">{{detail.category}}</view>
+      <view class="cu-tag bg-blue" bindtap='goEditePage' wx:else><text class='cuIcon-writefill lg'></text></view>
       <view class="cu-bar bg-shadeBottom">
-        <text>{{detail.tree_number}}</text>
+         <text>{{detail.tree_number}}</text>
       </view>
     </view>
     <view class="cu-list menu-avatar">
@@ -35,6 +33,7 @@
         </view>
       </view>
     </view>
+    <view class='margin tree-name'>{{detail.tree_name}}</view>
     <view class='margin tree-desc'>
       <view>冠幅：{{detail.crown}}m</view>
       <view><text>胸径：</text>{{detail.diameter}}cm</view>
@@ -63,6 +62,16 @@
       <text class='text-black'>产权单位：</text>
       <text>{{detail.property_unit}}</text>
     </view>
+  </view>
+  <view class='margin-top' wx:if="{{detail.tree_video}}"></view>
+  <view class="cu-bar bg-white" wx:if="{{detail.tree_video}}">
+    <view class="action">
+      <text class="cuIcon-titles text-green"></text>
+      <text class="text-xl text-bold">树木视频</text>
+    </view>
+  </view>
+  <view class='v-video bg-white' wx:if="{{detail.tree_video}}">
+    <video src="{{detail.tree_video}}" controls objectFit="cover"></video>
   </view>
   <view class='margin-top'></view>
   <view class="cu-bar bg-white">

@@ -13,6 +13,7 @@ Page({
     rule: app.globalData.rule,
     videoPath: '',
     videoUrl: '',
+    isEdite: false,
     imgList: [],
     imgUrl: [],
     numberId: '',
@@ -40,6 +41,7 @@ Page({
       id: -1,
       name: '无'
     },
+    currentId: '',
     treeCategory: [],
     propertyUnit: [],
     constructionUnit: [],
@@ -57,13 +59,18 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
+  onLoad: function (options) {
     var that = this
     // 实例化API核心类
     qqmapsdk = new QQMapWX({
       key: app.globalData.mapKey // 必填
     });
-    getLocPos(that)
+    console.log(options)
+    if (options.id){
+      this.getDetail(options.id)
+    } else {
+      getLocPos(that)
+    }
     this.setData({
       rule: app.globalData.rule,
       treeCategory: app.globalData.treeCategory,
@@ -118,6 +125,45 @@ Page({
       })
     }
   },
+  // 获取详情
+  getDetail(id){
+    http({
+      url: '/api/tree-detail',
+      data: { tree_id: id }
+    }).then(res => {
+      if (res.status == 1) {
+        console.log(res.data)
+        this.data.markers.latitude = res.data.latitude
+        this.data.markers.longitude = res.data.longitude
+        if (res.data.tree_image && res.data.tree_image.length > 0) {
+          res.data.tree_image = res.data.tree_image.map(item => {
+            item.tree_image = app.globalData.app_url + item.tree_image
+            item.path = item.tree_image
+            return item
+          })
+        }
+        if (res.data.tree_video) {
+          res.data.tree_video = app.globalData.app_url + res.data.tree_video
+        }
+        this.setData({
+          detail: res.data,
+          isEdite: true,
+          numberId: res.data.tree_number,
+          treeName: res.data.tree_name,
+          crown: res.data.crown,
+          diameter: res.data.diameter,
+          heightTree: res.data.height,
+          other: res.data.other,
+          videoPath: res.data.tree_video,
+          imgList: res.data.tree_image,
+          tree_id: id,
+          markers: this.data.markers
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  },
   // 模态窗
   showModal(e) {
     this.setData({
@@ -133,6 +179,12 @@ Page({
   radioChange: function(e) {
     this.setData({
       stateInd: e.detail.value
+    })
+  },
+  // 全屏地图
+  goFullmap(){
+    wx.navigateTo({
+      url: '/pages/fullmap/fullmap?lat='+ this.data.markers.latitude +'&lon='+ this.data.markers.longitude
     })
   },
   // 树种选择

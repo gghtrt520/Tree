@@ -34,3 +34,7 @@
 .cu-form-group .title,.cu-form-group input {
   padding-right: 14rpx;
 }
+.map-button{
+  display: flex;
+  align-items: center;
+}

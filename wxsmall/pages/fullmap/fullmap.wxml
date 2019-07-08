@@ -1,0 +1,10 @@
+<!--pages/fullmap/fullmap.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">{{title}}</view>
+</cu-custom>
+<view>
+  <map id="myMap" bindregionchange="getCenterLocation" markers="{{[markers]}}" style="width:100%;height:calc(100vh - {{CustomBar}}px);" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='19'>
+    <cover-view class='bg-white local-info'>{{localInfo}}</cover-view>
+  </map>
+</view>

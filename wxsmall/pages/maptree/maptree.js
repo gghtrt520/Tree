@@ -14,6 +14,11 @@ var marker = {
   width: 30,
   height: 30
 }
+var circles = {
+  latitude: '39.980014',
+  longitude: '116.313972',
+  radius: 30
+}
 Page({
 
   /**
@@ -46,23 +51,33 @@ Page({
     mapDialog: false,
     exportDialog: false,
     currentTree: {},
-    indTree: 0,
+    indTree: '',
     markers: [],
     titleKey: '',
     scrollLeft: 0
   },
   // 隐藏弹窗
   hide() {
+    this.data.markers = this.data.markers.slice(0, -1);
+    this.data.indTree = ''
     this.setData({
+      markers: this.data.markers,
       mapDialog: false
     })
   },
   markerTap(e) {
     console.log(e)
+    let mk = {...this.data.markers[e.markerId]}
+    mk.iconPath = './tree.png'
+    if (this.data.indTree !== ''){
+      this.data.markers = this.data.markers.slice(0, -1);
+    }
+    this.data.markers.push(mk)
     this.setData({
       mapDialog: true,
+      markers: this.data.markers,
       indTree: e.markerId,
-      currentTree: this.data.markers[e.markerId]
+      currentTree: mk
     })
   },
   /**
@@ -102,20 +117,21 @@ Page({
     if (e.type == 'end' && e.causedBy == 'scale') {
       this.mapCtx.getScale({
         success: function(res) {
-          console.log(res.scale)
-          if (res.scale < 9) {
+          let scale = parseInt(res.scale)
+          console.log(scale)
+          if (scale < 9) {
             that.data.location = 'province'
             that.data.value = that.data.address_component.province
           }
-          if (res.scale < 13 && res.scale > 8) {
+          if (scale < 13 && scale > 8) {
             that.data.location = 'city'
             that.data.value = that.data.address_component.city
           }
-          if (res.scale > 12) {
+          if (scale > 12) {
             that.data.location = 'district'
             that.data.value = that.data.address_component.district
           }
-          // if (res.scale > 16) {
+          // if (scale > 16) {
           //   that.data.location = 'street'
           //   that.data.value = that.data.address_component.street
           // }
@@ -223,7 +239,7 @@ Page({
           this.showModal()
           setTimeout(() => {
             this.hideModal()
-          }, 5000)
+          }, 10000)
         }
         let newArr = res.data.tree_list.map((item, index) => {
           let obj = {}
@@ -264,12 +280,12 @@ Page({
           marker.latitude = item.latitude
           marker.longitude = item.longitude
           marker.created_at = item.created_at
+          marker.tree_name = item.tree_name
           marker.tree_number = item.tree_number
           marker.tree_image = app.globalData.app_url + item.treeImage.tree_image
           marker.treeId = item.id
           marker.id = index
-          obj = { ...marker
-          }
+          obj = { ...marker }
           marks.push(obj)
           return item
         })

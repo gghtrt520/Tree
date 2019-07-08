@@ -1,0 +1,4 @@
+/* pages/fullmap/fullmap.wxss */
+.local-info{
+  line-height: 2;
+}

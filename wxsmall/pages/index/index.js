@@ -128,6 +128,7 @@ function loginUser(userInfo,that){
             if (data.status){
               wx.setStorageSync('openid', data.data.openid)
               app.globalData.rule = data.data.rule
+              app.globalData.is_write = data.data.is_write
               console.log(app.globalData)
               if (data.data.rule == 0){
                 if (data.data.apply_rule == 0){

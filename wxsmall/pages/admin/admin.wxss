@@ -101,3 +101,10 @@
 .text-light {
   font-weight: 300;
 }
+.fixd-bottom{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  line-height: 2;
+  text-align: center;
+}

@@ -6,7 +6,8 @@
     "pages/maptree/maptree",
     "pages/detail/detail",
     "pages/admin/admin",
-    "pages/indexes/indexes"
+    "pages/indexes/indexes",
+    "pages/fullmap/fullmap"
   ],
   "window": {
     "backgroundTextStyle": "light",

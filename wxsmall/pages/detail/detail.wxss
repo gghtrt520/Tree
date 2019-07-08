@@ -24,3 +24,10 @@
   width: 200rpx;
   text-align: right;
 }
+.v-video video{
+  width: 100%;
+}
+.tree-name{
+  font-size: 18px;
+  color: #111111;
+}
