@@ -236,35 +236,38 @@ Page({
       tree_category_id: this.data.categoryInd.id
     }
     this.delImgArr(this.data.delArr)
-    http({
-      url: '/api/update',
-      data: data
-    }).then(res => {
-      if (res.status) {
-        wx.showToast({
-          title: '上传成功',
-          mask: true,
-          icon: 'success'
-        })
-        setTimeout(()=>{
-          wx.navigateTo({
-            url: '/pages/index/index'
+    this.delVideoStr(this.data.tree_id)
+    setTimeout(()=>{
+      http({
+        url: '/api/update',
+        data: data
+      }).then(res => {
+        if (res.status) {
+          wx.showToast({
+            title: '上传成功',
+            mask: true,
+            icon: 'success'
           })
-        },1500)
-      } else {
+          setTimeout(() => {
+            wx.navigateTo({
+              url: '/pages/admin/admin'
+            })
+          }, 1500)
+        } else {
+          wx.showToast({
+            title: res.message,
+            mask: true,
+            icon: 'none'
+          })
+        }
+      }).catch(err => {
+        console.log(err)
         wx.showToast({
-          title: res.message,
-          mask: true,
+          title: '上传失败请重试',
           icon: 'none'
         })
-      }
-    }).catch(err => {
-      console.log(err)
-      wx.showToast({
-        title: '上传失败请重试',
-        icon: 'none'
       })
-    })
+    },500)
   },
   // 模态窗
   showModal(e) {
@@ -500,6 +503,22 @@ Page({
       }).catch(err => {
         console.log(err)
       })
+    })
+  },
+  // 删除照片数组
+  delVideoStr(id) {
+    let path = "" + this.data.videoPath
+    let ind = path.indexOf('upload')
+    if(ind != -1){
+      return false
+    }
+    http({
+      url: '/api/delete-video',
+      data: { id: id }
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
     })
   },
   // 刷新地图
