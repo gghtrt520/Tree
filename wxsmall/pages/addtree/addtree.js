@@ -226,6 +226,7 @@ Page({
       latitude: this.data.markers.latitude,
       longitude: this.data.markers.longitude,
       tree_video: this.data.videoUrl,
+      health: this.data.treeState[this.data.stateInd],
       crown: this.data.crown,
       diameter: this.data.diameter,
       height: this.data.heightTree,
@@ -480,12 +481,13 @@ Page({
       imgList: this.data.imgList
     })
     if (ind != -1){
-      this.data.delArr.push(del) 
+      this.data.delArr.push(del[0]) 
     }
   },
   // 删除照片数组
   delImgArr(arr){
-    arr.map((item,index)=>{
+    arr.map((item)=>{
+      console.log(item)
       http({
         url: '/api/delete-image',
         data: { id: item.id }
