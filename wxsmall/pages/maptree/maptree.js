@@ -233,7 +233,10 @@ Page({
           }
         })
       } else {
-        
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        })
       }
     }).catch(err => {
       console.log(err)
