@@ -225,14 +225,14 @@ Page({
       other: this.data.other,
       latitude: this.data.markers.latitude,
       longitude: this.data.markers.longitude,
-      video: this.data.videoUrl,
+      tree_video: this.data.videoUrl,
       crown: this.data.crown,
       diameter: this.data.diameter,
       height: this.data.heightTree,
-      property: this.data.propertyInd.id,
-      construction: this.data.constructionInd.id,
-      conservation: this.data.conservationInd.id,
-      category: this.data.categoryInd.id
+      property_unit_id: this.data.propertyInd.id,
+      construction_unit_id: this.data.constructionInd.id,
+      conservation_unit_id: this.data.conservationInd.id,
+      tree_category_id: this.data.categoryInd.id
     }
     this.delImgArr(this.data.delArr)
     http({
