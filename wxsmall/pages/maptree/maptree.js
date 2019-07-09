@@ -8,6 +8,11 @@ const http = require("../../utils/http.js")
 let sizepage = 10
 var marker = {
   id: 0,
+  callout:{
+    content:'●',
+    fontSize: 18,
+    color: '#666666'
+  },
   latitude: '39.980014',
   longitude: '116.313972',
   iconPath: './tree.png', //图标路径
@@ -58,26 +63,16 @@ Page({
   },
   // 隐藏弹窗
   hide() {
-    this.data.markers = this.data.markers.slice(0, -1);
-    this.data.indTree = ''
     this.setData({
-      markers: this.data.markers,
       mapDialog: false
     })
   },
   markerTap(e) {
     console.log(e)
-    let mk = {...this.data.markers[e.markerId]}
-    mk.iconPath = './tree.png'
-    if (this.data.indTree !== ''){
-      this.data.markers = this.data.markers.slice(0, -1);
-    }
-    this.data.markers.push(mk)
     this.setData({
       mapDialog: true,
-      markers: this.data.markers,
       indTree: e.markerId,
-      currentTree: mk
+      currentTree: this.data.markers[e.markerId]
     })
   },
   /**

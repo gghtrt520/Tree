@@ -3,6 +3,7 @@ const app = getApp()
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var qqmapsdk = ''
 const http = require("../../utils/http.js")
+const util = require("../../utils/util.js")
 Page({
   /**
    * 页面的初始数据
@@ -12,15 +13,16 @@ Page({
     CustomBar: app.globalData.CustomBar,
     rule: app.globalData.rule,
     videoPath: '',
+    delArr: [],
     videoUrl: '',
     isEdite: false,
     imgList: [],
     imgUrl: [],
     numberId: '',
     treeName: '',
-    crown: 0,
-    diameter: 0,
-    heightTree: 0,
+    crown: '',
+    diameter: '',
+    heightTree: '',
     other: '',
     modalName: null,
     treeState: ['非常健康', '健康', '一般', '较差', '非常差', '死亡'],
@@ -42,6 +44,7 @@ Page({
       name: '无'
     },
     currentId: '',
+    tree_id: 0,
     treeCategory: [],
     propertyUnit: [],
     constructionUnit: [],
@@ -53,20 +56,20 @@ Page({
       width: 20,
       height: 20
     },
-    localInfo:''
+    localInfo: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this
     // 实例化API核心类
     qqmapsdk = new QQMapWX({
       key: app.globalData.mapKey // 必填
     });
     console.log(options)
-    if (options.id){
+    if (options.id) {
       this.getDetail(options.id)
     } else {
       getLocPos(that)
@@ -110,11 +113,11 @@ Page({
 
   },
   // 获取中心定位
-  getCenterLocation: function (e) {
+  getCenterLocation: function(e) {
     var that = this
-    if (e.type == 'end' && e.causedBy == 'drag'){
+    if (e.type == 'end' && e.causedBy == 'drag') {
       this.mapCtx.getCenterLocation({
-        success: function (res) {
+        success: function(res) {
           that.data.markers.latitude = res.latitude
           that.data.markers.longitude = res.longitude
           that.setData({
@@ -126,10 +129,12 @@ Page({
     }
   },
   // 获取详情
-  getDetail(id){
+  getDetail(id) {
     http({
       url: '/api/tree-detail',
-      data: { tree_id: id }
+      data: {
+        tree_id: id
+      }
     }).then(res => {
       if (res.status == 1) {
         console.log(res.data)
@@ -149,6 +154,23 @@ Page({
           detail: res.data,
           isEdite: true,
           numberId: res.data.tree_number,
+          categoryInd: {
+            id: res.data.category_id,
+            name: res.data.category
+          },
+          propertyInd: {
+            id: res.data.property_unit_id,
+            name: res.data.property_unit
+          },
+          conservationInd: {
+            id: res.data.conservation_unit_id,
+            name: res.data.conservation_unit
+          },
+          constructionInd: {
+            id: res.data.construction_unit_id,
+            name: res.data.construction_unit
+          },
+          stateInd: util.getArrInd(this.data.treeState, res.data.health),
           treeName: res.data.tree_name,
           crown: res.data.crown,
           diameter: res.data.diameter,
@@ -162,6 +184,81 @@ Page({
       }
     }).catch(err => {
       console.log(err)
+    })
+  },
+  // 添加新数据
+  uploadTree(data){
+    http({
+      url: '/api/create',
+      data: data
+    }).then(res => {
+      if (res.status) {
+        wx.showToast({
+          title: '上传成功',
+          mask: true,
+          icon: 'success'
+        })
+        backTime()
+      } else {
+        wx.showToast({
+          title: res.message,
+          mask: true,
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.showToast({
+        title: '上传失败请重试',
+        icon: 'none'
+      })
+    })
+  },
+  // 更新老数据
+  updateTree() {
+    var data = {}
+    data.id = this.data.tree_id
+    data.image = this.data.imgUrl
+    data.TreeInformation = {
+      tree_number: this.data.numberId,
+      tree_name: this.data.treeName,
+      other: this.data.other,
+      latitude: this.data.markers.latitude,
+      longitude: this.data.markers.longitude,
+      video: this.data.videoUrl,
+      crown: this.data.crown,
+      diameter: this.data.diameter,
+      height: this.data.heightTree,
+      property: this.data.propertyInd.id,
+      construction: this.data.constructionInd.id,
+      conservation: this.data.conservationInd.id,
+      category: this.data.categoryInd.id
+    }
+    this.delImgArr(this.data.delArr)
+    http({
+      url: '/api/update',
+      data: data
+    }).then(res => {
+      if (res.status) {
+        wx.showToast({
+          title: '上传成功',
+          mask: true,
+          icon: 'success'
+        })
+        backTime()
+      } else {
+        wx.showToast({
+          title: res.message,
+          mask: true,
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.showToast({
+        title: '上传失败请重试',
+        icon: 'none'
+      })
     })
   },
   // 模态窗
@@ -182,9 +279,9 @@ Page({
     })
   },
   // 全屏地图
-  goFullmap(){
+  goFullmap() {
     wx.navigateTo({
-      url: '/pages/fullmap/fullmap?lat='+ this.data.markers.latitude +'&lon='+ this.data.markers.longitude
+      url: '/pages/fullmap/fullmap?lat=' + this.data.markers.latitude + '&lon=' + this.data.markers.longitude
     })
   },
   // 树种选择
@@ -243,14 +340,24 @@ Page({
       title: '上传中',
     })
     this.data.imgList.map((item, index) => {
-      var p = this.imgUpload(item.path)
-      p.then(res => {
-        console.log(res)
-        this.data.imgUrl[index] = res
-      })
-      promiseList.push(p)
+      let path = "" + item.path
+      let ind = path.indexOf('upload')
+      console.log(ind)
+      if (ind != -1){
+        this.data.imgUrl[index] = item
+      } else {
+        var p = this.imgUpload(item.path)
+        p.then(res => {
+          console.log(res)
+          this.data.imgUrl[index] = res
+        })
+        promiseList.push(p)
+      }
     })
-    if (this.data.videoPath) {
+    let vpath = "" + this.data.videoPath
+    let vind = this.data.videoPath.indexOf('upload')
+    console.log(vind)
+    if (this.data.videoPath && vind == -1) {
       const openid = wx.getStorageSync('openid')
       var vp = new Promise((resolve, reject) => {
         wx.uploadFile({
@@ -290,6 +397,8 @@ Page({
         })
       })
       promiseList.push(vp)
+    } else {
+      this.data.videoUrl = this.data.videoPath
     }
     Promise.all(promiseList).then((res) => {
       let data = {}
@@ -310,31 +419,11 @@ Page({
       data.conservation = this.data.conservationInd.id
       data.category = this.data.categoryInd.id
       console.log(data)
-      http({
-        url: '/api/create',
-        data: data
-      }).then(res => {
-        if (res.status) {
-          wx.showToast({
-            title: '上传成功',
-            mask: true,
-            icon: 'success'
-          })
-          backTime()
-        } else {
-          wx.showToast({
-            title: res.message,
-            mask: true,
-            icon: 'none'
-          })
-        }
-      }).catch(err => {
-        console.log(err)
-        wx.showToast({
-          title: '上传失败请重试',
-          icon: 'none'
-        })
-      })
+      if (this.data.isEdite){
+        this.updateTree()
+      } else {
+        this.uploadTree(data)
+      }
     }).catch((err) => {
       console.log(err)
     })
@@ -383,30 +472,28 @@ Page({
   },
   // 删除照片
   DelImg(e) {
-    this.data.imgList.splice(e.currentTarget.dataset.index, 1);
+    let del = this.data.imgList.splice(e.currentTarget.dataset.index, 1);
+    let path = "" + del[0].path
+    let ind = path.indexOf('upload')
     this.setData({
       imgList: this.data.imgList
     })
-    // let path = this.data.imgUrl
-    // http({
-    //   url: '/api/delete-image',
-    //   data: { path: path}
-    // }).then(res => {
-    //   wx.showToast({
-    //     title: '删除成功',
-    //     icon: 'none'
-    //   })
-    //   this.setData({
-    //     imgPath: '',
-    //     imgUrl: ''
-    //   })
-    // }).catch(err => {
-    //   console.log(err)
-    //   wx.showToast({
-    //     title: '删除失败请重试',
-    //     icon: 'none'
-    //   })
-    // })
+    if (ind != -1){
+      this.data.delArr.push(del) 
+    }
+  },
+  // 删除照片数组
+  delImgArr(arr){
+    arr.map((item,index)=>{
+      http({
+        url: '/api/delete-image',
+        data: { id: item.id }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    })
   },
   // 刷新地图
   refreshMap() {
@@ -496,7 +583,7 @@ Page({
     this.mapImg()
   },
   // 地址解析
-  getLocalInfo(latLon){
+  getLocalInfo(latLon) {
     var that = this
     // 坐标地址解析
     qqmapsdk.reverseGeocoder({
@@ -505,13 +592,13 @@ Page({
         longitude: latLon.longitude - 0
       },
       sig: app.globalData.sig,
-      success: function (res) { //成功后的回调
+      success: function(res) { //成功后的回调
         console.log(res);
         that.setData({
           localInfo: res.result.formatted_addresses ? res.result.formatted_addresses.recommend : res.result.address
         })
       },
-      fail: function (error) {
+      fail: function(error) {
         console.error(error);
         wx.showToast({
           title: '导航失败请重试',

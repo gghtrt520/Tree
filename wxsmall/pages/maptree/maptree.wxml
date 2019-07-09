@@ -18,7 +18,7 @@
   </view>
 </scroll-view>
 <view style="height:calc(100vh - {{CustomBar}}px - 95px);">
-  <map id="myMap" bindregionchange="regionchange" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" circles="{{circles?[circles]:''}}" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='13'>
+  <map id="myMap" bindregionchange="regionchange" bindtap="hide" bindmarkertap="markerTap" show-location='true' show-compass='true' markers="{{markers}}" style="width:100%;height:100%;" circles="{{circles?[circles]:''}}" longitude="{{myPosition.longitude}}" latitude="{{myPosition.latitude}}" scale='13'>
     <cover-view class='legend bg-white'>
       <cover-view class='legend-v'>
         <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree00.png" />
@@ -28,10 +28,10 @@
         <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/tree10.png" />
         <cover-view>落叶</cover-view>
       </cover-view>
-      <cover-view class='legend-v'>
+      <!-- <cover-view class='legend-v'>
         <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/plane.png" />
         <cover-view>无人机</cover-view>
-      </cover-view>
+      </cover-view> -->
     </cover-view>
     <cover-view catchtap='getMyPosition' class='mypos bg-white'>
       <cover-image class="img" src="https://sapling.cnfay.com/upload/marker/local.png" />

@@ -7,16 +7,19 @@
 <view wx:if="{{detail!=''}}" class="cu-card case no-card">
   <view class="cu-item">
     <view class="image">
-      <swiper class="screen-swiper square-dot}}" indicator-dots="true" circular="true">
+      <swiper class="screen-swiper" circular="true">
+        <!-- <swiper-item wx:if="{{detail.tree_video}}">
+          <video src="{{detail.tree_video}}" controls='{{false}}'></video>
+        </swiper-item> -->
         <swiper-item catchtap='fullImg' data-url='{{item.tree_image}}' wx:for="{{detail.tree_image}}" wx:key>
           <image src="{{item.tree_image}}" mode="aspectFill"></image>
         </swiper-item>
       </swiper>
       <view class="cu-tag bg-blue" wx:if="{{is_write == '不可录入'}}">{{detail.category}}</view>
       <view class="cu-tag bg-blue" bindtap='goEditePage' wx:else><text class='cuIcon-writefill lg'></text></view>
-      <view class="cu-bar bg-shadeBottom">
+      <!-- <view class="cu-bar bg-shadeBottom">
          <text>{{detail.tree_number}}</text>
-      </view>
+      </view> -->
     </view>
     <view class="cu-list menu-avatar">
       <view class="cu-item">

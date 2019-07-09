@@ -38,3 +38,7 @@
   display: flex;
   align-items: center;
 }
+.cu-form-group input:disabled
+{ 
+  background-color: #dddddd;
+}
