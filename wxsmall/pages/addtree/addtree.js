@@ -246,7 +246,11 @@ Page({
           mask: true,
           icon: 'success'
         })
-        backTime()
+        setTimeout(()=>{
+          wx.navigateTo({
+            url: '/pages/index/index'
+          })
+        },1500)
       } else {
         wx.showToast({
           title: res.message,

@@ -195,24 +195,48 @@ Page({
   },
   // 导出数据
   exportData(){
-    wx.downloadFile({
-      url: app.globalData.app_url + '/upload/marker/student.xlsx', //仅为示例，并非真实的资源
-      success(res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-        if (res.statusCode === 200) {
-          wx.saveFile({
-            tempFilePath: res.tempFilePath,
-            success(res) {
-              wx.openDocument({
-                filePath: res.savedFilePath,
-                success: function (res) {
-                  console.log('打开文档成功')
+    let data = {}
+    // data.page = page
+    data.keywork = this.data.titleKey
+    data.tree_category_id = this.data.categoryId
+    data.location = this.data.location
+    data.value = this.data.value
+    http({
+      url: '/api/save-file',
+      data: data
+    }).then(res => {
+      console.log(res)
+      if (res.status == 1) {
+        wx.downloadFile({
+          url: app.globalData.app_url + res.data.file_name, //仅为示例，并非真实的资源
+          success(res) {
+            // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+            if (res.statusCode === 200) {
+              wx.saveFile({
+                tempFilePath: res.tempFilePath,
+                success(res) {
+                  wx.openDocument({
+                    filePath: res.savedFilePath,
+                    success: function (res) {
+                      console.log('打开文档成功')
+                    },
+                    complete(err) {
+                      console.log(err)
+                    }
+                  })
+                },
+                complete(err){
+                  console.log(err)
                 }
               })
             }
-          })
-        }
+          }
+        })
+      } else {
+        
       }
+    }).catch(err => {
+      console.log(err)
     })
   },
   // 关键字搜索
