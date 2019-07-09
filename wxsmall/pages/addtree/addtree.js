@@ -344,6 +344,7 @@ Page({
       let ind = path.indexOf('upload')
       console.log(ind)
       if (ind != -1){
+        item.path = urlSub(item.path)
         this.data.imgUrl[index] = item
       } else {
         var p = this.imgUpload(item.path)
@@ -398,7 +399,7 @@ Page({
       })
       promiseList.push(vp)
     } else {
-      this.data.videoUrl = this.data.videoPath
+      this.data.videoUrl = urlSub(this.data.videoPath)
     }
     Promise.all(promiseList).then((res) => {
       let data = {}
@@ -677,4 +678,9 @@ function backTime() {
       delta: 1
     })
   }, 1500)
+}
+// 去除服务器地址
+function urlSub(str){
+  let reg = new RegExp(app.globalData.app_url)
+  return str.replace(reg, "")
 }
