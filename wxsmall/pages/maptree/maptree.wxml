@@ -6,7 +6,7 @@
 <view class="cu-bar bg-white search solid-bottom">
   <view class="search-form round">
     <text class="cuIcon-search"></text>
-    <input type="text" placeholder="树木编码" bindinput='searchInput' confirm-type="search"></input>
+    <input type="text" placeholder="请输入关键字搜索" bindinput='searchInput' confirm-type="search"></input>
   </view>
   <view class="action">
     <button class="cu-btn bg-gradual-green shadow-blur round" bindtap='search'>搜索</button>

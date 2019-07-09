@@ -197,7 +197,7 @@ Page({
   exportData(){
     let data = {}
     // data.page = page
-    data.keywork = this.data.titleKey
+    data.keyword = this.data.titleKey
     data.tree_category_id = this.data.categoryId
     data.location = this.data.location
     data.value = this.data.value
@@ -351,7 +351,7 @@ Page({
 function getCardData(page = 1, sort = '', key = '', location, val) {
   let data = {}
   // data.page = page
-  data.keywork = key
+  data.keyword = key
   data.tree_category_id = sort
   data.location = location
   data.value = val
