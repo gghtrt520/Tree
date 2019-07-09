@@ -342,15 +342,15 @@ Page({
     this.data.imgList.map((item, index) => {
       let path = "" + item.path
       let ind = path.indexOf('upload')
-      console.log(ind)
+      // console.log(ind)
       if (ind != -1){
-        item.path = urlSub(item.path)
-        this.data.imgUrl[index] = item
+        // item.path = urlSub(item.path)
+        // this.data.imgUrl[index] = item
       } else {
         var p = this.imgUpload(item.path)
         p.then(res => {
           console.log(res)
-          this.data.imgUrl[index] = res
+          this.data.imgUrl.push(res)
         })
         promiseList.push(p)
       }
