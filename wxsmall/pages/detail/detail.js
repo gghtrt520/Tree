@@ -90,9 +90,13 @@ Page({
   // 全屏预览图片
   fullImg(e) {
     console.log(e.target.dataset.url)
+    let arr = []
+    arr = this.data.detail.tree_image.map(item=>{
+      return item.tree_image
+    })
     wx.previewImage({
       current: e.target.dataset.url, // 当前显示图片的http链接
-      urls: [e.target.dataset.url] // 需要预览的图片http链接列表
+      urls: arr // 需要预览的图片http链接列表
     })
   },
   // 移植

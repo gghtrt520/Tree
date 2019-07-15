@@ -6,7 +6,7 @@ page{
   position: fixed;
   display: flex;
   flex-direction: column;
-  top: 30%;
+  top: 32%;
   width: 90%;
   margin: 0 5%;
   padding-bottom: 10px;
@@ -46,7 +46,7 @@ page{
 .map-dialog .img{
   width: 48%;
   margin-right: 2%;
-  max-height: 200rpx;
+  height: 200rpx;
 }
 .mark-info{
   width: 50%;

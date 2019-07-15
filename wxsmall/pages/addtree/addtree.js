@@ -584,6 +584,10 @@ Page({
         icon: 'none'
       })
       return false
+    } else {
+      if (!validNumber(this.data.diameter - 0)) {
+        return false
+      }
     }
     if (!this.data.crown) {
       wx.showToast({
@@ -591,6 +595,10 @@ Page({
         icon: 'none'
       })
       return false
+    } else {
+      if (!validNumber(this.data.crown - 0)) {
+        return false
+      }
     }
     if (!this.data.heightTree) {
       wx.showToast({
@@ -598,6 +606,10 @@ Page({
         icon: 'none'
       })
       return false
+    } else {
+      if (!validNumber(this.data.heightTree - 0)) {
+        return false
+      }
     }
     if (this.data.imgList.length == 0) {
       wx.showToast({
@@ -708,4 +720,16 @@ function backTime() {
 function urlSub(str){
   let reg = new RegExp(app.globalData.app_url)
   return str.replace(reg, "")
+}
+// 输入数字校验
+function validNumber(num) {
+  if (isNaN(num - 0) || !num){
+    wx.showToast({
+      title: '请输入大于0的数字',
+      icon: 'none'
+    })
+    return false
+  } else {
+    return true
+  }
 }
