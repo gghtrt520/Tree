@@ -69,7 +69,7 @@ Page({
   },
   // 跳转修改页面
   goEditePage(e){
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/addtree/addtree?id=" + this.data.tree_id
     })
   },

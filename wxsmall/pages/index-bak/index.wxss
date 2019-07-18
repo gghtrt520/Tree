@@ -4,17 +4,7 @@
   width: 100vw;
   height: 100vh;
 }
-.back-img2{
-  background-size: cover;
-  background-position: center;
-}
-.logo-v{
-  width: 84%;
-  padding: 30rpx 0;
-  border-radius: 6rpx;
-  box-shadow: 4rpx 4rpx 4rpx #333;
-  margin: 20% 0 30rpx;
-}
+
 .nav-list {
   display: flex;
   flex-wrap: wrap;
@@ -112,12 +102,4 @@
 
 .text-light {
   font-weight: 300;
-}
-.fixd-bottom{
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  color: #efefefe1;
-  line-height: 2;
-  text-align: center;
 }

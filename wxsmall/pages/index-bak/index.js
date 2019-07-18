@@ -9,7 +9,6 @@ Page({
     CustomBar: app.globalData.CustomBar,
     modalName: '',
     bgimg: app.globalData.app_url + '/upload/marker/login.jpg',
-    bgimg2: app.globalData.app_url + '/upload/images/mac.jpg',
     userInfo: {},
     hasUserInfo: false,
     errinfo: '未授权您将不能使用该应用',
@@ -144,9 +143,9 @@ function loginUser(userInfo,that){
                 }
               }
               if (data.data.rule == 1) {
-                // wx.redirectTo({
-                //   url: '/pages/admin/admin'
-                // })
+                wx.redirectTo({
+                  url: '/pages/admin/admin'
+                })
               } else if(data.data.rule == 2) {
                 wx.redirectTo({
                   url: '/pages/addtree/addtree'

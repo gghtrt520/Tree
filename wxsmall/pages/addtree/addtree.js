@@ -198,7 +198,11 @@ Page({
           mask: true,
           icon: 'success'
         })
-        backTime()
+        setTimeout(() => {
+          wx.redirectTo({
+            url: '/pages/detail/detail?id=' + res.data.id
+          })
+        }, 1000)
       } else {
         wx.showToast({
           title: res.message,
@@ -249,10 +253,10 @@ Page({
             icon: 'success'
           })
           setTimeout(() => {
-            wx.navigateTo({
-              url: '/pages/admin/admin'
+            wx.redirectTo({
+              url: '/pages/detail/detail?id=' + this.data.tree_id
             })
-          }, 1500)
+          }, 1000)
         } else {
           wx.showToast({
             title: res.message,
