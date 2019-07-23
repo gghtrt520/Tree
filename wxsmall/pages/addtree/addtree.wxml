@@ -142,8 +142,12 @@
       <button class="cu-btn bg-blue" bindtap='goFullmap'>手动调整</button>
     </view>
   </view>
-  <map id="myMap" bindregionchange="getCenterLocation" markers="{{[markers]}}" style="width:100%;height:200px;" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='19'>
+  <map id="myMap" bindregionchange="getCenterLocation" enable-satellite="{{enableSatellite}}" markers="{{[markers]}}" style="width:100%;height:200px;" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='19'>
     <cover-view class='bg-white local-info'>{{localInfo}}</cover-view>
+    <cover-view catchtap='getMapModel' class='map-model bg-white'>
+      <cover-view class='btn {{enableSatellite?"":"active"}}' data-type='0'>标准</cover-view>
+      <cover-view class='btn {{enableSatellite?"active":""}}' data-type='1'>卫星</cover-view>
+    </cover-view>
   </map>
   <view class="padding">
     <button bindtap='uploadData' class="cu-btn block bg-blue margin-tb-sm lg">

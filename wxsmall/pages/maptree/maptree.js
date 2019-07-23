@@ -39,6 +39,7 @@ Page({
       latitude: '39.980014',
       longitude: '116.313972',
     },
+    enableSatellite: false,
     address_component: {
       city: "",
       district: "",
@@ -87,6 +88,21 @@ Page({
       indTree: e.markerId,
       currentTree: mk
     })
+  },
+  /**
+   * 地图显示模式
+   */
+  getMapModel(e){
+    let type = e.target.dataset.type;
+    if(type-0){
+      this.setData({
+        enableSatellite:true
+      })
+    }else{
+      this.setData({
+        enableSatellite: false
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载

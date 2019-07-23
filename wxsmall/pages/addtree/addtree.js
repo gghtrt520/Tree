@@ -12,6 +12,7 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     rule: app.globalData.rule,
+    enableSatellite: false,
     videoPath: '',
     delArr: [],
     videoUrl: '',
@@ -186,6 +187,21 @@ Page({
       console.log(err)
     })
   },
+  /**
+   * 地图显示模式
+   */
+  getMapModel(e) {
+    let type = e.target.dataset.type;
+    if (type - 0) {
+      this.setData({
+        enableSatellite: true
+      })
+    } else {
+      this.setData({
+        enableSatellite: false
+      })
+    }
+  },
   // 添加新数据
   uploadTree(data){
     http({
@@ -332,7 +348,15 @@ Page({
       maxDuration: 10,
       camera: 'back',
       success(res) {
-        console.log(res.tempFilePath)
+        console.log(res)
+        if(res.size>30*1024*1024){
+          wx.showToast({
+            title: '视频不能大于30M',
+            icon: 'none',
+            duration: 2000
+          })
+          return false;
+        }
         that.setData({
           videoPath: res.tempFilePath
         })

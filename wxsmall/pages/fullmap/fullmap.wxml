@@ -4,7 +4,11 @@
   <view slot="content">{{title}}</view>
 </cu-custom>
 <view>
-  <map id="myMap" bindregionchange="getCenterLocation" markers="{{[markers]}}" style="width:100%;height:calc(100vh - {{CustomBar}}px);" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='19'>
+  <map id="myMap" bindregionchange="getCenterLocation" enable-satellite="{{enableSatellite}}" markers="{{[markers]}}" style="width:100%;height:calc(100vh - {{CustomBar}}px);" longitude="{{markers.longitude}}" latitude="{{markers.latitude}}" scale='19'>
     <cover-view class='bg-white local-info'>{{localInfo}}</cover-view>
+    <cover-view catchtap='getMapModel' class='map-model bg-white'>
+      <cover-view class='btn {{enableSatellite?"":"active"}}' data-type='0'>标准</cover-view>
+      <cover-view class='btn {{enableSatellite?"active":""}}' data-type='1'>卫星</cover-view>
+    </cover-view>
   </map>
 </view>

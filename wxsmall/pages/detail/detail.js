@@ -14,6 +14,7 @@ Page({
     detail:'',
     tree_id: '',
     is_write: '不可录入',
+    enableSatellite: false,
     markers: {
       label: {
         content: '树木位置',
@@ -73,7 +74,21 @@ Page({
       url: "/pages/addtree/addtree?id=" + this.data.tree_id
     })
   },
-
+  /**
+   * 地图显示模式
+   */
+  getMapModel(e) {
+    let type = e.target.dataset.type;
+    if (type - 0) {
+      this.setData({
+        enableSatellite: true
+      })
+    } else {
+      this.setData({
+        enableSatellite: false
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

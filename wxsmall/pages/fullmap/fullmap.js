@@ -11,6 +11,7 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
+    enableSatellite: false,
     title: '地点选择',
     markers: {
       latitude: '39.980014',
@@ -36,7 +37,21 @@ Page({
       markers: this.data.markers
     })
   },
-
+  /**
+   * 地图显示模式
+   */
+  getMapModel(e) {
+    let type = e.target.dataset.type;
+    if (type - 0) {
+      this.setData({
+        enableSatellite: true
+      })
+    } else {
+      this.setData({
+        enableSatellite: false
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

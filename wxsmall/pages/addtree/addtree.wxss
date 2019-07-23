@@ -42,3 +42,18 @@
 { 
   background-color: #dddddd;
 }
+/*地图模式*/
+.map-model{
+  position: absolute;
+  top: 14%;
+  right: 10px;
+  border-radius: 6px;
+}
+.map-model .btn{
+  padding: 12rpx 8rpx;
+  color: #111;
+}
+.map-model .btn.active{
+  background-color: var(--blue);
+  color: #fff;
+}
