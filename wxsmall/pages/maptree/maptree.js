@@ -92,13 +92,13 @@ Page({
   /**
    * 地图显示模式
    */
-  getMapModel(e){
+  getMapModel(e) {
     let type = e.target.dataset.type;
-    if(type-0){
+    if (type - 0) {
       this.setData({
-        enableSatellite:true
+        enableSatellite: true
       })
-    }else{
+    } else {
       this.setData({
         enableSatellite: false
       })
@@ -107,21 +107,22 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function() {
     // 实例化API核心类
     qqmapsdk = new QQMapWX({
       key: app.globalData.mapKey // 必填
     });
     getLocPos(this)
-    this.search(false)
     // 分类列表
     let arr = this.data.treeCategory.concat(app.globalData.treeCategory)
     this.setData({
       treeCategory: arr,
       rule: app.globalData.rule
     })
+    // 搜索
+    this.search(false)
   },
-  onReady: function (e) {
+  onReady: function(e) {
     // 使用 wx.createMapContext 获取 map 上下文
     this.mapCtx = wx.createMapContext('myMap')
   },
@@ -140,7 +141,7 @@ Page({
     var that = this
     if (e.type == 'end' && e.causedBy == 'scale') {
       this.mapCtx.getScale({
-        success: function (res) {
+        success: function(res) {
           let scale = parseInt(res.scale)
           console.log(scale)
           if (scale < 9) {
@@ -168,7 +169,7 @@ Page({
   },
   // 地址定位
   goPlace() {
-    if(!this.data.placeKey){
+    if (!this.data.placeKey) {
       wx.showToast({
         title: '请输入定位地址',
         icon: 'none'
@@ -179,7 +180,7 @@ Page({
     qqmapsdk.geocoder({       //获取表单传入地址
       address: _this.data.placeKey, //地址参数，例：固定地址，address: '北京市海淀区彩和坊路海淀西大街74号'
       sig: app.globalData.sig,
-      success: function (res) { //成功后的回调     
+      success: function(res) { //成功后的回调     
         var res = res.result;
         var latitude = res.location.lat;
         var longitude = res.location.lng;         //根据地址解析在地图上标记解析地址位置
@@ -187,16 +188,17 @@ Page({
           myPosition: {
             latitude: latitude,
             longitude: longitude
-          }
+          },
+          address_component: res.address_components
         });
         _this.search(false);
       },
-      fail: function (error) {
+      fail: function(error) {
         console.error(error);
       },
-      complete: function (res) {
+      complete: function(res) {
         console.log(res);
-        if(res.status!=0){
+        if (res.status != 0) {
           wx.showToast({
             title: res.message,
             icon: 'none'
@@ -219,7 +221,7 @@ Page({
         longitude: that.data.currentTree.longitude - 0
       },
       sig: app.globalData.sig,
-      success: function (res) { //成功后的回调
+      success: function(res) { //成功后的回调
         console.log(res);
         wx.openLocation({ //​使用微信内置地图查看位置。
           latitude: that.data.currentTree.latitude - 0, //要去的纬度-地址
@@ -228,7 +230,7 @@ Page({
           address: res.result.address
         })
       },
-      fail: function (error) {
+      fail: function(error) {
         console.error(error);
         wx.showToast({
           title: '导航失败请重试',
@@ -247,7 +249,7 @@ Page({
         longitude: latLon.longitude - 0
       },
       sig: app.globalData.sig,
-      success: function (res) { //成功后的回调
+      success: function(res) { //成功后的回调
         console.log(res.result)
         that.data.address_component = res.result.address_component
         that.data.myPosition.latitude = latLon.latitude
@@ -256,7 +258,7 @@ Page({
           myPosition: that.data.myPosition
         })
       },
-      fail: function (error) {
+      fail: function(error) {
         console.error(error)
       }
     })
@@ -287,7 +289,7 @@ Page({
                   console.log(res)
                   wx.openDocument({
                     filePath: res.savedFilePath,
-                    success: function (res) {
+                    success: function(res) {
                       console.log('打开文档成功')
                     },
                     complete(err) {
@@ -313,6 +315,7 @@ Page({
   search(e) {
     this.hide()
     this.data.currentPage = 1
+    this.data.value = this.data.address_component[this.data.location]
     getCardData(1, this.data.categoryId, this.data.titleKey, this.data.location, this.data.value).then(res => {
       let marks = []
       if (res.data.tree_list.length == 0) {
@@ -415,7 +418,7 @@ Page({
       titleKey: e.detail.value
     })
   },
-  placeInput(e){
+  placeInput(e) {
     this.setData({
       placeKey: e.detail.value
     })
@@ -430,6 +433,7 @@ function getCardData(page = 1, sort = '', key = '', location, val) {
   data.tree_category_id = sort
   data.location = location
   data.value = val
+  console.log(data)
   return new Promise((resolve, reject) => {
     http({
       url: '/api/tree-list',
