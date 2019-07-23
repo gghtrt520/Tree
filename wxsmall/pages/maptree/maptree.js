@@ -189,6 +189,7 @@ Page({
             longitude: longitude
           }
         });
+        _this.search(false);
       },
       fail: function (error) {
         console.error(error);
