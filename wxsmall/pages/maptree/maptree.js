@@ -416,6 +416,7 @@ Page({
   // 跳转详情页
   goDetail(e) {
     let id = this.data.currentTree.treeId
+    this.hide()
     wx.navigateTo({
       url: '/pages/detail/detail?id=' + id
     })

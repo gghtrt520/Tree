@@ -132,39 +132,39 @@ function loginUser(userInfo, that) {
               app.globalData.rule = data.data.rule
               app.globalData.is_write = data.data.is_write
               console.log(app.globalData)
-              if (data.data.apply_rule == 0) {
-                wx.redirectTo({
-                  url: '/pages/home/home?type=0'
-                })
-              }else if (data.data.apply_rule == 1) {
-                wx.redirectTo({
-                  url: '/pages/home/home?type=1'
-                })
-              }else{
-                if (data.data.rule == 0) {
-                  if (data.data.is_write == '可录入') {
-                    wx.redirectTo({
-                      url: '/pages/addtree/addtree'
-                    })
-                  }else{
-                    wx.redirectTo({
-                      url: '/pages/home/home?type=1'
-                    })
-                  }
-                } else {
-                  if (data.data.is_write == '可录入') {
-                    that.setData({
-                      logined: true
-                    })
-                  } else {
-                    wx.redirectTo({
-                      url: '/pages/maptree/maptree'
-                    })
-                  }
-                }
-              }
               sortList()
               setTimeout(function () {
+                if (data.data.apply_rule == 0) {
+                  wx.redirectTo({
+                    url: '/pages/home/home?type=0'
+                  })
+                } else if (data.data.apply_rule == 1) {
+                  wx.redirectTo({
+                    url: '/pages/home/home?type=1'
+                  })
+                } else {
+                  if (data.data.rule == 0) {
+                    if (data.data.is_write == '可录入') {
+                      wx.redirectTo({
+                        url: '/pages/addtree/addtree'
+                      })
+                    } else {
+                      wx.redirectTo({
+                        url: '/pages/home/home?type=1'
+                      })
+                    }
+                  } else {
+                    if (data.data.is_write == '可录入') {
+                      that.setData({
+                        logined: true
+                      })
+                    } else {
+                      wx.redirectTo({
+                        url: '/pages/maptree/maptree'
+                      })
+                    }
+                  }
+                }
                 wx.hideLoading()
               }, 1000)
             } else {
