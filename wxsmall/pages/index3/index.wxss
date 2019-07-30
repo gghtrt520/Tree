@@ -117,6 +117,7 @@
   position: fixed;
   width: 100%;
   bottom: 0;
+  color: #111;
   line-height: 2;
   text-align: center;
 }

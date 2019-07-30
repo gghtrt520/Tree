@@ -30,6 +30,7 @@ Page({
     currentPage: 1,
     categoryId: '',
     rule: app.globalData.rule,
+    is_write: app.globalData.is_write,
     CustomBar: app.globalData.CustomBar,
     treeCategory: [{
       id: '',
@@ -163,6 +164,13 @@ Page({
           if (that.data.value != '') {
             that.search(false)
           }
+        }
+      })
+    }
+    if (e.type == 'end' && e.causedBy == 'drag') {
+      this.mapCtx.getCenterLocation({
+        success: function (res) {
+          that.parseLatLon(res)
         }
       })
     }

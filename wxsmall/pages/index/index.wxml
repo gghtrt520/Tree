@@ -1,18 +1,13 @@
-<cu-custom bgColor="bg-header-color">
-  <view slot="content">苗木营行</view>
-</cu-custom>
-<view class="back-img" style="height:calc(100vh - {{CustomBar}}px);background-image: url({{bgimg}});">
-  <view class="flex justify-center">
-    <view class='text-center logo-v back-img2' style="background-image: url({{bgimg2}});">
-      <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
-      <view class="padding">{{userInfo.nickName}}</view>
+<view class="back-img" style="background-image: url({{bgimg}});">
+  <view class="flex" wx:if='{{logined}}'>
+    <view class='text-center logo-v back-img2'>
+      <view class="cu-avatar xl round" style="background-image:url({{userInfo.avatarUrl}})"></view>
     </view>
   </view>
-  <view class='nav-list'>
-    <navigator open-type="navigate" hover-class='none' url="/pages/{{item.name+'tree'}}/{{item.name+'tree'}}" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:key>
+  <view class='nav-list' wx:if='{{logined}}'>
+    <navigator open-type="navigate" hover-class='none' url="/pages/{{item.name+'tree'}}/{{item.name+'tree'}}" class="nav-li text-{{item.color}}" wx:for="{{elements}}" wx:key>
       <view class="nav-title">{{item.title}}</view>
       <view class="nav-name">{{item.name}}</view>
-      <text class='cuIcon-{{item.icon}}'></text>
     </navigator>
   </view>
 </view>

@@ -12,6 +12,7 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     rule: app.globalData.rule,
+    is_write: app.globalData.is_write,
     enableSatellite: false,
     videoPath: '',
     delArr: [],
@@ -215,9 +216,15 @@ Page({
           icon: 'success'
         })
         setTimeout(() => {
-          wx.redirectTo({
-            url: '/pages/detail/detail?id=' + res.data.id
-          })
+          if(this.data.rule==0){
+            wx.navigateTo({
+              url: '/pages/detail/detail?id=' + res.data.id
+            })
+          }else{
+            wx.redirectTo({
+              url: '/pages/detail/detail?id=' + res.data.id
+            })
+          }
         }, 1000)
       } else {
         wx.showToast({
@@ -269,9 +276,15 @@ Page({
             icon: 'success'
           })
           setTimeout(() => {
-            wx.redirectTo({
-              url: '/pages/detail/detail?id=' + this.data.tree_id
-            })
+            if (this.data.rule == 0) {
+              wx.navigateTo({
+                url: '/pages/detail/detail?id=' + this.data.tree_id
+              })
+            } else {
+              wx.redirectTo({
+                url: '/pages/detail/detail?id=' + this.data.tree_id
+              })
+            }
           }, 1000)
         } else {
           wx.showToast({

@@ -8,20 +8,19 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     modalName: '',
-    bgimg: app.globalData.app_url + '/upload/marker/login2.jpg',
+    bgimg: app.globalData.app_url + '/upload/marker/login.jpg',
     bgimg2: app.globalData.app_url + '/upload/images/mac.jpg',
     userInfo: {},
     hasUserInfo: false,
-    logined: false,
     errinfo: '未授权您将不能使用该应用',
     elements: [{
-      title: '树',
+      title: '树木地图',
       name: 'map',
       color: 'green',
       icon: 'newsfill'
     },
     {
-      title: '库',
+      title: '树木入库',
       name: 'add',
       color: 'blue',
       icon: 'pick'
@@ -29,7 +28,7 @@ Page({
     ],
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-
+  
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -83,15 +82,15 @@ Page({
   }
 })
 // 分类列表
-function sortList() {
+function sortList(){
   http({
     url: '/api/get-list',
   }).then(res => {
     if (res.status == 1) {
       app.globalData.treeCategory = res.data.tree_category;
       app.globalData.propertyUnit = res.data.property_unit;
-      app.globalData.conservationUnit = res.data.conservation_unit;
-      app.globalData.constructionUnit = res.data.construction_unit;
+      app.globalData.conservationUnit = res.data.construction_unit;
+      app.globalData.constructionUnit = res.data.conservation_unit;
     }
   }).catch(err => {
     console.log(err)
@@ -99,9 +98,9 @@ function sortList() {
   })
 }
 
-function loginUser(userInfo, that) {
+function loginUser(userInfo,that){
   var openid = wx.getStorageSync('openid') || ''
-  if (openid) {
+  if(openid){
     console.log('已存在', openid)
     return false
   }
@@ -127,41 +126,35 @@ function loginUser(userInfo, that) {
           },
           success(response) {
             let data = response.data
-            if (data.status) {
+            if (data.status){
               wx.setStorageSync('openid', data.data.openid)
               app.globalData.rule = data.data.rule
               app.globalData.is_write = data.data.is_write
               console.log(app.globalData)
-              if (data.data.apply_rule == 0) {
-                wx.redirectTo({
-                  url: '/pages/home/home?type=0'
-                })
-              }else if (data.data.apply_rule == 1) {
-                wx.redirectTo({
-                  url: '/pages/home/home?type=1'
-                })
-              }else{
-                if (data.data.rule == 0) {
-                  if (data.data.is_write == '可录入') {
-                    wx.redirectTo({
-                      url: '/pages/addtree/addtree'
-                    })
-                  }else{
-                    wx.redirectTo({
-                      url: '/pages/home/home?type=1'
-                    })
-                  }
-                } else {
-                  if (data.data.is_write == '可录入') {
-                    that.setData({
-                      logined: true
-                    })
-                  } else {
-                    wx.redirectTo({
-                      url: '/pages/maptree/maptree'
-                    })
-                  }
+              if (data.data.rule == 0){
+                if (data.data.apply_rule == 0){
+                  wx.redirectTo({
+                    url: '/pages/home/home?type=0'
+                  })
                 }
+                if (data.data.apply_rule == 1) {
+                  wx.redirectTo({
+                    url: '/pages/home/home?type=1'
+                  })
+                }
+              }
+              if (data.data.rule == 1) {
+                // wx.redirectTo({
+                //   url: '/pages/admin/admin'
+                // })
+              } else if(data.data.rule == 2) {
+                wx.redirectTo({
+                  url: '/pages/addtree/addtree'
+                })
+              } else {
+                wx.redirectTo({
+                  url: '/pages/maptree/maptree'
+                })
               }
               sortList()
               setTimeout(function () {
