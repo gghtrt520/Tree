@@ -109,6 +109,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
+    console.log(app.globalData)
     // 实例化API核心类
     qqmapsdk = new QQMapWX({
       key: app.globalData.mapKey // 必填
@@ -118,6 +119,7 @@ Page({
     let arr = this.data.treeCategory.concat(app.globalData.treeCategory)
     this.setData({
       treeCategory: arr,
+      is_write: app.globalData.is_write,
       rule: app.globalData.rule
     })
     // 搜索

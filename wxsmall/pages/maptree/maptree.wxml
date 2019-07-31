@@ -1,5 +1,5 @@
 <!--pages/listtree/listtree.wxml-->
-<cu-custom bgColor="bg-gradual-blue"  isBack="{{rule!=0&&is_write=='可录入'}}">
+<cu-custom bgColor="bg-gradual-blue"  isBack="{{rule!=0 && is_write=='可录入'}}">
   <view wx:if="{{rule!=0&&is_write=='可录入'}}" slot="backText">返回</view>
   <view slot="content">树木地图</view>
 </cu-custom>

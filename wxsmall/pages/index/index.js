@@ -7,6 +7,7 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
+    is_write: app.globalData.is_write,
     modalName: '',
     bgimg: app.globalData.app_url + '/upload/marker/login2.jpg',
     bgimg2: app.globalData.app_url + '/upload/images/mac.jpg',
