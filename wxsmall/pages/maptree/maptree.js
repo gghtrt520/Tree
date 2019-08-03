@@ -163,6 +163,11 @@ Page({
           //   that.data.location = 'street'
           //   that.data.value = that.data.address_component.street
           // }
+          that.mapCtx.getCenterLocation({
+            success: function (res) {
+              that.parseLatLon(res)
+            }
+          })
           if (that.data.value != '') {
             that.search(false)
           }
