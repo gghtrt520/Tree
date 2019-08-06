@@ -101,11 +101,6 @@ function sortList() {
 }
 
 function loginUser(userInfo, that) {
-  var openid = wx.getStorageSync('openid') || ''
-  if (openid) {
-    console.log('已存在', openid)
-    return false
-  }
   // 登录
   wx.login({
     success: res => {
