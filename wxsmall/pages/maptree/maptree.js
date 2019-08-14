@@ -40,7 +40,7 @@ Page({
       latitude: '39.980014',
       longitude: '116.313972',
     },
-    enableSatellite: false,
+    enableSatellite: true,
     address_component: {
       city: "",
       district: "",
