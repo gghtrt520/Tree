@@ -1,0 +1,9 @@
+/* pages/museum/create/create.wxss */
+form input{
+  text-align: right;
+}
+.cu-avatar{
+  width: 90rpx;
+  height: 90rpx;
+  overflow: hidden;
+}

@@ -1,0 +1,24 @@
+<home wx:if="{{PageCur=='home'}}" bind:goMuseum="NavChange"></home>
+<museum wx:if="{{PageCur=='museum'}}"></museum>
+<my wx:if="{{PageCur=='my'}}"></my>
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="home">
+    <view class='cuIcon-cu-image'>
+      <text class="cuIcon-homefill text-{{PageCur=='home'?'orange':'gray'}}"></text>
+    </view>
+    <view class="{{PageCur=='home'?'text-orange':'text-gray'}}">首页</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="museum">
+    <view class='cuIcon-cu-image'>
+      <!-- <image src="/images/tabbar/component{{PageCur=='museum'?'_cur':''}}.png"></image> -->
+      <text class="cuIcon-apps text-{{PageCur=='museum'?'orange':'gray'}}"></text>
+    </view>
+    <view class="{{PageCur=='museum'?'text-orange':'text-gray'}}">纪念馆</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="my">
+    <view class='cuIcon-cu-image'>
+      <text class="cuIcon-peoplefill text-{{PageCur=='my'?'orange':'gray'}}"></text>
+    </view>
+    <view class="{{PageCur=='my'?'text-orange':'text-gray'}}">我的</view>
+  </view>
+</view>

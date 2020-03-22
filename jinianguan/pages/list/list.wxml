@@ -1,0 +1,17 @@
+<!--pages/list/list.wxml-->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">{{title}}</view>
+</cu-custom>
+<view>
+  <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
+    <view wx:for="{{listImg}}" wx:key="id" class="list-item">
+      <image mode="aspectFill" src="{{item.url}}"></image>
+      <view class="item-text text-cut">{{item.name}}</view>
+    </view>
+  </view>
+  <view wx:else class="nodata">
+    <view class="cuIcon-newsfill text-red"></view>
+    <text class="text-red">暂无数据</text>
+  </view>
+</view>

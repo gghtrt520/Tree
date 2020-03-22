@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "home": "/pages/home/home/home",
+    "museum": "/pages/museum/home/home",
+    "nodata": "/pages/componts/nodata/nodata",
+    "my": "/pages/my/home/home"
+  }
+}
