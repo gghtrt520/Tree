@@ -1,0 +1,5 @@
+<!--pages/componts/nodata/nodata.wxml-->
+<view class="nodata">
+  <text class="cuIcon-newsfill lg text-gray"></text>
+  <text>暂无数据</text>
+</view>

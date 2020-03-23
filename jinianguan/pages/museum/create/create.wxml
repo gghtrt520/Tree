@@ -1,0 +1,83 @@
+<!--pages/museum/create/create.wxml-->
+<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
+  <view slot="content">创建纪念馆</view>
+</cu-custom>
+<form>
+  <view class="cu-form-group">
+    <view class="title">头像</view>
+    <view class="cu-avatar radius bg-gray" bindtap="ChooseImage">
+      <image wx:if="{{avatarUrl}}" src='{{avatarUrl}}' mode='aspectFill'></image>
+      <text wx:else class="cuIcon-cameraadd"></text>
+    </view>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">逝者姓名</view>
+    <input placeholder="请输入逝者姓名"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">性别</view>
+    <picker bindchange="sexPickerChange" value="{{sex}}" range="{{picker}}">
+      <view class="picker">
+        {{sex?picker[sex]:'请选择'}}
+      </view>
+    </picker>
+  </view>
+  <view class="padding">
+    <text class="text-red">注：以上信息无法修改</text>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">生辰</view>
+    <picker mode="date" value="{{date1}}" start="1900-01-01" end="{{date1}}" bindchange="birthDateChange">
+      <view class="picker">
+        {{date1}}
+      </view>
+    </picker>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">忌日</view>
+    <picker mode="date" value="{{date2}}" start="{{date1}}" end="{{date2}}" bindchange="deathDateChange">
+      <view class="picker">
+        {{date2}}
+      </view>
+    </picker>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">享年</view>
+    <input placeholder="未知" disabled="true"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">籍贯</view>
+    <picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+      <view class="picker">
+        {{region[0]}}，{{region[1]}}，{{region[2]}}
+      </view>
+    </picker>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">宗教</view>
+    <picker bindchange="religionPickerChange" value="{{religionInd}}" range="{{religion}}">
+      <view class="picker">
+        {{religionInd?religion[religionInd]:'请选择逝者宗教信仰'}}
+      </view>
+    </picker>
+  </view>
+  <!-- <view class="cu-form-group">
+    <view class="title">关系</view>
+    <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+      <view class="picker">
+        {{index?picker[index]:'请选择与逝者关系'}}
+      </view>
+    </picker>
+  </view> -->
+  <view class="cu-form-group">
+    <view class="title">权限</view>
+    <picker bindchange="authorityPickerChange" value="{{authorityInd}}" range="{{authority}}">
+      <view class="picker">
+        {{authorityInd?authority[authorityInd]:'公开'}}
+      </view>
+    </picker>
+  </view>
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-orange lg">保存</button>
+  </view>
+</form>

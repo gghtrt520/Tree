@@ -1,0 +1,35 @@
+/* pages/tombstone/tombstone.wxss */
+.content{
+  position: relative;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  overflow: hidden;
+}
+.avatar-c{
+  position: absolute;
+  width: 180rpx;
+  height: 180rpx;
+  top:50%;
+  left: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  transform: translate(-50%,-50%);
+}
+.toolbar{
+  position: absolute;
+  top: 10vh;
+  right: 5vw;
+}
+.v-tool{
+  background-color: rgba(245, 245, 245, 0.3);
+  width: 70rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 50rpx;
+  margin-bottom: 50rpx;
+}
