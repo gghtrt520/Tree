@@ -1,13 +1,23 @@
 <!--pages/tombstone/tombstone.wxml-->
-<!-- <cu-custom bgColor="bg-gradual-brown" isCustom="{{true}}">
+<cu-custom bgColor="bg-gradual-brown" isCustom="{{true}}">
   <view slot="content">{{title}}</view>
-</cu-custom> -->
-<view class="content" style="height:calc(100vh); background-image: url({{backImg}});">
-  <view class="avatar-c" style="background-image: url({{avatarImg}});"></view>
+</cu-custom>
+<view class="content" style="height:calc(100vh - {{CustomBar}}px); background-image: url({{backImg}});">
+  <navigator url="/pages/museum/detail/detail" hover-class="none">
+    <view class="avatar-c" style="background-image: url({{avatarImg}});"></view>
+  </navigator>
   <view class="toolbar">
-    <view class="v-tool"><text class="cuIcon-musicfill text-yellow"></text></view>
-    <view class="v-tool"><text class="cuIcon-like text-yellow"></text></view>
-    <view class="v-tool"><text class="cuIcon-punch text-yellow"></text></view>
-    <view class="v-tool"><text class="cuIcon-present text-yellow"></text></view>
+    <view class="v-tool">
+      <text class="cuIcon-musicfill text-yellow"></text>
+    </view>
+    <view class="v-tool">
+      <text class="cuIcon-like text-yellow"></text>
+    </view>
+    <view class="v-tool">
+      <text class="cuIcon-punch text-yellow"></text>
+    </view>
+    <view class="v-tool">
+      <text class="cuIcon-present text-yellow"></text>
+    </view>
   </view>
 </view>

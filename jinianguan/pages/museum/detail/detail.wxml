@@ -1,2 +1,49 @@
 <!--pages/museum/detail/detail.wxml-->
-<text>pages/museum/detail/detail.wxml</text>
+<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
+  <view slot="content">{{title}}</view>
+</cu-custom>
+<view class="cu-bar bg-white solid-bottom">
+  <view class="action">
+    <text class="cuIcon-titles text-orange"></text> 个人信息
+  </view>
+</view>
+<view class='bg-white margin-bottom padding'>
+  <view>
+    <text>姓名：</text>
+    <text>测试文字</text>
+  </view>
+  <view>
+    <text>性别：</text>
+    <text>男</text>
+  </view>
+  <view>
+    <text>生卒：</text>
+    <text>1988-01-02至2020-01-06</text>
+  </view>
+  <view>
+    <text>籍贯：</text>
+    <text>北京市东城区</text>
+  </view>
+</view>
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{0==TabCur?'text-orange cur':''}}" bindtap="tabSelect" data-id="0">
+      祭文
+    </view>
+    <view class="cu-item flex-sub {{1==TabCur?'text-orange cur':''}}" bindtap="tabSelect" data-id="1">
+      相册
+    </view>
+    <view class="cu-item flex-sub {{2==TabCur?'text-orange cur':''}}" bindtap="tabSelect" data-id="2">
+      视频
+    </view>
+  </view>
+  <view wx:if="{{0==TabCur}}" class="bg-grey padding margin text-center">
+    祭文
+  </view>
+  <view wx:if="{{1==TabCur}}" class="bg-grey padding margin text-center">
+    相册
+  </view>
+  <view wx:if="{{2==TabCur}}" class="bg-grey padding margin text-center">
+    视频
+  </view>
+</scroll-view>

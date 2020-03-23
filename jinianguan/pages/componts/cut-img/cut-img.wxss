@@ -1,0 +1,5 @@
+/* pages/componts/cut-img/cut-img.wxss */
+.map{
+  width: 750rpx;
+  height: 750rpx;
+}
