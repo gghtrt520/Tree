@@ -1,22 +1,20 @@
-// pages/tombstone/tombstone.js
-const app = getApp();
+// pages/register/register.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    CustomBar: app.globalData.CustomBar,
-    backImg:"../../images/mu1.jpg",
-    avatarImg:"../../images/邵逸夫.jpg",
-    title:"邵逸夫邵逸夫"
+    isBack: false,
+    times: 60,
+    getCodeing: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+
   },
 
   /**
@@ -32,7 +30,28 @@ Page({
   onShow: function () {
 
   },
-
+  getCode: function(){
+    this.setData({
+      getCodeing: true
+    });
+    this.timerGetCode();
+  },
+  timerGetCode: function(){
+    var _this = this;
+    if (_this.data.times>0){
+      setTimeout(function(){
+        var theTimes = _this.data.times - 1;
+        _this.setData({
+          times: theTimes
+        })
+        _this.timerGetCode();
+      },1000);
+    }else{
+      this.setData({
+        getCodeing: false
+      });
+    }
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

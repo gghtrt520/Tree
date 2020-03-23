@@ -1,5 +1,5 @@
 <!--pages/list/list.wxml-->
-<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+<cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">{{title}}</view>
 </cu-custom>
@@ -11,7 +11,7 @@
     </view>
   </view>
   <view wx:else class="nodata">
-    <view class="cuIcon-newsfill text-red"></view>
-    <text class="text-red">暂无数据</text>
+    <view class="cuIcon-newsfill text-brown"></view>
+    <text class="text-brown">暂无数据</text>
   </view>
 </view>

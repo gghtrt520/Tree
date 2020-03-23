@@ -1,0 +1,24 @@
+<!--pages/register/register.wxml-->
+<cu-custom bgColor="bg-gradual-brown" isBack="{{isBack}}">
+  <view slot="content">信息注册</view>
+</cu-custom>
+<view>
+  <view class="cu-form-group margin-top">
+    <view class="title cuIcon-mobile text-gray"></view>
+    <input placeholder="请输入手机号码"></input>
+    <!-- <view class="cu-capsule radius">
+      <view class="cu-tag bg-blue">
+        +86
+      </view>
+      <view class="cu-tag line-blue">
+        中国大陆
+      </view>
+    </view> -->
+  </view>
+  <view class="cu-form-group margin-top">
+    <view class="title cuIcon-pay text-gray"></view>
+    <input placeholder="请输入验证码"></input>
+    <text wx:if="{{getCodeing}}" class="cu-btn bg-green">{{times}}s后再次获取</text>
+    <text wx:else class="cu-btn bg-green" bindtap="getCode">获取验证码</text>
+  </view>
+</view>

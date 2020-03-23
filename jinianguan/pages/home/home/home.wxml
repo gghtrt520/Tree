@@ -7,25 +7,25 @@
   </swiper>
   <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
-      <text class='cuIcon-titles text-orange '></text> 我的关注
+      <text class='cuIcon-titles text-brown '></text> 我的关注
     </view>
     <view class='action' bindtap="goToMuseum" data-cur="museum">
-      <text class='text-orange'>更多》</text>
+      <text class='text-brown'>更多》</text>
     </view>
   </view>
   <view class="list">
     <view class="nodata">
-      <view class="cuIcon-newsfill text-red"></view>
-      <text class="text-red">暂无数据</text>
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
     </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
-      <text class='cuIcon-titles text-orange '></text> 时代人物
+      <text class='cuIcon-titles text-brown '></text> 时代人物
     </view>
     <view class='action'>
       <navigator url="/pages/list/list?title=时代人物" hover-class="none">
-        <text class='text-orange'>更多》</text>
+        <text class='text-brown'>更多》</text>
       </navigator>
     </view>
   </view>
@@ -37,17 +37,17 @@
       </view>
     </view>
     <view wx:else class="nodata">
-      <view class="cuIcon-newsfill text-red"></view>
-      <text class="text-red">暂无数据</text>
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
     </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
-      <text class='cuIcon-titles text-orange '></text> 艺术人生
+      <text class='cuIcon-titles text-brown '></text> 艺术人生
     </view>
     <view class='action'>
       <navigator url="/pages/list/list?title=艺术人生" hover-class="none">
-        <text class='text-orange'>更多》</text>
+        <text class='text-brown'>更多》</text>
       </navigator>
     </view>
   </view>
@@ -59,8 +59,8 @@
       </view>
     </view>
     <view wx:else class="nodata">
-      <view class="cuIcon-newsfill text-red"></view>
-      <text class="text-red">暂无数据</text>
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
     </view>
   </view>
   <view class='cu-tabbar-height'></view>

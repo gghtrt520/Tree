@@ -1,0 +1,4 @@
+/* pages/register/register.wxss */
+.cu-form-group .title{
+  font-size: 42rpx;
+}

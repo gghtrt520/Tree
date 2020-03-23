@@ -4,21 +4,21 @@
 <view class="cu-bar tabbar bg-white shadow foot">
   <view class="action" bindtap="NavChange" data-cur="home">
     <view class='cuIcon-cu-image'>
-      <text class="cuIcon-homefill text-{{PageCur=='home'?'orange':'gray'}}"></text>
+      <text class="cuIcon-homefill text-{{PageCur=='home'?'brown':'gray'}}"></text>
     </view>
-    <view class="{{PageCur=='home'?'text-orange':'text-gray'}}">首页</view>
+    <view class="{{PageCur=='home'?'text-brown':'text-gray'}}">首页</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="museum">
     <view class='cuIcon-cu-image'>
       <!-- <image src="/images/tabbar/component{{PageCur=='museum'?'_cur':''}}.png"></image> -->
-      <text class="cuIcon-apps text-{{PageCur=='museum'?'orange':'gray'}}"></text>
+      <text class="cuIcon-apps text-{{PageCur=='museum'?'brown':'gray'}}"></text>
     </view>
-    <view class="{{PageCur=='museum'?'text-orange':'text-gray'}}">纪念馆</view>
+    <view class="{{PageCur=='museum'?'text-brown':'text-gray'}}">纪念馆</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="my">
     <view class='cuIcon-cu-image'>
-      <text class="cuIcon-peoplefill text-{{PageCur=='my'?'orange':'gray'}}"></text>
+      <text class="cuIcon-peoplefill text-{{PageCur=='my'?'brown':'gray'}}"></text>
     </view>
-    <view class="{{PageCur=='my'?'text-orange':'text-gray'}}">我的</view>
+    <view class="{{PageCur=='my'?'text-brown':'text-gray'}}">我的</view>
   </view>
 </view>

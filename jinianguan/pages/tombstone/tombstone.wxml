@@ -1,8 +1,8 @@
 <!--pages/tombstone/tombstone.wxml-->
-<cu-custom bgColor="bg-gradual-orange" isCustom="{{true}}">
+<!-- <cu-custom bgColor="bg-gradual-brown" isCustom="{{true}}">
   <view slot="content">{{title}}</view>
-</cu-custom>
-<view class="content" style="height:calc(100vh - {{CustomBar}}px); background-image: url({{backImg}});">
+</cu-custom> -->
+<view class="content" style="height:calc(100vh); background-image: url({{backImg}});">
   <view class="avatar-c" style="background-image: url({{avatarImg}});"></view>
   <view class="toolbar">
     <view class="v-tool"><text class="cuIcon-musicfill text-yellow"></text></view>

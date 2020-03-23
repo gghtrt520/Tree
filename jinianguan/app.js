@@ -32,6 +32,8 @@ App({
               }
             }
           })
+        }else{
+          console.log(1)
         }
       }
     })

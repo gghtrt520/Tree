@@ -1,6 +1,6 @@
 <!--pages/museum/home/home.wxml-->
 <scroll-view scroll-y class="scrollPage">
-  <cu-custom bgColor="bg-gradual-orange" isCustom="{{false}}">
+  <cu-custom bgColor="bg-gradual-brown" isCustom="{{false}}">
     <view slot="content">纪念馆</view>
   </cu-custom>
   <view class="cu-bar search bg-white solid-bottom">
@@ -13,11 +13,11 @@
   </view>
   <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
-      <text class='cuIcon-titles text-orange '></text> 我的创建
+      <text class='cuIcon-titles text-brown '></text> 我的创建
     </view>
     <view class='action'>
       <navigator url="/pages/museum/create/create" hover-class="none">
-        <text class='cu-btn round bg-orange'>创建纪念馆</text>
+        <text class='cu-btn round bg-brown'>创建纪念馆</text>
       </navigator>
     </view>
   </view>
@@ -25,18 +25,18 @@
     <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
       <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
         <image mode="aspectFill" src="{{item.url}}"></image>
-        <view class="cu-tag text-red">审核中</view>
+        <view class="cu-tag text-brown">审核中</view>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>
     </view>
     <view wx:else class="nodata">
-      <view class="cuIcon-newsfill text-red"></view>
-      <text class="text-red">暂无数据</text>
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
     </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
-      <text class='cuIcon-titles text-orange '></text> 我的关注
+      <text class='cuIcon-titles text-brown '></text> 我的关注
     </view>
   </view>
   <view class="list">
@@ -44,14 +44,14 @@
       <block wx:for="{{listImg2}}" wx:key="*this">
         <view class="list-item" data-id="{{item.id}}" bindtap="goDetail">
           <image mode="aspectFill" src="{{item.url}}"></image>
-          <view class="cu-tag text-red">审核中</view>
+          <view class="cu-tag text-brown">审核中</view>
           <view class="item-text text-cut">{{item.name}}</view>
         </view>
       </block>
     </view>
     <view wx:else class="nodata">
-      <view class="cuIcon-newsfill text-red"></view>
-      <text class="text-red">暂无数据</text>
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
     </view>
   </view>
 </scroll-view>

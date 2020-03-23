@@ -1,6 +1,6 @@
 <!--pages/my/home/home.wxml-->
 <scroll-view scroll-y class="scrollPage">
-  <view class="userinfo bg-gradual-orange">
+  <view class="userinfo bg-black">
     <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>

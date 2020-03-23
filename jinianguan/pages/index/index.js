@@ -1,7 +1,7 @@
 const app = getApp();
 Page({
   data: {
-    userInfo: {},
+    userInfo: null,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     PageCur: 'home'
@@ -34,6 +34,13 @@ Page({
         }
       })
     }
+  },
+  onShow:function(){
+    // if (!this.data.userInfo){
+    //   wx.redirectTo({
+    //     url: '/pages/register/register',
+    //   })
+    // }
   },
   NavChange(e, options) {
     let cur;
