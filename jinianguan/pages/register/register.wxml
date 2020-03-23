@@ -1,6 +1,6 @@
 <!--pages/register/register.wxml-->
 <cu-custom bgColor="bg-gradual-brown" isBack="{{isBack}}">
-  <view slot="content">信息注册</view>
+  <view slot="content">西户云纪念馆</view>
 </cu-custom>
 <view>
   <view class="cu-form-group margin-top">
@@ -19,6 +19,10 @@
     <view class="title cuIcon-pay text-gray"></view>
     <input placeholder="请输入验证码"></input>
     <text wx:if="{{getCodeing}}" class="cu-btn bg-green">{{times}}s后再次获取</text>
-    <text wx:else class="cu-btn bg-green" bindtap="getCode">获取验证码</text>
+    <text wx:else class="cu-btn bg-brown" bindtap="getCode">获取验证码</text>
+  </view>
+  <view class="padding"></view>
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-brown lg">保存</button>
   </view>
 </view>

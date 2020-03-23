@@ -2,7 +2,7 @@
   "usingComponents": {
     "home": "/pages/home/home/home",
     "museum": "/pages/museum/home/home",
-    "nodata": "/pages/componts/nodata/nodata",
+    "saomu": "/pages/saomu/home/home",
     "my": "/pages/my/home/home"
   }
 }

@@ -1,5 +1,6 @@
 <home wx:if="{{PageCur=='home'}}" bind:goMuseum="NavChange"></home>
 <museum wx:if="{{PageCur=='museum'}}"></museum>
+<saomu wx:if="{{PageCur=='saomu'}}"></saomu>
 <my wx:if="{{PageCur=='my'}}"></my>
 <view class="cu-bar tabbar bg-white shadow foot">
   <view class="action" bindtap="NavChange" data-cur="home">
@@ -14,6 +15,12 @@
       <text class="cuIcon-apps text-{{PageCur=='museum'?'brown':'gray'}}"></text>
     </view>
     <view class="{{PageCur=='museum'?'text-brown':'text-gray'}}">纪念馆</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="saomu">
+    <view class='cuIcon-cu-image'>
+      <text class="cuIcon-evaluate text-{{PageCur=='saomu'?'brown':'gray'}}"></text>
+    </view>
+    <view class="{{PageCur=='saomu'?'text-brown':'text-gray'}}">代客扫墓</view>
   </view>
   <view class="action" bindtap="NavChange" data-cur="my">
     <view class='cuIcon-cu-image'>
