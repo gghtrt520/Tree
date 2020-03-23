@@ -1,0 +1,6 @@
+<!--pages/componts/cut-img/cut-img.wxml-->
+<view>
+  <button bindtap='button1'>选 择 图 片</button>
+  <button bindtap='button'>截 图 上 传</button>
+  <canvas class="map" disable-scroll="true" bindtouchstart="a1" bindtouchmove="a2" canvas-id="map_id"></canvas>
+</view>

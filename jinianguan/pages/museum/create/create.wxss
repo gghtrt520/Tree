@@ -7,3 +7,19 @@ form input{
   height: 90rpx;
   overflow: hidden;
 }
+.view-form{
+  position: relative;
+}
+.canvas-v{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 10;
+  background-color: #fff;
+}
+.map{
+  width: 100%;
+  height: calc(100% - 126rpx);
+}
