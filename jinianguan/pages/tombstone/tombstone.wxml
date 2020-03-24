@@ -1,8 +1,8 @@
 <!--pages/tombstone/tombstone.wxml-->
-<cu-custom bgColor="bg-gradual-brown" isCustom="{{true}}">
-  <view slot="content">{{title}}</view>
-</cu-custom>
-<view class="content" style="height:calc(100vh - {{CustomBar}}px); background-image: url({{backImg}});">
+<view class="content" style="height:100vh; background-image: url({{backImg}});">
+  <cu-custom bgColor="bg-gradual-brown" isCustom="{{true}}">
+    <view slot="content">{{title}}</view>
+  </cu-custom>
   <navigator url="/pages/museum/detail/detail" hover-class="none">
     <view class="avatar-c" style="background-image: url({{avatarImg}});"></view>
   </navigator>

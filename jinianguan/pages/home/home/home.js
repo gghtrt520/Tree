@@ -31,6 +31,12 @@ Component({
       this.triggerEvent('goMuseum', e.currentTarget.dataset, {
         bubbles: true
       })
+    },
+    goTombstnoe(e){
+      let id = e.currentTarget.dataset.id
+      wx.navigateTo({
+        url: "/pages/tombstone/tombstone?id=" + id
+      })
     }
   }
 })

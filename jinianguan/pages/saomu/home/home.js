@@ -13,5 +13,11 @@ Component({
         url: '/pages/plugin' + e.currentTarget.dataset.url
       })
     },
+    goPage(){
+      wx.showToast({
+        title: '功能研发中',
+        icon: 'none'
+      })
+    }
   }
 });

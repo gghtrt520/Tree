@@ -83,9 +83,9 @@
   <view class='canvas-v' wx:if="{{showCut}}">
     <canvas class="map" disable-scroll="true" bindtouchstart="a1" bindtouchmove="a2" canvas-id="map_id"></canvas>
     <view class="cu-bar btn-group">
-      <button class="cu-btn text-green line-green shadow" bindtap='cancelCut'>取消</button>
-      <button class="cu-btn bg-green shadow-blur" bindtap='button1'>相册</button>
-      <button class="cu-btn bg-green shadow-blur" bindtap='button'>上传</button>
+      <button class="cu-btn text-brown line-brown shadow" bindtap='cancelCut'>取消</button>
+      <button class="cu-btn bg-brown shadow-blur" bindtap='button1'>相册</button>
+      <button class="cu-btn bg-brown shadow-blur" bindtap='button'>上传</button>
     </view>
   </view>
 </view>

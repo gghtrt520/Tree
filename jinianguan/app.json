@@ -8,7 +8,8 @@
     "pages/tombstone/tombstone",
     "pages/museum/create/create",
     "pages/museum/detail/detail",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/museum/details/details"
   ],
   "window": {
     "navigationStyle": "custom"

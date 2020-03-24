@@ -1,0 +1,21 @@
+.v-saomu{
+  position: relative;
+  flex: 1;
+  background-image: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.btns{
+  padding: 0 100rpx;
+}
+.titles{
+  margin-top: 30%;
+  text-align: center;
+}
+.big-title{
+  font-size: 80rpx;
+}
+.sm-title{
+  font-size: 36rpx;
+}

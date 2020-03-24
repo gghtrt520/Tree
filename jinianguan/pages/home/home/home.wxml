@@ -31,7 +31,7 @@
   </view>
   <view class="list">
     <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-      <view wx:for="{{listImg}}" wx:key="*this" class="list-item">
+      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" bindtap='goTombstnoe'>
         <image mode="aspectFill" src="{{item.url}}"></image>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>
@@ -53,7 +53,7 @@
   </view>
   <view class="list">
     <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-      <view wx:for="{{listImg}}" wx:key="*this" class="list-item">
+      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" bindtap='goTombstnoe'>
         <image mode="aspectFill" src="{{item.url}}"></image>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>

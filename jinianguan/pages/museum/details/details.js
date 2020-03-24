@@ -1,13 +1,11 @@
-// pages/museum/detail/detail.js
+// pages/museum/details/details.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    title: "西户祭奠",
-    TabCur: 0,
-    scrollLeft: 0
+    title: "详情"
   },
 
   /**
@@ -30,12 +28,7 @@ Page({
   onShow: function () {
 
   },
-  tabSelect(e) {
-    this.setData({
-      TabCur: e.currentTarget.dataset.id,
-      scrollLeft: (e.currentTarget.dataset.id - 1) * 60
-    })
-  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
