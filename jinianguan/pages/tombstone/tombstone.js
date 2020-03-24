@@ -7,8 +7,8 @@ Page({
    */
   data: {
     CustomBar: app.globalData.CustomBar,
-    backImg:"../../images/mu1.jpg",
-    avatarImg:"../../images/邵逸夫.jpg",
+    backImg: app.globalData.server + '/upload/mu1.jpg',
+    avatarImg: app.globalData.server + '/upload/邵逸夫.jpg',
     title:"邵逸夫邵逸夫"
   },
 

@@ -64,6 +64,8 @@ Component({
           userInfo: e.detail.userInfo,
           hasUserInfo: true
         })
+        app.globalData.hasAtuo = true
+        loginUser(e.detail.userInfo, this)
       }else{
         this.setData({
           userInfo: null,
@@ -73,3 +75,45 @@ Component({
     }
   }
 })
+function loginUser(userInfo, that) {
+  // 登录
+  wx.login({
+    success: res => {
+      console.log(res.code)
+      // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      if (res.code) {
+        //发起网络请求
+        wx.request({
+          url: app.globalData.server + 'api/login',
+          method: 'post',
+          data: {
+            nick_name: userInfo.nickName,
+            avatar_url: userInfo.avatarUrl,
+            gender: userInfo.gender,
+            js_code: res.code
+          },
+          success(response) {
+            let data = response.data
+            if (data.code == 1) {
+              wx.setStorageSync('openid', data.data.openid)
+              app.globalData.openid = data.data.openid
+              app.globalData.access_token = data.data.access_token
+              console.log(app.globalData)
+            } else {
+              wx.showToast({
+                icon: 'none',
+                title: '登录失败，请重试'
+              })
+            }
+          },
+          fail(err) {
+            wx.showToast({
+              icon: 'none',
+              title: '登录失败，请重试'
+            })
+          }
+        })
+      }
+    }
+  })
+}

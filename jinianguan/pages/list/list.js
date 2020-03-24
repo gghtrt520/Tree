@@ -1,4 +1,5 @@
 // pages/list/list.js
+const app = getApp();
 Page({
 
   /**
@@ -10,12 +11,12 @@ Page({
       id: 1,
       type: 'image',
       name: '邵逸夫邵逸夫',
-      url: '/images/邵逸夫.jpg'
+      url: app.globalData.server + '/upload/邵逸夫.jpg'
     }, {
       id: 2,
       type: 'image',
       name: '邵逸夫',
-      url: '/images/邵逸夫.jpg'
+      url: app.globalData.server + '/upload/邵逸夫.jpg'
     }]
   },
 

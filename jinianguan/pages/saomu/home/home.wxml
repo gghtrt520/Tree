@@ -1,12 +1,13 @@
 <view style='display:flex;height:100vh;'>
-<view class="v-saomu" style='background-image: url("/images/saomubg.jpg");'>
+<view class="v-saomu" style='background-image: url({{bgImg}});'>
   <view class='titles'>
     <text class='big-title'>西户</text>
     <text class='sm-title'>云纪念馆</text>
   </view>
   <view class="padding flex flex-direction btns" style="margin-top:60%;">
-    <button class="cu-btn bg-black lg">在线祭扫</button>
-    <button class="cu-btn bg-black margin-tb-sm lg">代客祭扫</button>
+    <button class="cu-btn bg-black lg" bindtap="goPage">在线祭扫</button>
+    <br/><br/>
+    <button class="cu-btn bg-black margin-tb-sm lg" bindtap="goPage">代客祭扫</button>
   </view>
 </view>
 <view class='cu-tabbar-height'></view>

@@ -3,14 +3,14 @@
   position: relative;
   width: 100vw;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100% 100%;
   background-position: center center;
   overflow: hidden;
 }
 .avatar-c{
   position: absolute;
-  width: 180rpx;
-  height: 180rpx;
+  width: 260rpx;
+  height: 260rpx;
   top:25%;
   left: 50%;
   background-repeat: no-repeat;
@@ -32,4 +32,7 @@
   border-radius: 50%;
   font-size: 50rpx;
   margin-bottom: 50rpx;
+}
+.bg-gradual-white .cuIcon-back{
+  color: white;
 }

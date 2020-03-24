@@ -1,5 +1,5 @@
 <!--pages/search/search.wxml-->
-<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
+<cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
     <view slot="content">搜索</view>
   </cu-custom>
 <view class="cu-bar bg-white search">
@@ -8,6 +8,6 @@
     <input type="text" placeholder="搜索纪念馆" confirm-type="search"></input>
   </view>
   <view class="action">
-    <text class="cu-btn round bg-blue" style="width:auto;">搜索</text>
+    <text class="cu-btn round bg-brown" style="width:auto;">搜索</text>
   </view>
 </view>

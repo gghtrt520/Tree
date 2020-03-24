@@ -5,7 +5,8 @@ Component({
   },
   data: {
     StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar
+    CustomBar: app.globalData.CustomBar,
+    bgImg: app.globalData.server + '/upload/saomubg.jpg'
   },
   methods: {
     toChild(e) {

@@ -1,4 +1,4 @@
-// pages/museum/home/home.js
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -15,12 +15,12 @@ Component({
       id: 1,
       type: 'image',
       name: '邵逸夫邵逸夫',
-      url: '/images/邵逸夫.jpg'
+      url: app.globalData.server + '/upload/邵逸夫.jpg'
     }, {
       id: 2,
       type: 'image',
       name: '邵逸夫',
-      url: '/images/邵逸夫.jpg'
+        url: app.globalData.server + '/upload/邵逸夫.jpg'
     }],
     listImg2:[]
   },

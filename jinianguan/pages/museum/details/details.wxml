@@ -1,12 +1,57 @@
 <!--pages/museum/details/details.wxml-->
-<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
-  <view slot="content">{{title}}</view>
-</cu-custom>
-<scroll-view scroll-y class="scrollPage">
-<view style='background-image:url(/images/)'>
-  <view>头像</view>
-</view>
-<view>
 
-</view>
+<scroll-view scroll-y class="scrollPage bg-white">
+  <view style="background-image: url({{bgImg}})" class="v-header">
+    <cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
+      <view slot="content"></view>
+    </cu-custom>
+    <view style="background-image: url({{avatarImg}})" class="headerImg"></view>
+    <view class="btn-video">事迹</view>
+  </view>
+  <view class="padding bg-white">
+    <text>当前祭扫人数：1534</text>
+    <view class="padding tongji">
+      <view class="item">
+        <view class="bg-img" style="background-image: url({{huaImg}})"></view>
+        <text>20</text>
+        <text>鲜花</text>
+      </view>
+      <view class="item">
+        <view class="bg-img" style="background-image: url({{liImg}})"></view>
+        <text>20</text>
+        <text>祭果</text>
+      </view>
+      <view class="item">
+        <view class="bg-img" style="background-image: url({{liyiImg}})"></view>
+        <text>20</text>
+        <text>祭拜</text>
+      </view>
+    </view>
+    <view class="jiyu bg-black padding">
+      <text>岁哈根还哦收到后宫啊说公司岁哈根还哦收到后宫啊说公司，岁哈根还哦收到后宫啊说公司，岁哈根还哦收到后宫啊说公司</text>
+      <view class="btn-jiyu">
+        <view class="cu-btn">寄 语
+          <text class="cuIcon-writefill"></text>
+        </view>
+      </view>
+    </view>
+    <view class="padding list-liwu">
+      <view>
+        <text>撒共i啊说狗爱上冬瓜搜狗</text>
+        <text>2010-01-02</text>
+      </view>
+      <view>
+        <text>撒共i啊说狗爱上冬瓜搜狗</text>
+        <text>2010-01-02</text>
+      </view>
+      <view>
+        <text>撒共i啊说狗爱上冬瓜搜狗</text>
+        <text>2010-01-02</text>
+      </view>
+      <view>
+        <text>撒共i啊说狗爱上冬瓜搜狗</text>
+        <text>2010-01-02</text>
+      </view>
+    </view>
+  </view>
 </scroll-view>

@@ -25,7 +25,7 @@
     <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
       <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
         <image mode="aspectFill" src="{{item.url}}"></image>
-        <view class="cu-tag text-brown">审核中</view>
+        <view class="cu-tag text-blue">审核中</view>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>
     </view>
@@ -44,7 +44,7 @@
       <block wx:for="{{listImg2}}" wx:key="*this">
         <view class="list-item" data-id="{{item.id}}" bindtap="goDetail">
           <image mode="aspectFill" src="{{item.url}}"></image>
-          <view class="cu-tag text-brown">审核中</view>
+          <view class="cu-tag text-blue">审核中</view>
           <view class="item-text text-cut">{{item.name}}</view>
         </view>
       </block>

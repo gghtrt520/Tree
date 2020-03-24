@@ -1,7 +1,6 @@
 // pages/museum/create/create.js
 const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -118,18 +117,21 @@ Page({
       success: function (res) {
         coordinate.img = res.tempFilePaths[0]
         _this.setData({
-          coordinate: coordinate,
-          showCut: true
+          avatarUrl: res.tempFilePaths[0]
         })
-        var ctx = wx.createCanvasContext('map_id');
-        console.log(ctx);
-        ctx.drawImage(coordinate.img, 0, 0, coordinate.px, coordinate.px);
-        ctx.setLineWidth(3)
-        ctx.setStrokeStyle('#0065fa')
-        ctx.rect(coordinate.x, coordinate.y, coordinate.px - 100, coordinate.px - 100)
-        ctx.setLineJoin('round')
-        ctx.stroke()
-        ctx.draw()
+        // _this.setData({
+        //   coordinate: coordinate,
+        //   showCut: true
+        // })
+        // var ctx = wx.createCanvasContext('map_id');
+        // console.log(coordinate);
+        // ctx.drawImage(coordinate.img, 0, 0, coordinate.px, coordinate.px);
+        // ctx.setLineWidth(3)
+        // ctx.setStrokeStyle('#0065fa')
+        // ctx.rect(coordinate.x, coordinate.y, coordinate.px - 100, coordinate.px - 100)
+        // ctx.setLineJoin('round')
+        // ctx.stroke()
+        // ctx.draw()
       }
     })
   },

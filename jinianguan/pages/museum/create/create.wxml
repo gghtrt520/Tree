@@ -6,7 +6,7 @@
   <view class="cu-form-group">
     <view class="title">头像</view>
     <view class="cu-avatar radius bg-gray" bindtap="ChooseImage">
-      <image wx:if="{{avatarUrl}}" src='{{avatarUrl}}' mode='aspectFill'></image>
+      <image wx:if="{{avatarUrl}}" src='{{avatarUrl}}' mode='aspectFit'></image>
       <text wx:else class="cuIcon-cameraadd"></text>
     </view>
   </view>

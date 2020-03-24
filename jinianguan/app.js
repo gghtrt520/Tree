@@ -10,15 +10,17 @@ App({
       }
     })
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //   }
+    // })
     // 获取用户信息
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
+          console.log(1)
+          this.globalData.hasAtuo = true
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
@@ -33,12 +35,17 @@ App({
             }
           })
         }else{
-          console.log(1)
+          console.log(2)
+          this.globalData.hasAtuo = false
         }
       }
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    hasAtuo: true,
+    access_token:"",
+    openid:"",
+    server: 'https://xcx.xhbinyi.com/'
   }
 })

@@ -2,7 +2,7 @@
   position: relative;
   flex: 1;
   background-image: center;
-  background-size: contain;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow: hidden;
 }

@@ -1,4 +1,73 @@
 /* pages/museum/details/details.wxss */
-l{
-   
+
+.v-header {
+  position: relative;
+  height: 580rpx;
+  overflow: hidden;
+}
+
+.headerImg {
+  position: absolute;
+  width: 260rpx;
+  height: 260rpx;
+  left: 50%;
+  top: 240rpx;
+  transform: translate(-50%,-25%);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+.bg-gradual-brown .cuIcon-back{
+  color: white;
+}
+
+.tongji{
+  display: flex;
+  justify-content: space-around;
+}
+.tongji .item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+.tongji .bg-img{
+  width: 100rpx;
+  height: 100rpx;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.jiyu{
+  position: relative;
+  border-radius: 20rpx;
+  min-height: 100rpx;
+  line-height: 2;
+  margin: 0 5%;
+}
+.btn-jiyu{
+  text-align: right;
+}
+.btn-jiyu .cu-btn{
+  margin-top: 20rpx;
+  border-radius: 8rpx;
+  border:2rpx solid white;
+  color: white;
+  background-color: transparent;
+}
+.list-liwu{
+  line-height: 2;
+  color: #111;
+}
+.btn-video{
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  background-color: rgba(1, 1, 1, 0.7);
+  color: white;
+  padding: 18rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 32rpx;
 }

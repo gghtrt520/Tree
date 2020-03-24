@@ -1,11 +1,16 @@
 // pages/museum/details/details.js
+const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    title: "详情"
+    title: "详情",
+    bgImg: app.globalData.server + "/upload/peoplebg.jpg",
+    avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
+    huaImg: app.globalData.server + "/upload/hua.png",
+    liImg: app.globalData.server + "/upload/lipin.png",
+    liyiImg: app.globalData.server + "/upload/liyi.jpg"
   },
 
   /**
