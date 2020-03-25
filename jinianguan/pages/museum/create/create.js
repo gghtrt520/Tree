@@ -18,7 +18,7 @@ Page({
     avatarUrl: null,
     picker: ['男', '女'],
     type: ['免费'],
-    authority: ['公开', '仅自己可见'],
+    authority: ['仅自己可见','公开'],
     religion: ['无', '道教', '佛教', '基督教'],
     date1: '1900-01-01',
     date2: '1900-01-01',
@@ -151,19 +151,19 @@ Page({
           var params = {}
           params.url = "api/rooms"
           params.data = {
-            "Room[user_id]": app.globalData.user_id,
-            "Room[avatar_url]": imgPath,
-            "Room[name]": _this.data.name,
-            "Room[gender]": _this.data.picker[_this.data.sex],
-            "Room[birthdate]": _this.data.date1,
-            "Room[death]": _this.data.date2,
-            "Room[age]": _this.data.age,
-            "Room[province]": _this.data.region[0],
-            "Room[city]": _this.data.region[1],
-            "Room[area]": _this.data.region[2],
-            "Room[religion]": _this.data.religion[_this.data.religionInd],
-            "Room[category]": _this.data.type[_this.data.typeInd],
-            "Room[rule]": _this.data.authority[_this.data.authorityInd]
+            "user_id": app.globalData.user_id,
+            "avatar_url": imgPath,
+            "name": _this.data.name,
+            "gender": _this.data.picker[_this.data.sex],
+            "birthdate": _this.data.date1,
+            "death": _this.data.date2,
+            "age": _this.data.age,
+            "province": _this.data.region[0],
+            "city": _this.data.region[1],
+            "area": _this.data.region[2],
+            "religion": _this.data.religion[_this.data.religionInd],
+            "category": _this.data.type[_this.data.typeInd],
+            "rule": _this.data.authorityInd
           }
           if(_this.data.id){
             params.data.id = _this.data.id

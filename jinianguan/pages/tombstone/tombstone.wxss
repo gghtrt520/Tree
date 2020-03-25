@@ -36,3 +36,14 @@
 .bg-gradual-white .cuIcon-back{
   color: white;
 }
+.lipin{
+  position: absolute;
+  padding: 10rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-color: red;
+  z-index: 10;
+}

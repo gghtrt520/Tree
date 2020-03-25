@@ -3,10 +3,13 @@ App({
   onLaunch: function () {
     wx.getSystemInfo({
       success: e => {
+        console.log(e)
         this.globalData.StatusBar = e.statusBarHeight;
         let custom = wx.getMenuButtonBoundingClientRect();
         this.globalData.Custom = custom;
         this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+        this.globalData.pixelRatio = e.pixelRatio;
+        this.globalData.windowView = [e.windowWidth, e.windowHeight];
       }
     })
     // 登录
@@ -19,7 +22,7 @@ App({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-          console.log(1)
+          console.log("已授权")
           this.globalData.hasAtuo = true
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
@@ -35,7 +38,7 @@ App({
             }
           })
         }else{
-          console.log(2)
+          console.log("未授权")
           this.globalData.hasAtuo = false
         }
       }
