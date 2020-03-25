@@ -8,20 +8,33 @@ Page({
   data: {
     // 拖拽参数
     writePosition: [50, 50], //默认定位参数
-    writesize: [0, 0],// X Y 定位
+    writesize: [0, 0], // X Y 定位
     window: [0, 0], //屏幕尺寸
     write: [0, 0], //定位参数
-    scrolltop: 0,//据顶部距离
+    scrolltop: 0, //据顶部距离
     CustomBar: app.globalData.CustomBar,
     backImg: app.globalData.server + '/upload/mu1.jpg',
     avatarImg: app.globalData.server + '/upload/邵逸夫.jpg',
-    title:"邵逸夫邵逸夫"
+    title: "邵逸夫邵逸夫",
+    liNums: [{
+      id: "1",
+      writePosition: [50, 50], //默认定位参数
+      writesize: [0, 0], // X Y 定位
+      write: [0, 0], //定位参数
+      isMy: 0
+    }, {
+      id: "2",
+      writePosition: [30, 30], //默认定位参数
+      writesize: [0, 0], // X Y 定位
+      write: [0, 0], //定位参数
+      isMy: 1
+    }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(options)
     let that = this;
     that.getSysdata();
@@ -30,21 +43,21 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
   //计算默认定位值
-  getSysdata: function () {
+  getSysdata: function() {
     var that = this;
     wx.getSystemInfo({
-      success: function (e) {
+      success: function(e) {
         that.data.window = [e.windowWidth, e.windowHeight];
         var write = [];
         write[0] = that.data.window[0] * that.data.writePosition[0] / 100;
@@ -52,60 +65,61 @@ Page({
         console.log(write, 45);
         that.setData({
           write: write
-        }, function () {
+        }, function() {
           // 获取元素宽高
-          wx.createSelectorQuery().select('.content').boundingClientRect(function (res) {
+          wx.createSelectorQuery().select('.content').boundingClientRect(function(res) {
             console.log(res.width)
             that.data.writesize = [res.width, res.height];
           }).exec();
         });
       },
-      fail: function (e) {
+      fail: function(e) {
         console.log(e);
       }
     });
   },
   //开始拖拽  
-  touchmove: function (e) {
+  touchmove: function(e) {
     var that = this;
-    var position = [e.touches[0].pageX - that.data.writesize[0] / 2, e.touches[0].pageY - that.data.writesize[1] / 2 - this.data.scrolltop];
+    var position = [e.touches[0].pageX, e.touches[0].pageY - this.data.scrolltop];
     that.setData({
       write: position
     });
+    console.log(that.data.write)
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

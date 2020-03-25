@@ -137,7 +137,7 @@ Page({
       mask: true
     })
     wx.uploadFile({
-      url: app.globalData.server + 'api/rooms/upload?access_token=' + app.globalData.access_token, //接口
+      url: app.globalData.server + 'api/upload?access_token=' + app.globalData.access_token, //接口
       filePath: this.data.avatarUrl,
       name: 'Room[avatar_url]',
       formData: {
@@ -149,7 +149,7 @@ Page({
         if(data.code == 1){
           var imgPath = data.data.path;
           var params = {}
-          params.url = "api/rooms"
+          params.url = "api/add"
           params.data = {
             "user_id": app.globalData.user_id,
             "avatar_url": imgPath,
@@ -170,6 +170,15 @@ Page({
           }
           http(params).then(res=>{
             console.log(res)
+            wx.showToast({
+              title: "保存成功",
+              icon: 'none'
+            });
+            setTimeout(()=>{
+              wx.navigateBack({
+                delta: 1
+              })
+            },2000);
           })
         }else{
           wx.hideLoading();

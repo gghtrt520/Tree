@@ -1,5 +1,5 @@
 <!--pages/tombstone/tombstone.wxml-->
-<view class="content" style="height:100vh; background-image: url({{backImg}});">
+<movable-area class="content" style="height:100vh; background-image: url({{backImg}});">
   <cu-custom bgColor="bg-gradual-white" isBack="{{true}}">
     <view slot="content"></view>
   </cu-custom>
@@ -20,7 +20,7 @@
       <text class="cuIcon-present text-yellow"></text>
     </view>
   </view>
-  <view>
-    <view class='lipin' bindtouchmove="touchmove" catch:touchmove style='left:{{write[0]}}px;top:{{write[1]}}px;'>鲜花</view>
-  </view>
-</view>
+  <block wx:for="{{liNums}}" wx:key="{{item.id}}">
+    <view class='lipin' bindtouchmove="touchmove" data-isMy="" catch:touchmove style='left:{{write[0]}}px;top:{{write[1]}}px;'>鲜花</view>
+  </block>
+</movable-area>

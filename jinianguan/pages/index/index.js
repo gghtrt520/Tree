@@ -105,6 +105,7 @@ function loginUser(userInfo, that) {
             js_code: res.code
           },
           success(response) {
+            console.log(response)
             let data = response.data
             if (data.code == 1) {
               wx.setStorageSync('openid', data.data.openid)
