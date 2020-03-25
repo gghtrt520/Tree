@@ -9,7 +9,8 @@
     "pages/museum/create/create",
     "pages/museum/detail/detail",
     "pages/register/register",
-    "pages/museum/details/details"
+    "pages/museum/details/details",
+    "pages/museum/sortDetail/sortDetail"
   ],
   "window": {
     "navigationStyle": "custom"

@@ -44,6 +44,7 @@ App({
   globalData: {
     userInfo: null,
     hasAtuo: true,
+    user_id: "",
     access_token:"",
     openid:"",
     server: 'https://xcx.xhbinyi.com/'

@@ -1,16 +1,23 @@
 // pages/museum/create/create.js
 const app = getApp();
+const http = require("../../../utils/http.js");
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     CustomBar: app.globalData.CustomBar,
+    id: null,
     sex: "0",
+    name:"",
+    jiyuText:"山河已安好，英雄可回家。烈士纪念日，向英烈致敬！",
     religionInd: "0",
     authorityInd: "0",
+    typeInd: "0",
+    age: "",
     avatarUrl: null,
     picker: ['男', '女'],
+    type: ['免费'],
     authority: ['公开', '仅自己可见'],
     religion: ['无', '道教', '佛教', '基督教'],
     date1: '1900-01-01',
@@ -70,6 +77,7 @@ Page({
   onReady: function() {
 
   },
+  typePickerChange(e){},
   sexPickerChange(e) {
     console.log(e)
     this.setData({
@@ -86,6 +94,94 @@ Page({
       authorityInd: e.detail.value
     })
   },
+  // 姓名
+  inputName(e){
+    var value = e.detail.value
+    this.setData({
+      name: e.detail.value
+    })
+  },
+  // 寄语
+  inputJiyu(e) {
+    var value = e.detail.value
+    this.setData({
+      jiyuText: e.detail.value
+    })
+  },
+  // 保存
+  saveInfo(e){
+    var _this = this
+    if(this.data.name == ""){
+      wx.showToast({
+        title: '请输入逝者姓名',
+        icon: 'none'
+      })
+      return;
+    }
+    if (this.data.jiyuText == "") {
+      wx.showToast({
+        title: '请输入寄语',
+        icon: 'none'
+      })
+      return;
+    }
+    if (this.data.age == "") {
+      wx.showToast({
+        title: '请选择生辰忌日',
+        icon: 'none'
+      })
+      return;
+    }
+    wx.showLoading({
+      title: '上传中',
+      mask: true
+    })
+    wx.uploadFile({
+      url: app.globalData.server + 'api/rooms/upload?access_token=' + app.globalData.access_token, //接口
+      filePath: this.data.avatarUrl,
+      name: 'Room[avatar_url]',
+      formData: {
+        access_token: app.globalData.access_token
+      },
+      success: function (res) {
+        console.log(res)
+        var data = JSON.parse(res.data);
+        if(data.code == 1){
+          var imgPath = data.data.path;
+          var params = {}
+          params.url = "api/rooms"
+          params.data = {
+            "Room[user_id]": app.globalData.user_id,
+            "Room[avatar_url]": imgPath,
+            "Room[name]": _this.data.name,
+            "Room[gender]": _this.data.picker[_this.data.sex],
+            "Room[birthdate]": _this.data.date1,
+            "Room[death]": _this.data.date2,
+            "Room[age]": _this.data.age,
+            "Room[province]": _this.data.region[0],
+            "Room[city]": _this.data.region[1],
+            "Room[area]": _this.data.region[2],
+            "Room[religion]": _this.data.religion[_this.data.religionInd],
+            "Room[category]": _this.data.type[_this.data.typeInd],
+            "Room[rule]": _this.data.authority[_this.data.authorityInd]
+          }
+          if(_this.data.id){
+            params.data.id = _this.data.id
+          }
+          http(params).then(res=>{
+            console.log(res)
+          })
+        }else{
+          wx.hideLoading();
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
+        }
+      }
+    })
+    
+  },
   PickerChange(e) {
     this.setData({
       sex: e.detail.value
@@ -95,11 +191,23 @@ Page({
     this.setData({
       date1: e.detail.value
     })
+    if(this.data.date2){
+      var age = GetAge(e.detail.value, this.data.date2);
+      this.setData({
+        age:age
+      })
+    }
   },
   deathDateChange(e) {
     this.setData({
       date2: e.detail.value
     })
+    if (this.data.date1) {
+      var age = GetAge(this.data.date1, e.detail.value);
+      this.setData({
+        age: age
+      })
+    }
   },
   RegionChange: function(e) {
     console.log(e)
@@ -302,3 +410,42 @@ Page({
 
   }
 })
+function GetAge(strBirthday,deathDay) {
+  var returnAge,
+    strBirthdayArr = strBirthday.split("-"),
+    birthYear = strBirthdayArr[0],
+    birthMonth = strBirthdayArr[1],
+    birthDay = strBirthdayArr[2],
+    d = new Date(),
+    deathDayArr = deathDay.split("-"),
+    nowYear = deathDayArr[0],
+    nowMonth = deathDayArr[1],
+    nowDay = deathDayArr[2];
+  if (nowYear == birthYear) {
+    returnAge = 0;//同年 则为0周岁
+  }
+  else {
+    var ageDiff = nowYear - birthYear; //年之差
+    if (ageDiff > 0) {
+      if (nowMonth == birthMonth) {
+        var dayDiff = nowDay - birthDay;//日之差
+        if (dayDiff < 0) {
+          returnAge = ageDiff - 1;
+        } else {
+          returnAge = ageDiff;
+        }
+      } else {
+        var monthDiff = nowMonth - birthMonth;//月之差
+        if (monthDiff < 0) {
+          returnAge = ageDiff - 1;
+        }
+        else {
+          returnAge = ageDiff;
+        }
+      }
+    } else {
+      returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+    }
+  }
+  return returnAge;//返回周岁年龄
+}

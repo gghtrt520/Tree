@@ -3,7 +3,7 @@
   <cu-custom bgColor="bg-gradual-white" isBack="{{true}}">
     <view slot="content"></view>
   </cu-custom>
-  <navigator url="/pages/museum/details/details" hover-class="none">
+  <navigator url="/pages/museum/sortDetail/sortDetail" hover-class="none">
     <view class="avatar-c" style="background-image: url({{avatarImg}});"></view>
   </navigator>
   <view class="toolbar">

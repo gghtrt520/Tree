@@ -109,6 +109,7 @@ function loginUser(userInfo, that) {
             if (data.code == 1) {
               wx.setStorageSync('openid', data.data.openid)
               app.globalData.openid = data.data.openid
+              app.globalData.user_id = data.data.user_id
               app.globalData.access_token = data.data.access_token
               console.log(app.globalData)
             } else {
