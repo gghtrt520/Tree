@@ -20,13 +20,20 @@ Page({
   onLoad: function (options) {
     if (options.type == 2){
       this.setData({
-        bgImg: app.globalData.server + "/upload/peoplebg.jpg",
-        huaImg: app.globalData.server + "/upload/hua.png",
-        liImg: app.globalData.server + "/upload/lipin.png",
-        liyiImg: app.globalData.server + "/upload/liyi.jpg",
-        jiyuImg: app.globalData.server + "/upload/liyi.jpg"
+        bgImg: "/images/mu1-bg.jpg",
+        huaImg: "/images/b.png",
+        liImg: "/images/j.png",
+        liyiImg: "/images/d.png",
+        jiyuImg: "/images/jiyubg.jpg"
       })
     }
+    this.setData({
+      bgImg: "/images/mu1-bg.jpg",
+      huaImg: "/images/b.png",
+      liImg: "/images/j.png",
+      liyiImg: "/images/d.png",
+      jiyuImg: "/images/jiyubg.jpg"
+    })
   },
 
   /**

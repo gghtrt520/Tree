@@ -4,10 +4,16 @@ Page({
   data: {
     userInfo: null,
     hasUserInfo: false,
+    homeData1: [],
+    homeData2: [],
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     PageCur: 'home'
   },
   onLoad: function() {
+    wx.showLoading({
+      title: '加载中...',
+      mask: true
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -88,11 +94,26 @@ Page({
     }
   },
   getHomeData() {
+    var that = this;
     http({
       url: "api/show",
-      data: { category: ["时代人物", '艺术人生'] }
+      data: { category: ["时代人物"] }
     }).then(res => {
-      console.log(res)
+      if(res.code == 1){
+        that.setData({
+          homeData1:res.data
+        })
+      }
+    });
+    http({
+      url: "api/show",
+      data: { category: ["艺术人生"] }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          homeData2: res.data
+        })
+      }
     })
   }
 })
@@ -116,6 +137,7 @@ function loginUser(userInfo, that) {
           },
           success(response) {
             let data = response.data
+            wx.hideLoading();
             if (data.code == 1) {
               wx.setStorageSync('openid', data.data.openid)
               app.globalData.openid = data.data.openid
@@ -131,6 +153,7 @@ function loginUser(userInfo, that) {
             }
           },
           fail(err) {
+            app.globalData.hasAtuo = false;
             wx.showToast({
               icon: 'none',
               title: '登录失败，请重试'

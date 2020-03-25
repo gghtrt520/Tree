@@ -1,11 +1,22 @@
 /* pages/museum/sortDetail.wxss */
+.bg-gradual-white .cuIcon-back{
+  color: white;
+}
 
 .v-header {
   position: relative;
   height: 580rpx;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center center;
   overflow: hidden;
 }
-
+.scroll-content{
+  height: clac(100vh - 640rpx);
+}
+.jisao-nums{
+  font-size: 32rpx;
+}
 .headerImg {
   position: absolute;
   width: 260rpx;
@@ -37,24 +48,24 @@
   width: 100rpx;
   height: 100rpx;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 200%;
   background-position: center center;
 }
 .jiyu{
+  padding: 50rpx 80rpx;
   position: relative;
   border-radius: 20rpx;
-  min-height: 100rpx;
+  min-height: 230rpx;
   line-height: 2;
   margin: 0 5%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 .btn-jiyu{
   text-align: right;
+  margin-top: -28rpx;
 }
 .btn-jiyu .cu-btn{
-  margin-top: 20rpx;
-  border-radius: 8rpx;
-  border:2rpx solid white;
-  color: white;
   background-color: transparent;
 }
 .list-liwu{

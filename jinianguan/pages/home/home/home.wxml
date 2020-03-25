@@ -30,9 +30,9 @@
     </view>
   </view>
   <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" bindtap='goTombstnoe'>
-        <image mode="aspectFill" src="{{item.url}}"></image>
+    <view class="padding grid col-2 grid-square" wx:if="{{homeData1.length>0}}">
+      <view wx:for="{{homeData1}}" wx:key="*this" data-id="{{item.id}}" class="list-item" bindtap='goTombstnoe'>
+        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>
     </view>
@@ -52,9 +52,9 @@
     </view>
   </view>
   <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" bindtap='goTombstnoe'>
-        <image mode="aspectFill" src="{{item.url}}"></image>
+    <view class="padding grid col-2 grid-square" wx:if="{{homeData2.length>0}}">
+      <view wx:for="{{homeData2}}" wx:key="*this" data-id="{{item.id}}" class="list-item" bindtap='goTombstnoe'>
+        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>
     </view>

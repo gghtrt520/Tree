@@ -1,11 +1,13 @@
 // pages/search/search.js
+const http = require("../../utils/http.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    listImg:[],
+    key:""
   },
 
   /**
@@ -21,7 +23,15 @@ Page({
   onReady: function () {
 
   },
-
+  searchData(e){
+    this.getData(this.data.key);
+  },
+  goDetail(e) {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: "/pages/museum/sortDetail/sortDetail?id=" + id
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -62,5 +72,24 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  keyInput(e){
+    this.setData({
+      key: e.detail.value
+    })
+  },
+  getData(key) {
+    var that = this;
+    http({
+      url: "api/self",
+      data: { name: key }
+    }).then(res => {
+      console.log(res);
+      if (res.code == 1) {
+        that.setData({
+          listImg: res.data
+        })
+      }
+    });
+  },
 })

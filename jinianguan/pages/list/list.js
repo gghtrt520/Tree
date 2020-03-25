@@ -1,5 +1,6 @@
 // pages/list/list.js
 const app = getApp();
+const http = require("../../utils/http.js");
 Page({
 
   /**
@@ -7,17 +8,7 @@ Page({
    */
   data: {
     title: '',
-    listImg: [{
-      id: 1,
-      type: 'image',
-      name: '邵逸夫邵逸夫',
-      url: app.globalData.server + '/upload/邵逸夫.jpg'
-    }, {
-      id: 2,
-      type: 'image',
-      name: '邵逸夫',
-      url: app.globalData.server + '/upload/邵逸夫.jpg'
-    }]
+    listImg: []
   },
 
   /**
@@ -33,7 +24,23 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    var that = this;
+    http({
+      url: "api/show",
+      data: { category: [that.data.title] }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          listImg: res.data
+        })
+      }
+    })
+  },
+  goDetail(e) {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: "/pages/museum/sortDetail/sortDetail?id=" + id
+    })
   },
 
   /**

@@ -1,5 +1,15 @@
 const app = getApp();
 Component({
+  properties: {
+    homeData1: {
+      type: null,//类型
+      value: []//默认值
+    },
+    homeData2: {
+      type: null,//类型
+      value: []//默认值
+    }
+  },
   options: {
     addGlobalClass: true,
   },
@@ -14,17 +24,7 @@ Component({
       type: 'image',
       url: app.globalData.server + '/upload/banner/banner1.jpg',
     }],
-    listImg: [{
-      id: 1,
-      type: 'image',
-      name: '邵逸夫邵逸夫',
-      url: app.globalData.server + '/upload/邵逸夫.jpg'
-    }, {
-      id: 2,
-      type: 'image',
-      name: '邵逸夫',
-      url: app.globalData.server + '/upload/邵逸夫.jpg'
-    }]
+    listImg: []
   },
   lifetimes: {
     attached() {
@@ -50,7 +50,7 @@ Component({
       }
       let id = e.currentTarget.dataset.id
       wx.navigateTo({
-        url: "/pages/tombstone/tombstone?id=" + id
+        url: "/pages/museum/sortDetail/sortDetail?id=" + id
       })
     }
   }

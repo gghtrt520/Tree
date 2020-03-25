@@ -1,4 +1,5 @@
 const app = getApp();
+const http = require("../../../utils/http.js");
 Component({
   /**
    * 组件的属性列表
@@ -11,20 +12,16 @@ Component({
    * 组件的初始数据
    */
   data: {
-    listImg: [{
-      id: 1,
-      type: 'image',
-      name: '邵逸夫邵逸夫',
-      url: app.globalData.server + '/upload/邵逸夫.jpg'
-    }, {
-      id: 2,
-      type: 'image',
-      name: '邵逸夫',
-        url: app.globalData.server + '/upload/邵逸夫.jpg'
-    }],
+    listImg: [],
     listImg2:[]
   },
+  lifetimes: {
+    attached() {
+    this.getHomeData();
+    }
+  },
 
+  
   /**
    * 组件的方法列表
    */
@@ -32,8 +29,22 @@ Component({
     goDetail(e){
       let id = e.currentTarget.dataset.id
       wx.navigateTo({
-        url: "/pages/tombstone/tombstone?id=" + id
+        url: "/pages/museum/sortDetail/sortDetail?id=" + id
       })
-    }
+    },
+    getHomeData() {
+      var that = this;
+      http({
+        url: "api/self",
+        data: {}
+      }).then(res => {
+        console.log(res);
+        if (res.code == 1) {
+          that.setData({
+            listImg: res.data
+          })
+        }
+      });
+    },
   }
 })

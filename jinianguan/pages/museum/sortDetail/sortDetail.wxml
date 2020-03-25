@@ -1,39 +1,35 @@
 <!--pages/museum/details/details.wxml-->
 
-<scroll-view scroll-y class="scrollPage bg-white">
+<view scroll-y class="bg-white">
   <view style="background-image: url({{bgImg}})" class="v-header">
-    <cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
+    <cu-custom bgColor="bg-gradual-white" isBack="{{true}}">
       <view slot="content"></view>
     </cu-custom>
     <view style="background-image: url({{avatarImg}})" class="headerImg"></view>
-    <view class="btn-video">事迹</view>
+    <!-- <view class="btn-video">事迹</view> -->
   </view>
-  <view class="padding bg-white">
-    <text>当前祭扫人数：1534</text>
+  <scroll-view scroll-y class="scroll-content padding bg-white">
+    <text class="jisao-nums">当前祭扫人数：1534</text>
     <view class="padding tongji">
       <view class="item">
         <view class="bg-img" style="background-image: url({{huaImg}})"></view>
-        <text>20</text>
+        <!-- <text>20</text> -->
         <text>鲜花</text>
       </view>
       <view class="item">
         <view class="bg-img" style="background-image: url({{liImg}})"></view>
-        <text>20</text>
         <text>祭果</text>
       </view>
       <view class="item">
         <view class="bg-img" style="background-image: url({{liyiImg}})"></view>
-        <text>20</text>
         <text>祭拜</text>
       </view>
     </view>
-    <view class="jiyu bg-black padding">
-      <!-- <text>岁哈根还哦收到后宫啊说公司岁哈根还哦收到后宫啊说公司，岁哈根还哦收到后宫啊说公司，岁哈根还哦收到后宫啊说公司</text>
+    <view class="jiyu" style="background-image: url({{jiyuImg}})">
+      <text>岁哈根还哦收到后宫啊说公司岁哈根还哦收到后宫啊说公司，岁哈根还哦收到后宫啊说公司</text>
       <view class="btn-jiyu">
-        <view class="cu-btn">寄 语
-          <text class="cuIcon-writefill"></text>
-        </view>
-      </view> -->
+        <view class="cu-btn">寄 语</view>
+      </view>
     </view>
     <view class="padding list-liwu">
       <view>
@@ -53,5 +49,5 @@
         <text>2010-01-02</text>
       </view>
     </view>
-  </view>
-</scroll-view>
+  </scroll-view>
+</view>

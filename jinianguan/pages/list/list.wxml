@@ -3,15 +3,16 @@
   <view slot="backText">返回</view>
   <view slot="content">{{title}}</view>
 </cu-custom>
-<view>
-  <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-    <view wx:for="{{listImg}}" wx:key="id" class="list-item">
-      <image mode="aspectFill" src="{{item.url}}"></image>
-      <view class="item-text text-cut">{{item.name}}</view>
+<view class="list">
+    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
+      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
+        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
+        <view class="cu-tag text-blue" wx:if="{{item.is_show==0}}">审核中</view>
+        <view class="item-text text-cut">{{item.name}}</view>
+      </view>
+    </view>
+    <view wx:else class="nodata">
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
     </view>
   </view>
-  <view wx:else class="nodata">
-    <view class="cuIcon-newsfill text-brown"></view>
-    <text class="text-brown">暂无数据</text>
-  </view>
-</view>
