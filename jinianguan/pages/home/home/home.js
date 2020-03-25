@@ -26,6 +26,10 @@ Component({
       url: app.globalData.server + '/upload/邵逸夫.jpg'
     }]
   },
+  lifetimes: {
+    attached() {
+    }
+  },
   methods: {
     goToMuseum(e) {
       var obj = e.currentTarget.dataset;

@@ -34,7 +34,7 @@
       <text class="text-brown">暂无数据</text>
     </view>
   </view>
-  <view class="cu-bar bg-white solid-bottom">
+  <!-- <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
       <text class='cuIcon-titles text-brown '></text> 我的关注
     </view>
@@ -53,5 +53,5 @@
       <view class="cuIcon-newsfill text-brown"></view>
       <text class="text-brown">暂无数据</text>
     </view>
-  </view>
+  </view> -->
 </scroll-view>

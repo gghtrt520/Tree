@@ -1,4 +1,5 @@
 const app = getApp();
+const http = require("../../utils/http.js");
 Page({
   data: {
     userInfo: null,
@@ -86,7 +87,17 @@ Page({
       path: '/pages/index/index'
     }
   },
+  getHomeData() {
+    http({
+      url: "api/show",
+      method: "get",
+      data: { category: ["时代人物", '艺术人生'] }
+    }).then(res => {
+      console.log(res)
+    })
+  }
 })
+
 function loginUser(userInfo, that) {
   // 登录
   wx.login({
@@ -105,7 +116,6 @@ function loginUser(userInfo, that) {
             js_code: res.code
           },
           success(response) {
-            console.log(response)
             let data = response.data
             if (data.code == 1) {
               wx.setStorageSync('openid', data.data.openid)
@@ -113,6 +123,7 @@ function loginUser(userInfo, that) {
               app.globalData.user_id = data.data.user_id
               app.globalData.access_token = data.data.access_token
               console.log(app.globalData)
+              that.getHomeData()
             } else {
               wx.showToast({
                 icon: 'none',

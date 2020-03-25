@@ -5,20 +5,20 @@
       <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
     </swiper-item>
   </swiper>
-  <view class="cu-bar bg-white solid-bottom">
+  <!-- <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
       <text class='cuIcon-titles text-brown '></text> 我的关注
     </view>
     <view class='action' bindtap="goToMuseum" data-cur="museum">
       <text class='text-brown'>更多》</text>
     </view>
-  </view>
-  <view class="list">
+  </view> -->
+  <!-- <view class="list">
     <view class="nodata">
       <view class="cuIcon-newsfill text-brown"></view>
       <text class="text-brown">暂无数据</text>
     </view>
-  </view>
+  </view> -->
   <view class="cu-bar bg-white solid-bottom">
     <view class='action'>
       <text class='cuIcon-titles text-brown '></text> 时代人物
