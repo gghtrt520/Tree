@@ -4,7 +4,7 @@ const http = (params) => {
   const user_id = app.globalData.user_id || '';
   const access_token = app.globalData.access_token || '';
   params.data = params.data ? params.data : {}
-  // params.header = params.header ? params.header : {}
+  params.header = params.header ? params.header : { "Content-Type": "application/x-www-form-urlencoded" }
   // params.header["access_token"] = access_token
   // params.data.user_id = user_id
   console.log(params)

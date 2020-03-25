@@ -90,7 +90,6 @@ Page({
   getHomeData() {
     http({
       url: "api/show",
-      method: "get",
       data: { category: ["时代人物", '艺术人生'] }
     }).then(res => {
       console.log(res)
