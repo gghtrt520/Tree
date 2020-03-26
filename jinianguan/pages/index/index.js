@@ -14,42 +14,78 @@ Page({
       title: '加载中...',
       mask: true
     })
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-      loginUser(app.globalData.userInfo,this)
-    } else if (this.data.canIUse) {
-      console.log(app.globalData)
-      if (!app.globalData.hasAtuo) {
-        this.setData({
-          PageCur: 'my'
-        })
-      }
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-        console.log(app.globalData)
-        loginUser(res.userInfo, this)
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+    // 获取用户信息
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          console.log("已授权")
+          app.globalData.hasAtuo = true
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              // 可以将 res 发送给后台解码出 unionId
+              app.globalData.userInfo = res.userInfo
+
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              this.setData({
+                userInfo: res.userInfo,
+                hasUserInfo: true
+              })
+              wx.hideLoading()
+              loginUser(res.userInfo, this)
+            }
           })
-          loginUser(res.userInfo, this)
+        } else {
+          console.log("未授权")
+          app.globalData.hasAtuo = false
+          wx.hideLoading()
+          wx.showToast({
+            icon: 'none',
+            title: '您未授权登录'
+          })
+          this.setData({
+            PageCur: 'my'
+          })
         }
-      })
-    }
+      }
+    })
+    // if (app.globalData.userInfo) {
+    //   this.setData({
+    //     userInfo: app.globalData.userInfo,
+    //     hasUserInfo: true
+    //   })
+    //   loginUser(app.globalData.userInfo,this)
+    // } else if (this.data.canIUse) {
+    //   console.log(app.globalData)
+    //   if (!app.globalData.hasAtuo) {
+    //     this.setData({
+    //       PageCur: 'my'
+    //     })
+    //   }
+    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+    //   // 所以此处加入 callback 以防止这种情况
+    //   app.userInfoReadyCallback = res => {
+    //     this.setData({
+    //       userInfo: res.userInfo,
+    //       hasUserInfo: true
+    //     })
+    //     console.log(app.globalData)
+    //     loginUser(res.userInfo, this)
+    //   }
+    // } else {
+    //   // 在没有 open-type=getUserInfo 版本的兼容处理
+    //   wx.getUserInfo({
+    //     success: res => {
+    //       app.globalData.userInfo = res.userInfo
+    //       this.setData({
+    //         userInfo: res.userInfo,
+    //         hasUserInfo: true
+    //       })
+    //       loginUser(res.userInfo, this)
+    //     }
+    //   })
+    // }
   },
   onShow:function(){
     // if (!this.data.userInfo){
@@ -64,6 +100,10 @@ Page({
   NavChange(e, options) {
     let cur;
     if (!app.globalData.hasAtuo) {
+      wx.showToast({
+        icon: 'none',
+        title: '请授权登录'
+      })
       this.setData({
         PageCur: 'my'
       })

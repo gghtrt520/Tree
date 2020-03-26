@@ -7,7 +7,7 @@
       <text class="cuIcon-title text-brown "></text> 消息列表
     </view>
     <view class="action">
-      <text class="cu-btn bg-brown">编写祭文</text>
+      <text class="cu-btn round bg-brown">编写祭文</text>
     </view>
   </view>
   <view class="cu-list menu-avatar">

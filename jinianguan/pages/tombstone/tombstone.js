@@ -7,6 +7,7 @@ Page({
    */
   data: {
     // 拖拽参数
+    id:null,
     modalName: null,
     showAnimation: false,
     writePosition: [50, 50], //默认定位参数
@@ -38,8 +39,10 @@ Page({
    */
   onLoad: function(options) {
     console.log(options)
-    let that = this;
-    that.getSysdata();
+    this.getSysdata();
+    this.setData({
+      id:options.id
+    })
   },
 
   /**
@@ -59,6 +62,11 @@ Page({
     this.setData({
       showAnimation: true
     })
+    setTimeout(()=>{
+      this.setData({
+        showAnimation: false
+      })
+    },2100);
   },
   selectGiftImg(e) {
     this.hideModal()

@@ -10,7 +10,7 @@ Page({
     id: null,
     sex: "0",
     name:"",
-    jiyuText:"山河已安好，英雄可回家。烈士纪念日，向英烈致敬！",
+    jiyuText:"",
     religionInd: "0",
     authorityInd: "0",
     typeInd: "0",
@@ -51,6 +51,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    if(options.id){
+      this.setData({
+        id: options.id
+      })
+      this.getMuseumInfo(options.id)
+    }
+
     var day2 = new Date();
     day2.setTime(day2.getTime());
     var month = day2.getMonth() + 1 > 9 ? day2.getMonth() + 1 : '0' + (day2.getMonth() + 1);
@@ -77,9 +84,31 @@ Page({
   onReady: function() {
 
   },
+  getMuseumInfo(id){
+    var that = this;
+    http({
+      url:"api/detail",
+      data:{id:id}
+    }).then(res=>{
+      console.log(res)
+      if(res.code == 1){
+        that.setData({
+          age:res.data.age,
+          avatarUrl: res.data.avatar_url,
+          name: res.data.name,
+          sex: that.data.picker.indexOf(res.data.gender).toString(),
+          jiyuText: res.data.description,
+          date1: res.data.birthdate,
+          date2: res.data.death,
+          region:[res.data.province,res.data.city,res.data.area],
+          religionInd: that.data.religion.indexOf(res.data.religion).toString(),
+          authorityInd: res.data.rule
+        })
+      }
+    })
+  },
   typePickerChange(e){},
   sexPickerChange(e) {
-    console.log(e)
     this.setData({
       sex: e.detail.value
     })
@@ -143,6 +172,34 @@ Page({
       title: '上传中',
       mask: true
     })
+    var reg = /^http/;
+    var params = {};
+    params.data = {
+      "user_id": app.globalData.user_id,
+      "name": _this.data.name,
+      "gender": _this.data.picker[_this.data.sex],
+      "birthdate": _this.data.date1,
+      "death": _this.data.date2,
+      "age": _this.data.age,
+      "description": _this.data.jiyuText,
+      "province": _this.data.region[0],
+      "city": _this.data.region[1],
+      "area": _this.data.region[2],
+      "religion": _this.data.religion[_this.data.religionInd],
+      "category": _this.data.type[_this.data.typeInd],
+      "rule": _this.data.authorityInd
+    }
+    if (_this.data.id) {
+      params.data.id = _this.data.id
+      params.url = "api/save"
+    } else {
+      params.url = "api/add"
+    }
+    if (reg.test(_this.data.avatarUrl)){
+      params.data["avatar_url"] = _this.data.avatarUrl
+      _this.saveMuseum(params);
+      return;
+    }
     wx.uploadFile({
       url: app.globalData.server + 'api/upload?access_token=' + app.globalData.access_token, //接口
       filePath: this.data.avatarUrl,
@@ -151,60 +208,10 @@ Page({
         access_token: app.globalData.access_token
       },
       success: function (res) {
-        console.log(res)
         var data = JSON.parse(res.data);
         if(data.code == 1){
-          var imgPath = data.data.path;
-          var params = {}
-          params.url = "api/add"
-          params.data = {
-            "user_id": app.globalData.user_id,
-            "avatar_url": imgPath,
-            "name": _this.data.name,
-            "gender": _this.data.picker[_this.data.sex],
-            "birthdate": _this.data.date1,
-            "death": _this.data.date2,
-            "age": _this.data.age,
-            "province": _this.data.region[0],
-            "city": _this.data.region[1],
-            "area": _this.data.region[2],
-            "religion": _this.data.religion[_this.data.religionInd],
-            "category": _this.data.type[_this.data.typeInd],
-            "rule": _this.data.authorityInd
-          }
-          // params.data = {
-          //   "Room[user_id]": app.globalData.user_id,
-          //   "Room[avatar_url]": imgPath,
-          //   "Room[name]": _this.data.name,
-          //   "Room[gender]": _this.data.picker[_this.data.sex],
-          //   "Room[birthdate]": _this.data.date1,
-          //   "Room[death]": _this.data.date2,
-          //   "Room[age]": _this.data.age,
-          //   "Room[province]": _this.data.region[0],
-          //   "Room[city]": _this.data.region[1],
-          //   "Room[area": _this.data.region[2],
-          //   "Room[religion]": _this.data.religion[_this.data.religionInd],
-          //   "Room[category]": _this.data.type[_this.data.typeInd],
-          //   "Room[rule]": _this.data.authorityInd
-          // }
-          // params.header = {
-          //   "content-type":"application/x-www-form-urlencoded"
-          // }
-          if(_this.data.id){
-            params.data.id = _this.data.id
-          }
-          http(params).then(res=>{
-            console.log(res)
-            wx.showToast({
-              title: "保存成功",
-              icon: 'none'
-            });
-            setTimeout(()=>{
-              wx.navigateBack({
-                delta: 1
-              })
-            },2000);
-          })
+          params.data["avatar_url"] = data.data.path;
+          _this.saveMuseum(params);
         }else{
           wx.hideLoading();
           wx.showToast({
@@ -214,7 +221,20 @@ Page({
         }
       }
     })
-    
+  },
+  saveMuseum(params){
+    http(params).then(res => {
+      console.log(res)
+      wx.showToast({
+        title: "保存成功",
+        icon: 'none'
+      });
+      setTimeout(() => {
+        wx.navigateBack({
+          delta: 1
+        })
+      }, 2000);
+    })
   },
   PickerChange(e) {
     this.setData({

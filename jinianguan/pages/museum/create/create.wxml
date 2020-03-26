@@ -12,7 +12,7 @@
   </view>
   <view class="cu-form-group">
     <view class="title">逝者姓名</view>
-    <input placeholder="请输入逝者姓名" maxlength="8" bindblur="inputName"></input>
+    <input placeholder="请输入逝者姓名" value="{{name}}" maxlength="8" bindblur="inputName"></input>
   </view>
   <view class="cu-form-group">
     <view class="title">性别</view>

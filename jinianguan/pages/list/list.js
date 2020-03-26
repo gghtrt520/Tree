@@ -39,7 +39,7 @@ Page({
   goDetail(e) {
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: "/pages/museum/sortDetail/sortDetail?id=" + id
+      url: "/pages/tombstone/tombstone?id=" + id
     })
   },
 

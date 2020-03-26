@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id:null,
     title: "详情",
     bgImg: app.globalData.server + "/upload/peoplebg.jpg",
     avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
@@ -22,6 +23,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      id:options.id
+    })
     if (options.type == 3){
       this.setData({
         bgImg: app.globalData.server + "/upload/3.jpg",
@@ -78,7 +82,7 @@ Page({
   },
   goToEdit(e) {
     wx.navigateTo({
-      url: '/pages/museum/create/create',
+      url: '/pages/museum/create/create?id='+ this.data.id,
     })
   },
   /**
