@@ -1,0 +1,6 @@
+<!--pages/museum/photos/photos.wxml-->
+<scroll-view scroll-y="{{modalName==null}}" class="page {{modalName!=null?'show':''}}">
+  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="content">相册</view>
+  </cu-custom>
+</scroll-view>

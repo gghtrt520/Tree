@@ -10,7 +10,10 @@
     "pages/museum/detail/detail",
     "pages/register/register",
     "pages/museum/details/details",
-    "pages/museum/sortDetail/sortDetail"
+    "pages/museum/sortDetail/sortDetail",
+    "pages/museum/photos/photos",
+    "pages/museum/videos/videos",
+    "pages/museum/article/article"
   ],
   "window": {
     "navigationStyle": "custom"

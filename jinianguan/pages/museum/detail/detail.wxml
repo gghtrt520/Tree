@@ -1,5 +1,5 @@
 <!--pages/museum/detail/detail.wxml-->
-<cu-custom bgColor="bg-gradual-orange" isBack="{{true}}">
+<cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
   <view slot="content">{{title}}</view>
 </cu-custom>
 <view class="cu-bar bg-white solid-bottom">

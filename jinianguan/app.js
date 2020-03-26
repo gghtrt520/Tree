@@ -40,13 +40,18 @@ App({
         }else{
           console.log("未授权")
           this.globalData.hasAtuo = false
+          wx.hideLoading()
+          wx.showToast({
+            icon: 'none',
+            title: '您未授权登录'
+          })
         }
       }
     })
   },
   globalData: {
     userInfo: null,
-    hasAtuo: true,
+    hasAtuo: false,
     user_id: "",
     access_token:"",
     openid:"",

@@ -132,6 +132,13 @@ Page({
       })
       return;
     }
+    if (!this.data.avatarUrl) {
+      wx.showToast({
+        title: '请选头像照片',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showLoading({
       title: '上传中',
       mask: true

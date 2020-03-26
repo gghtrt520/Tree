@@ -2,17 +2,34 @@
 .bg-gradual-white .cuIcon-back{
   color: white;
 }
-
+.bigContent{
+  position: relative;
+  overflow: hidden;
+}
+.toolbar{
+  position: absolute;
+  top: 40%;
+  right: 2vw;
+}
+.v-tool{
+  background-color: rgba(200, 200, 200, 0.3);
+  padding: 10rpx 20rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 32rpx;
+  margin-bottom: 50rpx;
+  z-index: 1000;
+}
 .v-header {
   position: relative;
-  height: 580rpx;
+  height: 500rpx;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
   background-position: center center;
   overflow: hidden;
 }
 .scroll-content{
-  height: clac(100vh - 640rpx);
+  height: clac(100vh - 560rpx);
 }
 .jisao-nums{
   font-size: 32rpx;
@@ -70,6 +87,7 @@
 }
 .list-liwu{
   line-height: 2;
+  max-height: 500rpx;
   margin: 0 10%;
   color: #111;
 }

@@ -7,6 +7,8 @@ Page({
    */
   data: {
     // 拖拽参数
+    modalName: null,
+    showAnimation: false,
     writePosition: [50, 50], //默认定位参数
     writesize: [0, 0], // X Y 定位
     window: [0, 0], //屏幕尺寸
@@ -53,6 +55,15 @@ Page({
   onShow: function() {
 
   },
+  sendGift: function() {
+    this.setData({
+      showAnimation: true
+    })
+  },
+  selectGiftImg(e) {
+    this.hideModal()
+    this.sendGift();
+  },
   //计算默认定位值
   getSysdata: function() {
     var that = this;
@@ -87,7 +98,20 @@ Page({
     });
     console.log(that.data.write)
   },
-
+  // 弹窗
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+  selectBgImg(e) {
+    this.hideModal()
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

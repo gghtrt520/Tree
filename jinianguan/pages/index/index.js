@@ -23,10 +23,6 @@ Page({
     } else if (this.data.canIUse) {
       console.log(app.globalData)
       if (!app.globalData.hasAtuo) {
-        wx.showToast({
-          icon: 'none',
-          title: '您未授权登录'
-        })
         this.setData({
           PageCur: 'my'
         })
@@ -68,10 +64,6 @@ Page({
   NavChange(e, options) {
     let cur;
     if (!app.globalData.hasAtuo) {
-      wx.showToast({
-        icon: 'none',
-        title: '您未授权登录'
-      })
       this.setData({
         PageCur: 'my'
       })

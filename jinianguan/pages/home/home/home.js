@@ -28,6 +28,7 @@ Component({
   },
   lifetimes: {
     attached() {
+      this.triggerEvent('refreshData');
     }
   },
   methods: {
