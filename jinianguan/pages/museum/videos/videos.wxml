@@ -12,9 +12,9 @@
     </view>
   </view>
   <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
-        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
+    <view class="padding grid col-2 grid-square" wx:if="{{videoList.length>0}}">
+      <view wx:for="{{videoList}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
+        <video mode='aspectFill' src="{{item.avatar_url}}"></video>
       </view>
     </view>
     <view wx:else class="nodata">
@@ -34,13 +34,13 @@
     <view class="padding bg-white">
       <view class="cu-form-group">
         <view class="title">标题</view>
-        <input style="text-align:right;" placeholder="请输入标题"></input>
+        <input style="text-align:right;" maxlength="10" bindblur="inputTitle" placeholder="请输入标题"></input>
       </view>
       <view class="grid col-12 grid-square flex-sub">
         <view class="v-video" wx:if="{{videosUpload}}" data-url="{{videosUpload}}">
           <video src='{{videosUpload}}' mode='aspectFill'></video>
           <view class="cu-tag bg-red" object-fit="contain" catchtap="DelVedio">
-            <text class="cuIcon-close"></text>
+            <text class="cuIcon-delete"></text>
           </view>
         </view>
         <view class="solids btn-choose" bindtap="ChooseVedio" wx:else>

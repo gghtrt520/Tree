@@ -22,6 +22,7 @@ Page({
     avatarImg: "",
     title: "",
     isPalaying: false,
+    musicUrl: app.globalData.server + 'upload/2255039574.mp3',
     liNums: [{
       id: "1",
       writePosition: [50, 50], //默认定位参数

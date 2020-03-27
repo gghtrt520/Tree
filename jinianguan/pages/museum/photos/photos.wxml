@@ -12,9 +12,10 @@
     </view>
   </view>
   <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
-      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
-        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
+    <view class="padding grid col-2 grid-square" wx:if="{{imgList.length>0}}">
+      <view wx:for="{{imgList}}" wx:key="*this" class="list-item" data-index="{{index}}" bindtap="imgYu">
+        <image mode="aspectFill" src="{{item.detail[0].photo_url}}"></image>
+        <text class="item-text">{{item.name}}</text>
       </view>
     </view>
     <view wx:else class="nodata">
@@ -46,7 +47,7 @@
           <view class="bg-img" wx:for="{{photos}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{photos[index]}}">
             <image src='{{photos[index]}}' mode='aspectFill'></image>
             <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
-              <text class="cuIcon-close"></text>
+              <text class="cuIcon-delete"></text>
             </view>
           </view>
           <view class="solids" bindtap="ChooseImage" wx:if="{{photos.length<8}}">

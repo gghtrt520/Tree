@@ -8,6 +8,7 @@
   height: 300rpx;
 }
 .btn-choose{
-  width: 200rpx;
-  height: 200rpx;
+  width: 100%;
+  height: 300rpx;
+  margin: 10rpx;
 }
