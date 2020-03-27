@@ -13,7 +13,8 @@
     "pages/museum/sortDetail/sortDetail",
     "pages/museum/photos/photos",
     "pages/museum/videos/videos",
-    "pages/museum/article/article"
+    "pages/museum/article/article",
+    "pages/saomu/daisao/daisao"
   ],
   "window": {
     "navigationStyle": "custom"

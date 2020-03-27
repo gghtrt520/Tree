@@ -12,9 +12,17 @@
     </view>
   </view>
   <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{videoList.length>0}}">
-      <view wx:for="{{videoList}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
-        <video mode='aspectFill' src="{{item.avatar_url}}"></video>
+    <view wx:if="{{videoList.length>0}}">
+      <view wx:for="{{videoList}}" wx:key="*this" class="list-item" data-id="{{item.id}}">
+        <view class="cu-bar margin-top bg-white">
+          <view class='action'>
+            {{item.name}}
+          </view>
+          <view class='action'>
+            
+          </view>
+        </view>
+        <video mode='aspectFill' src="{{item.video_path}}"></video>
       </view>
     </view>
     <view wx:else class="nodata">

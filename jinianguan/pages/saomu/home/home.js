@@ -19,6 +19,11 @@ Component({
         title: '功能研发中',
         icon: 'none'
       })
+    },
+    goPageDaiSao() {
+      wx.navigateTo({
+        url: '/pages/saomu/daisao/daisao',
+      })
     }
   }
 });

@@ -6,7 +6,7 @@
   <view class="padding flex flex-direction btns" style="margin-top:64vh;">
     <button class="cu-btn bg-black lg" bindtap="goPage">在线祭扫</button>
     <br/><br/>
-    <button class="cu-btn bg-black margin-tb-sm lg" bindtap="goPage">代客祭扫</button>
+    <button class="cu-btn bg-black margin-tb-sm lg" bindtap="goPageDaiSao">代客祭扫</button>
   </view>
 </view>
 <view class='cu-tabbar-height'></view>

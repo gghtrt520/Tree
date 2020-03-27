@@ -17,7 +17,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    this.setData({
+      id:options.id
+    })
   },
 
   /**
@@ -31,7 +33,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.getListVideo();
   },
   showModal(e) {
     this.setData({
@@ -66,6 +68,10 @@ Page({
       })
       return;
     }
+    wx.showLoading({
+      title: '上传中',
+      mask:true
+    })
     wx.uploadFile({
       url: app.globalData.server + 'api/videoupload?access_token=' + app.globalData.access_token, //上传地址
       filePath: that.data.videosUpload,
@@ -74,13 +80,12 @@ Page({
         const data = JSON.parse(res.data)
         //do something
         if (res.statusCode === 200 && data.code == 1) {
-          console.log(data.data)
           http({
             url: 'api/videocreate',
             data: {
               room_id: that.data.id,
               name: that.data.titleText,
-              path: data.data
+              path: data.data.path
             }
           }).then(res => {
             if (res.code == 1) {
@@ -89,6 +94,7 @@ Page({
                 title: '上传成功',
                 icon: 'none'
               })
+              wx.hideLoading()()
               that.getListVideo();
             }
           })
@@ -133,6 +139,14 @@ Page({
       maxDuration: 120,
       camera: 'back',
       success: function(res) {
+        if (res.size > 50 * 1024 * 1024) {
+          wx.showToast({
+            title: '视频不能大于50M',
+            icon: 'none',
+            duration: 2000
+          })
+          return false;
+        }
         that.setData({
           videosUpload: res.tempFilePath
         })
