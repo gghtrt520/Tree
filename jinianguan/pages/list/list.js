@@ -8,6 +8,7 @@ Page({
    */
   data: {
     title: '',
+    bgImg: app.globalData.server + 'upload/background.png',
     listImg: []
   },
 

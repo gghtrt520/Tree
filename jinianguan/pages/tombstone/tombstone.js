@@ -21,6 +21,7 @@ Page({
     backImg: "",
     avatarImg: "",
     title: "",
+    isPalaying: false,
     liNums: [{
       id: "1",
       writePosition: [50, 50], //默认定位参数

@@ -73,7 +73,6 @@ Page({
       } else {
         var p = this.imgUpload(item)
         p.then(res => {
-          console.log(res)
           resultsArr.push(res.path)
         })
         promiseList.push(p)
@@ -83,7 +82,7 @@ Page({
       console.log(resultsArr)
       http({
         url: "api/photocreate",
-        data: { room_id: that.data.id, name: that.data.title}
+        data: { room_id: that.data.id, name: that.data.title, photo_list: resultsArr}
       }).then(res=>{
         console.log(res)
         if(res.code == 1){
@@ -92,6 +91,7 @@ Page({
             title: '上传成功',
             icon: 'none'
           })
+          that.getListImgs();
         }
       })
     });
