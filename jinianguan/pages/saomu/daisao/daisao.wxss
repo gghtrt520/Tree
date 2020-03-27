@@ -7,12 +7,13 @@
   overflow: hidden;
 }
 .content-saomu{
-  margin: 30% 5%;
+  margin: 50rpx 10% 30rpx 10%;
 }
 .inputContent{
-  border: 4rpx dashed #666;
+  border: 6rpx dashed #666;
+  border-radius: 20rpx;
 }
-text{
+text,input{
   font-size: 32rpx;
 }
 .title{
@@ -21,4 +22,30 @@ text{
 .bigTxt{
   font-size: 50rpx;
   font-weight: bold;
+}
+.boder-bottom{
+  border-bottom: 1rpx solid #999;
+}
+.picker{
+  padding: 10rpx 0;
+  font-size: 32rpx;
+}
+.title-input{
+  padding: 10rpx 0;
+  font-size: 32rpx;
+}
+.yuyue-people{
+  background-color: #eee;
+  padding: 10rpx;
+}
+.flex-input{
+  display: flex;
+  align-items: center;
+}
+.flex-input>input{
+  flex: 1;
+  font-size: 32rpx;
+}
+.flex-input>text{
+  width: 160rpx;
 }
