@@ -1,5 +1,6 @@
 // pages/tombstone/tombstone.js
 const app = getApp();
+const http = require("../../utils/http.js");
 Page({
 
   /**
@@ -10,6 +11,7 @@ Page({
     id:null,
     modalName: null,
     showAnimation: false,
+    animationImg: "",
     writePosition: [50, 50], //默认定位参数
     writesize: [0, 0], // X Y 定位
     window: [0, 0], //屏幕尺寸
@@ -31,20 +33,44 @@ Page({
       writesize: [0, 0], // X Y 定位
       write: [0, 0], //定位参数
       isMy: 1
-    }]
+    }],
+    giftListArr:[],
+    bgListArr:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options)
     this.getSysdata();
     this.setData({
       id:options.id
     })
+    this.getGiftList();
   },
-
+  getGiftList(){
+    var that = this;
+    http({
+      url: "api/list"
+    }).then(res => {
+      if (res.code == 1) {
+        console.log(res)
+        that.setData({
+          giftListArr:res.data
+        })
+      }
+    })
+    http({
+      url: "api/bglist"
+    }).then(res => {
+      if (res.code == 1) {
+        console.log(res)
+        that.setData({
+          bgListArr: res.data
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -58,19 +84,36 @@ Page({
   onShow: function() {
 
   },
-  sendGift: function() {
-    this.setData({
-      showAnimation: true
+  sendGift: function (imgUrl, giftid) {
+    var that = this;
+    http({
+      url: "api/present",
+      data: { room_id: that.data.id, product_id: giftid }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          showAnimation: true,
+          animationImg: imgUrl
+        })
+        setTimeout(() => {
+          that.setData({
+            animationImg: "",
+            showAnimation: false
+          })
+        }, 2100);
+      }else{
+        wx.showToast({
+          title: '操作失败请重试',
+          icon: 'none'
+        })
+      }
     })
-    setTimeout(()=>{
-      this.setData({
-        showAnimation: false
-      })
-    },2100);
   },
   selectGiftImg(e) {
+    let imgUrl = e.currentTarget.dataset.img;
+    let giftid = e.currentTarget.dataset.giftid;
     this.hideModal()
-    this.sendGift();
+    this.sendGift(imgUrl, giftid);
   },
   //计算默认定位值
   getSysdata: function() {
@@ -111,6 +154,21 @@ Page({
     this.setData({
       modalName: e.currentTarget.dataset.target
     })
+    if (e.currentTarget.dataset.target = "bottomLiwu"){
+      console.log(this.data.giftListArr)
+      let newArr = this.data.giftListArr.concat();
+      this.setData({
+        giftListArr: newArr
+      })
+    }
+    if (e.currentTarget.dataset.target = "bottomModal") {
+      console.log(this.data.bgListArr)
+      let newArr = this.data.bgListArr.concat();
+      this.setData({
+        bgListArr: newArr
+      })
+    }
+    console.log(this)
   },
   hideModal(e) {
     this.setData({
@@ -118,7 +176,28 @@ Page({
     })
   },
   selectBgImg(e) {
+    let imgUrl = e.currentTarget.dataset.background;
+    let id = e.currentTarget.dataset.bgid;
     this.hideModal()
+    this.swapBgImg(imgUrl, id);
+  },
+  swapBgImg(imgUrl, id){
+    var that = this;
+    http({
+      url: "api/bg",
+      data: { room_id: that.data.id, product_id: id }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          backImg: imgUrl
+        })
+      } else {
+        wx.showToast({
+          title: '操作失败请重试',
+          icon: 'none'
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏

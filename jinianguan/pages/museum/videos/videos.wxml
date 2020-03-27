@@ -3,4 +3,23 @@
   <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
     <view slot="content">视频</view>
   </cu-custom>
+  <view class="cu-bar bg-white solid-bottom">
+    <view class='action'>
+      <text class='cuIcon-titles text-brown '></text> 视频列表
+    </view>
+    <view class='action'>
+      <text class='cu-btn round bg-brown'>上传视频</text>
+    </view>
+  </view>
+  <view class="list">
+    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
+      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
+        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
+      </view>
+    </view>
+    <view wx:else class="nodata">
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
+    </view>
+  </view>
 </scroll-view>

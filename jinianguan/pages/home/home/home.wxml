@@ -1,67 +1,17 @@
-<scroll-view scroll-y class="scrollPage">
-  <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-    <swiper-item wx:for="{{swiperList}}" wx:key="*this">
-      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-      <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
-    </swiper-item>
-  </swiper>
-  <!-- <view class="cu-bar bg-white solid-bottom">
-    <view class='action'>
-      <text class='cuIcon-titles text-brown '></text> 我的关注
-    </view>
-    <view class='action' bindtap="goToMuseum" data-cur="museum">
-      <text class='text-brown'>更多》</text>
-    </view>
-  </view> -->
-  <!-- <view class="list">
-    <view class="nodata">
-      <view class="cuIcon-newsfill text-brown"></view>
-      <text class="text-brown">暂无数据</text>
-    </view>
-  </view> -->
-  <view class="cu-bar bg-white solid-bottom">
-    <view class='action'>
-      <text class='cuIcon-titles text-brown '></text> 时代人物
-    </view>
-    <view class='action'>
-      <navigator url="/pages/list/list?title=时代人物" hover-class="none">
-        <text class='text-brown'>更多》</text>
-      </navigator>
-    </view>
+<view class="content" style="background-image: url({{bgImg}});">
+  <view class="bg-shidai">
+    <navigator url="/pages/list/list?title=时代人物" hover-class="none">
+      <view class='pos-btn' style="background-image: url({{btnImg1}});"></view>
+    </navigator>
   </view>
-  <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{homeData1.length>0}}">
-      <view wx:for="{{homeData1}}" wx:key="*this" data-id="{{item.id}}" class="list-item" bindtap='goTombstnoe'>
-        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
-        <view class="item-text text-cut">{{item.name}}</view>
-      </view>
-    </view>
-    <view wx:else class="nodata">
-      <view class="cuIcon-newsfill text-brown"></view>
-      <text class="text-brown">暂无数据</text>
-    </view>
+  <view class="bg-yishu">
+    <navigator url="/pages/list/list?title=艺术人生" hover-class="none">
+      <view class='pos-btn' style="background-image: url({{btnImg2}});"></view>
+    </navigator>
   </view>
-  <view class="cu-bar bg-white solid-bottom">
-    <view class='action'>
-      <text class='cuIcon-titles text-brown '></text> 艺术人生
-    </view>
-    <view class='action'>
-      <navigator url="/pages/list/list?title=艺术人生" hover-class="none">
-        <text class='text-brown'>更多》</text>
-      </navigator>
-    </view>
+  <view class="bg-create">
+    <navigator url="/pages/museum/create/create" hover-class="none">
+      <view class='pos-btn' style="background-image: url({{btnCreate}});"></view>
+    </navigator>
   </view>
-  <view class="list">
-    <view class="padding grid col-2 grid-square" wx:if="{{homeData2.length>0}}">
-      <view wx:for="{{homeData2}}" wx:key="*this" data-id="{{item.id}}" class="list-item" bindtap='goTombstnoe'>
-        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
-        <view class="item-text text-cut">{{item.name}}</view>
-      </view>
-    </view>
-    <view wx:else class="nodata">
-      <view class="cuIcon-newsfill text-brown"></view>
-      <text class="text-brown">暂无数据</text>
-    </view>
-  </view>
-  <view class='cu-tabbar-height'></view>
-</scroll-view>
+</view>

@@ -29,9 +29,9 @@
         <view class='margin-bottom'>实景切换</view>
         <scroll-view scroll-x="true">
           <view class='scroll-img'>
-            <block wx:for="{{10}}" wx:key>
-              <view class='bg-img-select' catchtap="selectBgImg" style="background-image: url({{backImg}});">
-                <text>免费</text>
+            <block wx:for="{{bgListArr}}" wx:key="{{item.id}}">
+              <view class='bg-img-select' data-img="{{item.background}}" data-bgid="{{item.id}}" catchtap="selectBgImg" style="background-image: url({{item.background}});">
+                <text>{{item.price>0 ? (item.price+"￥") : "免费"}}</text>
               </view>
             </block>
           </view>
@@ -45,9 +45,9 @@
         <view class='margin-bottom'>赠送祭品</view>
         <scroll-view scroll-x="true">
           <view class='scroll-img'>
-            <block wx:for="{{10}}" wx:key>
-              <view class='bg-img-select' catchtap="selectGiftImg" style="background-image: url({{backImg}});">
-                <text>免费</text>
+            <block wx:for="{{giftListArr}}" wx:key="{{item.id}}">
+              <view class='bg-img-select' data-img="{{item.style}}" data-giftid="{{item.id}}" catchtap="selectGiftImg" style="background-image: url({{item.style}});">
+                <text>{{item.price>0 ? (item.price+"￥") : "免费"}}</text>
               </view>
             </block>
           </view>
@@ -55,5 +55,5 @@
       </view>
     </view>
   </view>
-  <view class='animationGift {{showAnimation?"view-gift":""}}'></view>
+  <view class='animationGift {{showAnimation?"view-gift":""}}'  style="background-image: url({{animationImg}});"></view>
 </movable-area>

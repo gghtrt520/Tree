@@ -3,4 +3,63 @@
   <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
     <view slot="content">相册</view>
   </cu-custom>
+  <view class="cu-bar bg-white solid-bottom">
+    <view class='action'>
+      <text class='cuIcon-titles text-brown '></text> 照片列表
+    </view>
+    <view class='action'>
+      <text class='cu-btn round bg-brown' bindtap="showModal" data-target="DialogModal1">上传照片</text>
+    </view>
+  </view>
+  <view class="list">
+    <view class="padding grid col-2 grid-square" wx:if="{{listImg.length>0}}">
+      <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
+        <image mode="aspectFill" src="{{item.avatar_url}}"></image>
+      </view>
+    </view>
+    <view wx:else class="nodata">
+      <view class="cuIcon-newsfill text-brown"></view>
+      <text class="text-brown">暂无数据</text>
+    </view>
+  </view>
 </scroll-view>
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">照片上传</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding bg-white">
+      <view class="cu-form-group">
+        <view class="title">标题</view>
+        <input placeholder="请输入标题"></input>
+      </view>
+      <view class="cu-bar">
+        <view class="action">
+          图片上传
+        </view>
+      </view>
+      <view class="cu-form-group">
+        <view class="grid col-4 grid-square flex-sub">
+          <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+            <image src='{{imgList[index]}}' mode='aspectFill'></image>
+            <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+              <text class="cuIcon-close"></text>
+            </view>
+          </view>
+          <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<9}}">
+            <text class="cuIcon-cameraadd"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="hideModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

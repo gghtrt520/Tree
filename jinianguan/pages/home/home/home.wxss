@@ -1,1 +1,45 @@
 /* pages/home/home/home.wxss */
+.content{
+  position: relative;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  overflow: hidden;
+}
+.bg-shidai,
+.bg-yishu,
+.bg-create{
+  position: absolute;
+  width: 100vw;
+}
+.bg-shidai{
+  top: 24%;
+}
+.bg-yishu{
+  top: 40%;
+}
+.bg-create{
+  top: 60%;
+}
+.pos-btn{
+  width: 100%;
+}
+.bg-create .pos-btn{
+  height: 180rpx;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: center center;
+}
+.bg-shidai .pos-btn{
+  height: 180rpx;
+  background-repeat: no-repeat;
+  background-size: 92%;
+  background-position: center center;
+}
+.bg-yishu .pos-btn{
+  height: 180rpx;
+  background-repeat: no-repeat;
+  background-size: 84%;
+  background-position: center center;
+}

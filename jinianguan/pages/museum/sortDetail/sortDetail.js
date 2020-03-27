@@ -1,5 +1,6 @@
 // pages/museum/details/details.js
 const app = getApp();
+const http = require("../../../utils/http.js");
 Page({
   /**
    * 页面的初始数据
@@ -7,12 +8,14 @@ Page({
   data: {
     id:null,
     title: "详情",
-    bgImg: app.globalData.server + "/upload/peoplebg.jpg",
-    avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
-    huaImg: app.globalData.server + "/upload/hua.png",
-    liImg: app.globalData.server + "/upload/lipin.png",
-    liyiImg: app.globalData.server + "/upload/liyi.jpg",
-    jiyuImg: app.globalData.server + "/upload/liyi.jpg",
+    giftNum: 0, 
+    giftList:[],
+    bgImg: app.globalData.server + "upload/2.jpg",
+    // avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
+    huaImg: app.globalData.server + "upload/b.png",
+    liImg: app.globalData.server + "upload/j.png",
+    liyiImg: app.globalData.server + "upload/d.png",
+    jiyuImg: app.globalData.server + "upload/4.jpg",
     jiyutext: "寄语",
     huaTxt: "鲜花",
     liTxt: "祭果",
@@ -26,13 +29,17 @@ Page({
     this.setData({
       id:options.id
     })
-    if (options.type == 3){
+    this.getMuseumInfo(options.id);
+  },
+  // 数据展示
+  writeData(){
+    if (options.type == 3) {
       this.setData({
-        bgImg: app.globalData.server + "/upload/3.jpg",
-        huaImg: app.globalData.server + "/upload/a.png",
-        liImg: app.globalData.server + "/upload/j.png",
-        liyiImg: app.globalData.server + "/upload/e.png",
-        jiyuImg: app.globalData.server + "/upload/h.jpg",
+        bgImg: app.globalData.server + "upload/3.jpg",
+        huaImg: app.globalData.server + "upload/a.png",
+        liImg: app.globalData.server + "upload/j.png",
+        liyiImg: app.globalData.server + "upload/e.png",
+        jiyuImg: app.globalData.server + "upload/h.jpg",
         jiyutext: "圣经",
         huaTxt: "蜡盏",
         liTxt: "十字架",
@@ -41,29 +48,43 @@ Page({
     }
     if (options.type == 2) {
       this.setData({
-        bgImg: app.globalData.server + "/upload/1.jpg",
-        huaImg: app.globalData.server + "/upload/k.png",
-        liImg: app.globalData.server + "/upload/f.png",
-        liyiImg: app.globalData.server + "/upload/l.png",
-        jiyuImg: app.globalData.server + "/upload/4.jpg",
+        bgImg: app.globalData.server + "upload/1.jpg",
+        huaImg: app.globalData.server + "upload/k.png",
+        liImg: app.globalData.server + "upload/f.png",
+        liyiImg: app.globalData.server + "upload/l.png",
+        jiyuImg: app.globalData.server + "upload/4.jpg",
         jiyutext: "偈语",
-        huaTxt:"长蜡",
+        huaTxt: "长蜡",
         liTxt: "捧香",
         liyiTxt: "香火钱"
       })
-    }else{
+    } else {
       this.setData({
-        bgImg: app.globalData.server + "/upload/2.jpg",
-        huaImg: app.globalData.server + "/upload/b.png",
-        liImg: app.globalData.server + "/upload/j.png",
-        liyiImg: app.globalData.server + "/upload/d.png",
-        jiyuImg: app.globalData.server + "/upload/4.jpg",
+        bgImg: app.globalData.server + "upload/2.jpg",
+        huaImg: app.globalData.server + "upload/b.png",
+        liImg: app.globalData.server + "upload/j.png",
+        liyiImg: app.globalData.server + "upload/d.png",
+        jiyuImg: app.globalData.server + "upload/4.jpg",
         jiyutext: "寄语",
         huaTxt: "鲜花",
         liTxt: "祭果",
         liyiTxt: "祭拜"
       })
     }
+  },
+  getMuseumInfo(id) {
+    var that = this;
+    http({
+      url: "api/plist",
+      data: { room_id: id }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          giftList:res.data,
+          giftNum:res.data.length
+        })
+      }
+    })
   },
   gotoPagePhotos(e){
     wx.navigateTo({

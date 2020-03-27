@@ -4,6 +4,7 @@
 }
 .bigContent{
   position: relative;
+  height: 100vh;
   overflow: hidden;
 }
 .toolbar{
@@ -29,7 +30,9 @@
   overflow: hidden;
 }
 .scroll-content{
-  height: clac(100vh - 560rpx);
+  box-sizing: border-box;
+  height: clac(100vh - 590rpx);
+  overflow: hidden;
 }
 .jisao-nums{
   font-size: 32rpx;
@@ -87,7 +90,7 @@
 }
 .list-liwu{
   line-height: 2;
-  max-height: 500rpx;
+  max-height: 300rpx;
   margin: 0 10%;
   color: #111;
 }

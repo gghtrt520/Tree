@@ -90,7 +90,6 @@ Page({
       url:"api/detail",
       data:{id:id}
     }).then(res=>{
-      console.log(res)
       if(res.code == 1){
         that.setData({
           age:res.data.age,
@@ -191,7 +190,7 @@ Page({
     }
     if (_this.data.id) {
       params.data.id = _this.data.id
-      params.url = "api/save"
+      params.url = "api/change"
     } else {
       params.url = "api/add"
     }

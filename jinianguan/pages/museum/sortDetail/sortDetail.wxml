@@ -9,7 +9,7 @@
     <view class="btn-video" bindtap='goToEdit'>编辑</view>
   </view>
   <view class="scroll-content padding bg-white">
-    <text class="jisao-nums">当前祭祀人数：1534</text>
+    <text class="jisao-nums">当前祭品数：{{giftNum}}</text>
     <view class="padding tongji">
       <view class="item">
         <view class="bg-img" style="background-image: url({{huaImg}})"></view>
@@ -32,28 +32,16 @@
       </view>
     </view>
     <scroll-view scroll-y="true" class="padding list-liwu">
-      <view>
-        <text>撒共i啊说狗爱上冬瓜搜狗</text>
-        <text>2010-01-02</text>
-      </view>
-      <view>
-        <text>撒共i啊说狗爱上冬瓜搜狗</text>
-        <text>2010-01-02</text>
-      </view>
-      <view>
-        <text>撒共i啊说狗爱上冬瓜搜狗</text>
-        <text>2010-01-02</text>
-      </view>
-      <view>
-        <text>撒共i啊说狗爱上冬瓜搜狗</text>
-        <text>2010-01-02</text>
+      <view wx:for="{{giftList}}" wx:key="{{index}}">
+        <text>{{item.nick_name}} 献上了 {{item.name}} </text>
+        <text>{{item.created_at}}</text>
       </view>
     </scroll-view>
   </view>
   <view class="toolbar">
-    <view class="v-tool" bindtap='gotoPageArticle'>
+    <!-- <view class="v-tool" bindtap='gotoPageArticle'>
       <text class="text-brown">祭文</text>
-    </view>
+    </view> -->
     <view class="v-tool" bindtap='gotoPagePhotos'>
       <text class="text-brown">相册</text>
     </view>

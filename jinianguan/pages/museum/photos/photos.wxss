@@ -1,1 +1,14 @@
 /* pages/museum/photos/photos.wxss */
+.list-item{
+  position: relative;
+  text-align: center;
+}
+.list-item .item-text{
+  position: absolute;
+  display: block;
+  width: 100%;
+  line-height: 2;
+  bottom: 0;
+  color: white;
+  background-color: rgba(1, 1, 1, 0.2);
+}

@@ -15,6 +15,10 @@ Component({
   },
   data: {
     cardCur: 0,
+    bgImg: app.globalData.server + '/upload/homebg.jpg',
+    btnImg1: app.globalData.server + '/upload/shidai.png',
+    btnImg2: app.globalData.server + '/upload/yishu.png',
+    btnCreate: app.globalData.server + '/upload/create.png',
     swiperList: [{
       id: 0,
       type: 'image',

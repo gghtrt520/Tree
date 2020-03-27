@@ -21,7 +21,7 @@
 }
 .toolbar{
   position: absolute;
-  top: 30%;
+  top: 40%;
   right: 5vw;
 }
 .v-tool{
@@ -74,7 +74,6 @@
   top: 80%;
   left: 50%;
   transform: translate(-50%,-50%);
-  background-color: red;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -92,21 +91,19 @@
   /** 第一种写法**/
   0% {
     opacity: 1;
-    background-color: red;
   }
   50% {
     width: 150rpx;
     height: 150rpx;
     top: 50%;
     left: 25%;
-    background-color: orange;
+    opacity: 0.8;
   }
   100% {
     width: 1rpx;
     height: 1rpx;
     top: 25%;
     left: 50%;
-    background-color: yellow;
     opacity: 0;
   }
 }
