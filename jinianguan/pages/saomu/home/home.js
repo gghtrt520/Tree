@@ -6,7 +6,7 @@ Component({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
-    bgImg: app.globalData.server + '/upload/saomubg.jpg'
+    bgImg: app.globalData.server + 'upload/jisao.png'
   },
   methods: {
     toChild(e) {

@@ -43,6 +43,7 @@ Component({
    */
   data: {
     userInfo: {},
+    bgImg: app.globalData.server + "upload/20200328005307.png",
     ColorList: app.globalData.ColorList
   },
 

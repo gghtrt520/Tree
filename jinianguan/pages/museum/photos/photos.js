@@ -74,7 +74,7 @@ Page({
         var p = this.imgUpload(item)
         p.then(res => {
           console.log(res)
-          resultsArr.push(res.data.path)
+          resultsArr.push(res.path)
         })
         promiseList.push(p)
       }
@@ -86,6 +86,13 @@ Page({
         data: { room_id: that.data.id, name: that.data.title}
       }).then(res=>{
         console.log(res)
+        if(res.code == 1){
+          that.hideModal();
+          wx.showToast({
+            title: '上传成功',
+            icon: 'none'
+          })
+        }
       })
     });
   },
@@ -99,7 +106,6 @@ Page({
         name: 'PhotoList[photo_url]',
         success(res) {
           const data = JSON.parse(res.data)
-          console.log(data)
           //do something
           if (res.statusCode === 200 && data.code == 1) {
             resolve(data.data)
@@ -134,7 +140,8 @@ Page({
   hideModal(e) {
     this.setData({
       modalName: null,
-      photos:[]
+      photos:[],
+      title:""
     })
   },
   DelImg(e) {
@@ -167,7 +174,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getListImgs()
+  },
 
+  getListImgs(){
+    http({
+      url:"api/photodetail",
+      data: { room_id: this.data.id }
+    }).then(res=>{
+      console.log(res)
+    })
   },
 
   /**
