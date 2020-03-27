@@ -50,6 +50,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    goToRegister: function(){
+      wx.navigateTo({
+        url: '/pages/register/register?id=1'
+      })
+    },
     getUserInfo: function (e) {
       console.log(e)
       if (e.detail.userInfo){

@@ -18,9 +18,9 @@ Page({
     write: [0, 0], //定位参数
     scrolltop: 0, //据顶部距离
     CustomBar: app.globalData.CustomBar,
-    backImg: app.globalData.server + '/upload/mu1.jpg',
-    avatarImg: app.globalData.server + '/upload/邵逸夫.jpg',
-    title: "邵逸夫邵逸夫",
+    backImg: "",
+    avatarImg: "",
+    title: "",
     liNums: [{
       id: "1",
       writePosition: [50, 50], //默认定位参数
@@ -48,13 +48,32 @@ Page({
     })
     this.getGiftList();
   },
+  getMuseumInfo(id) {
+    var that = this;
+    http({
+      url: "api/detail",
+      data: { id: id }
+    }).then(res => {
+      if (res.code == 1) {
+        var bgImgUrl = app.globalData.server + '/upload/mu1.jpg';
+        that.data.bgListArr.map(item=>{
+          if (item.id == res.data.background_id){
+            bgImgUrl = item.background;
+          }
+        })
+        that.setData({
+          avatarImg: res.data.avatar_url,
+          backImg: bgImgUrl
+        })
+      }
+    })
+  },
   getGiftList(){
     var that = this;
     http({
       url: "api/list"
     }).then(res => {
       if (res.code == 1) {
-        console.log(res)
         that.setData({
           giftListArr:res.data
         })
@@ -64,10 +83,10 @@ Page({
       url: "api/bglist"
     }).then(res => {
       if (res.code == 1) {
-        console.log(res)
         that.setData({
           bgListArr: res.data
         })
+        that.getMuseumInfo(that.data.id);
       }
     })
   },
@@ -155,20 +174,17 @@ Page({
       modalName: e.currentTarget.dataset.target
     })
     if (e.currentTarget.dataset.target = "bottomLiwu"){
-      console.log(this.data.giftListArr)
       let newArr = this.data.giftListArr.concat();
       this.setData({
         giftListArr: newArr
       })
     }
     if (e.currentTarget.dataset.target = "bottomModal") {
-      console.log(this.data.bgListArr)
       let newArr = this.data.bgListArr.concat();
       this.setData({
         bgListArr: newArr
       })
     }
-    console.log(this)
   },
   hideModal(e) {
     this.setData({
@@ -176,7 +192,7 @@ Page({
     })
   },
   selectBgImg(e) {
-    let imgUrl = e.currentTarget.dataset.background;
+    let imgUrl = e.currentTarget.dataset.img;
     let id = e.currentTarget.dataset.bgid;
     this.hideModal()
     this.swapBgImg(imgUrl, id);
@@ -184,10 +200,11 @@ Page({
   swapBgImg(imgUrl, id){
     var that = this;
     http({
-      url: "api/bg",
-      data: { room_id: that.data.id, product_id: id }
+      url: "api/changepg",
+      data: { id: that.data.id, bg_id: id }
     }).then(res => {
       if (res.code == 1) {
+        console.log(imgUrl)
         that.setData({
           backImg: imgUrl
         })

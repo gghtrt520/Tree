@@ -1,6 +1,6 @@
 <!--pages/museum/videos/videos.wxml-->
 <scroll-view scroll-y="{{modalName==null}}" class="page {{modalName!=null?'show':''}}">
-  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
     <view slot="content">视频</view>
   </cu-custom>
   <view class="cu-bar bg-white solid-bottom">
@@ -8,7 +8,7 @@
       <text class='cuIcon-titles text-brown '></text> 视频列表
     </view>
     <view class='action'>
-      <text class='cu-btn round bg-brown'>上传视频</text>
+      <text class='cu-btn round bg-brown' bindtap="showModal" data-target="DialogModal1">上传视频</text>
     </view>
   </view>
   <view class="list">
@@ -23,3 +23,36 @@
     </view>
   </view>
 </scroll-view>
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">视频上传</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding bg-white">
+      <view class="cu-form-group">
+        <view class="title">标题</view>
+        <input style="text-align:right;" placeholder="请输入标题"></input>
+      </view>
+      <view class="grid col-12 grid-square flex-sub">
+        <view class="v-video" wx:if="{{videosUpload}}" data-url="{{videosUpload}}">
+          <video src='{{videosUpload}}' mode='aspectFill'></video>
+          <view class="cu-tag bg-red" object-fit="contain" catchtap="DelVedio">
+            <text class="cuIcon-close"></text>
+          </view>
+        </view>
+        <view class="solids btn-choose" bindtap="ChooseVedio" wx:else>
+          <text class="cuIcon-cameraadd"></text>
+        </view>
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <view class="cu-btn line-brown text-brown" bindtap="hideModal">取消</view>
+        <view class="cu-btn bg-brown margin-left" bindtap="uploadFiles">上传</view>
+      </view>
+    </view>
+  </view>
+</view>

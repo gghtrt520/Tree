@@ -34,12 +34,12 @@
 .bg-shidai .pos-btn{
   height: 180rpx;
   background-repeat: no-repeat;
-  background-size: 92%;
+  background-size: 89%;
   background-position: center center;
 }
 .bg-yishu .pos-btn{
   height: 180rpx;
   background-repeat: no-repeat;
-  background-size: 84%;
+  background-size: 82%;
   background-position: center center;
 }

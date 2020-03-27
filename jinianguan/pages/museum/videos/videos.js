@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    videosUpload: ""
   },
 
   /**
@@ -28,7 +28,34 @@ Page({
   onShow: function () {
 
   },
-
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+  ChooseVedio(){
+    var that = this;
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 120,
+      camera: 'back',
+      success: function (res) {
+        that.setData({
+          videosUpload: res.tempFilePath
+        })
+      }
+    })
+  },
+  DelVedio(){
+    this.setData({
+      videosUpload: ""
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

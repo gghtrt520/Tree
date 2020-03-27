@@ -1,6 +1,6 @@
 <!--pages/register/register.wxml-->
 <cu-custom bgColor="bg-gradual-brown" isBack="{{isBack}}">
-  <view slot="content">西户云纪念馆</view>
+  <view slot="content">云典</view>
 </cu-custom>
 <view>
   <view class="cu-form-group margin-top">

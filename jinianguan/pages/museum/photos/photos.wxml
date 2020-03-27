@@ -1,6 +1,6 @@
 <!--pages/museum/photos/photos.wxml-->
 <scroll-view scroll-y="{{modalName==null}}" class="page {{modalName!=null?'show':''}}">
-  <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
     <view slot="content">相册</view>
   </cu-custom>
   <view class="cu-bar bg-white solid-bottom">
@@ -34,7 +34,7 @@
     <view class="padding bg-white">
       <view class="cu-form-group">
         <view class="title">标题</view>
-        <input placeholder="请输入标题"></input>
+        <input style="text-align:right;" bindblur="inputTitle" maxlength="10" placeholder="请输入标题"></input>
       </view>
       <view class="cu-bar">
         <view class="action">
@@ -43,13 +43,13 @@
       </view>
       <view class="cu-form-group">
         <view class="grid col-4 grid-square flex-sub">
-          <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
-            <image src='{{imgList[index]}}' mode='aspectFill'></image>
+          <view class="bg-img" wx:for="{{photos}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{photos[index]}}">
+            <image src='{{photos[index]}}' mode='aspectFill'></image>
             <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
               <text class="cuIcon-close"></text>
             </view>
           </view>
-          <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<9}}">
+          <view class="solids" bindtap="ChooseImage" wx:if="{{photos.length<8}}">
             <text class="cuIcon-cameraadd"></text>
           </view>
         </view>
@@ -57,8 +57,8 @@
     </view>
     <view class="cu-bar bg-white justify-end">
       <view class="action">
-        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
-        <button class="cu-btn bg-green margin-left" bindtap="hideModal">确定</button>
+        <view class="cu-btn line-brown text-brown" bindtap="hideModal">取消</view>
+        <view class="cu-btn bg-brown margin-left" bindtap="uploadFiles">上传</view>
       </view>
     </view>
   </view>

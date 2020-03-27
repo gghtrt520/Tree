@@ -120,7 +120,7 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '西户云纪念馆',
+      title: '云典',
       imageUrl: '/images/share.jpg',
       path: '/pages/index/index'
     }

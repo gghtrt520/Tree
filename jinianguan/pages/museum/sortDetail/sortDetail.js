@@ -10,6 +10,7 @@ Page({
     title: "详情",
     giftNum: 0, 
     giftList:[],
+    textJiyu: "无",
     bgImg: app.globalData.server + "upload/2.jpg",
     // avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
     huaImg: app.globalData.server + "upload/b.png",
@@ -29,11 +30,30 @@ Page({
     this.setData({
       id:options.id
     })
-    this.getMuseumInfo(options.id);
+  },
+  getMuseumInfo(id) {
+    var that = this;
+    http({
+      url: "api/detail",
+      data: { id: id }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          title: res.data.name,
+          textJiyu: res.data.description ? res.data.description : "无"
+        })
+        if (res.data.religion == "佛教"){
+          that.writeData(2)
+        }
+        if (res.data.religion == "基督教") {
+          that.writeData(3)
+        }
+      }
+    })
   },
   // 数据展示
-  writeData(){
-    if (options.type == 3) {
+  writeData(type){
+    if (type == 3) {
       this.setData({
         bgImg: app.globalData.server + "upload/3.jpg",
         huaImg: app.globalData.server + "upload/a.png",
@@ -46,7 +66,7 @@ Page({
         liyiTxt: "圣经"
       })
     }
-    if (options.type == 2) {
+    if (type == 2) {
       this.setData({
         bgImg: app.globalData.server + "upload/1.jpg",
         huaImg: app.globalData.server + "upload/k.png",
@@ -72,7 +92,7 @@ Page({
       })
     }
   },
-  getMuseumInfo(id) {
+  getMuseumGift(id) {
     var that = this;
     http({
       url: "api/plist",
@@ -88,7 +108,7 @@ Page({
   },
   gotoPagePhotos(e){
     wx.navigateTo({
-      url: '/pages/museum/photos/photos',
+      url: '/pages/museum/photos/photos?id='+this.data.id,
     })
   },
   gotoPageArticle(e) {
@@ -98,7 +118,7 @@ Page({
   },
   gotoPageVideos(e) {
     wx.navigateTo({
-      url: '/pages/museum/videos/videos',
+      url: '/pages/museum/videos/videos?id=' + this.data.id,
     })
   },
   goToEdit(e) {
@@ -117,7 +137,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getMuseumGift(this.data.id);
+    this.getMuseumInfo(this.data.id);
   },
 
   /**

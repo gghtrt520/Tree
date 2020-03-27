@@ -1,1 +1,13 @@
 /* pages/museum/videos/videos.wxss */
+.v-video{
+  width: 100%;
+  margin: 10rpx;
+}
+.v-video video{
+  width: 100%;
+  height: 300rpx;
+}
+.btn-choose{
+  width: 200rpx;
+  height: 200rpx;
+}

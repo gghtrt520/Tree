@@ -7,14 +7,12 @@
       <text>{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="cu-bar bg-white solid-bottom">
+  <view class="cu-bar bg-white solid-bottom" bindtap="goToRegister">
     <view class='action'>
       <text class='cuIcon-profile text-gray'> 账号设置</text>
     </view>
     <view class='action'>
-      <navigator url="/pages/list/list?title=时代人物" hover-class="none">
         <text class='cuIcon-right text-gray'></text>
-      </navigator>
     </view>
   </view>
   <view class="cu-bar bg-white solid-bottom">

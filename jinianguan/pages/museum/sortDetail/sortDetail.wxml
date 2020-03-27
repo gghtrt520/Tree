@@ -26,7 +26,7 @@
       </view>
     </view>
     <view class="jiyu" style="background-image: url({{jiyuImg}})">
-      <text>岁哈根还哦收到后宫啊说公司岁哈根还哦收到后宫啊说公司，岁哈根还哦收到后宫啊说公司</text>
+      <view style="height:140rpx;">{{textJiyu}}</view>
       <view class="btn-jiyu">
         <view class="cu-btn">{{jiyutext}}</view>
       </view>
