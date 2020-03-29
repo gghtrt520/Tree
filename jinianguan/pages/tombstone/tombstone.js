@@ -1,6 +1,7 @@
 // pages/tombstone/tombstone.js
 const app = getApp();
 const http = require("../../utils/http.js");
+var backMusic = wx.createInnerAudioContext();
 Page({
 
   /**
@@ -8,7 +9,7 @@ Page({
    */
   data: {
     // 拖拽参数
-    id:null,
+    id: null,
     modalName: null,
     showAnimation: false,
     animationImg: "",
@@ -20,6 +21,7 @@ Page({
     CustomBar: app.globalData.CustomBar,
     backImg: "",
     avatarImg: "",
+    kuangImg: app.globalData.server + 'upload/kuang.png',
     title: "",
     isPalaying: false,
     musicUrl: app.globalData.server + 'upload/2255039574.mp3',
@@ -36,8 +38,9 @@ Page({
       write: [0, 0], //定位参数
       isMy: 1
     }],
-    giftListArr:[],
-    bgListArr:[]
+    giftListArr: [],
+    giftCountArr: [],
+    bgListArr: []
   },
 
   /**
@@ -46,38 +49,65 @@ Page({
   onLoad: function(options) {
     this.getSysdata();
     this.setData({
-      id:options.id
+      id: options.id
     })
-    this.getGiftList();
+  },
+  palyMusic: function() {
+    backMusic.title = "音乐播放";
+    backMusic.src = this.data.musicUrl;
+    backMusic.loop = true;
+    backMusic.play();
+    backMusic.onPlay(() => {
+      console.log("音乐播放开始");
+      this.setData({
+        isPalaying: true
+      })
+    });
+    backMusic.onPause(() => {
+      console.log("音乐播放暂停");
+      this.setData({
+        isPalaying: false
+      })
+    })
+  },
+  toggleMusic(e) {
+    if (this.data.isPalaying) {
+      backMusic.pause();
+    } else {
+      backMusic.play();
+    }
   },
   getMuseumInfo(id) {
     var that = this;
     http({
       url: "api/detail",
-      data: { id: id }
+      data: {
+        id: id
+      }
     }).then(res => {
       if (res.code == 1) {
-        var bgImgUrl = app.globalData.server + '/upload/mu1.jpg';
-        that.data.bgListArr.map(item=>{
-          if (item.id == res.data.background_id){
+        var bgImgUrl = app.globalData.server + '/admin/upload/background/2020-03-28/1585414302.7689.jpg';
+        that.data.bgListArr.map(item => {
+          if (item.id == res.data.background_id) {
             bgImgUrl = item.background;
           }
         })
         that.setData({
           avatarImg: res.data.avatar_url,
-          backImg: bgImgUrl
+          backImg: bgImgUrl,
+          title: res.data.name
         })
       }
     })
   },
-  getGiftList(){
+  getGiftList() {
     var that = this;
     http({
       url: "api/list"
     }).then(res => {
       if (res.code == 1) {
         that.setData({
-          giftListArr:res.data
+          giftListArr: res.data
         })
       }
     })
@@ -103,13 +133,42 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    if (!backMusic) {
+      backMusic = wx.createInnerAudioContext();
+    }
+    this.getGiftList();
+    this.palyMusic();
+    this.presentcount();
   },
-  sendGift: function (imgUrl, giftid) {
+  presentcount: function() {
+    var that = this;
+    http({
+      url: "api/presentcount",
+      data: {
+        room_id: that.data.id
+      }
+    }).then(res => {
+      if (res.code == 1) {
+        console.log(res)
+        that.setData({
+          giftCountArr: res.data
+        })
+      }
+    })
+  },
+  gotoDetail() {
+    wx.navigateTo({
+      url: '/pages/museum/sortDetail/sortDetail?id=' + this.data.id
+    })
+  },
+  sendGift: function(imgUrl, giftid) {
     var that = this;
     http({
       url: "api/present",
-      data: { room_id: that.data.id, product_id: giftid }
+      data: {
+        room_id: that.data.id,
+        product_id: giftid
+      }
     }).then(res => {
       if (res.code == 1) {
         that.setData({
@@ -121,8 +180,9 @@ Page({
             animationImg: "",
             showAnimation: false
           })
+          that.presentcount();
         }, 2100);
-      }else{
+      } else {
         wx.showToast({
           title: '操作失败请重试',
           icon: 'none'
@@ -175,7 +235,7 @@ Page({
     this.setData({
       modalName: e.currentTarget.dataset.target
     })
-    if (e.currentTarget.dataset.target = "bottomLiwu"){
+    if (e.currentTarget.dataset.target = "bottomLiwu") {
       let newArr = this.data.giftListArr.concat();
       this.setData({
         giftListArr: newArr
@@ -199,11 +259,14 @@ Page({
     this.hideModal()
     this.swapBgImg(imgUrl, id);
   },
-  swapBgImg(imgUrl, id){
+  swapBgImg(imgUrl, id) {
     var that = this;
     http({
       url: "api/changepg",
-      data: { id: that.data.id, bg_id: id }
+      data: {
+        id: that.data.id,
+        bg_id: id
+      }
     }).then(res => {
       if (res.code == 1) {
         console.log(imgUrl)
@@ -222,14 +285,20 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-
+    backMusic.destroy();
+    backMusic = null;
+    this.data.isPalaying = false;
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    if (backMusic) {
+      backMusic.destroy();
+      backMusic = null;
+      this.data.isPalaying = false;
+    }
   },
 
   /**
@@ -250,6 +319,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    var title = this.data.title;
+    var imgUrl = this.data.avatarImg;
+    return {
+      title: title,
+      imageUrl: imgUrl,
+      path: 'pages/tombstone/tombstone?id=' + this.data.id
+    }
   }
 })

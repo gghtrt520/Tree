@@ -26,6 +26,37 @@ Page({
   onReady: function() {
 
   },
+  delPhotos(e){
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '删除提示',
+      content: '确认要删除该相册吗？',
+      success: function (res) {
+        if (res.confirm) {
+          http({
+            url:"api/photodelete",
+            data: { photo_id: id}
+          }).then(res=>{
+            if(res.code == 1){
+              wx.showToast({
+                title: '操作成功',
+                icon: 'none'
+              })
+              that.getListImgs();
+            }else{
+              wx.showToast({
+                title: '请重试',
+                icon: 'none'
+              })
+            }
+          })
+        } else {
+          console.log('点击取消回调')
+        }
+      }
+    })
+  },
   imgYu: function(event) {
     console.log(event)
     var that = this;

@@ -12,11 +12,11 @@
   </view>
   <view class="cu-form-group">
     <view class="title">逝者姓名</view>
-    <input placeholder="请输入逝者姓名" value="{{name}}" maxlength="8" bindblur="inputName"></input>
+    <input placeholder="请输入逝者姓名" disabled="{{id}}" value="{{name}}" maxlength="8" bindblur="inputName"></input>
   </view>
   <view class="cu-form-group">
     <view class="title">性别</view>
-    <picker bindchange="sexPickerChange" value="{{sex}}" range="{{picker}}">
+    <picker bindchange="sexPickerChange" disabled="{{id}}" value="{{sex}}" range="{{picker}}">
       <view class="picker">
         {{sex?picker[sex]:'请选择'}}
       </view>
@@ -92,12 +92,12 @@
   <view class="padding flex flex-direction">
     <button class="cu-btn bg-brown lg" bindtap='saveInfo'>保存</button>
   </view>
-  <view class='canvas-v' wx:if="{{showCut}}">
+  <!-- <view class='canvas-v' wx:if="{{showCut}}">
     <canvas class="map" disable-scroll="true" bindtouchstart="a1" bindtouchmove="a2" canvas-id="map_id"></canvas>
     <view class="cu-bar btn-group">
       <button class="cu-btn text-brown line-brown shadow" bindtap='cancelCut'>取消</button>
       <button class="cu-btn bg-brown shadow-blur" bindtap='button1'>相册</button>
       <button class="cu-btn bg-brown shadow-blur" bindtap='button'>上传</button>
     </view>
-  </view>
+  </view> -->
 </view>

@@ -43,7 +43,8 @@ Component({
    */
   data: {
     userInfo: {},
-    bgImg: app.globalData.server + "upload/20200328005307.png",
+    // bgImg: "/images/20200328005307.jpg",
+    bgImg: app.globalData.server + "upload/20200328005307.jpg",
     ColorList: app.globalData.ColorList
   },
 
@@ -51,9 +52,36 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    cropperload(e) {
+      console.log("cropper初始化完成");
+    },
+    loadimage(e) {
+      console.log("图片加载完成", e.detail);
+      wx.hideLoading();
+      //重置图片角度、缩放、位置
+      this.cropper.imgReset();
+    },
+    clickcut(e) {
+      console.log(e.detail);
+      //点击裁剪框阅览图片
+      wx.previewImage({
+        current: e.detail.url, // 当前显示图片的http链接
+        urls: [e.detail.url] // 需要预览的图片http链接列表
+      })
+    },
     goToRegister: function(){
       wx.navigateTo({
         url: '/pages/register/register?id=1'
+      })
+    },
+    goToSuggest:function(){
+      wx.navigateTo({
+        url: '/pages/suggest/suggest?id=1'
+      })
+    },
+    goToAbout: function () {
+      wx.navigateTo({
+        url: '/pages/about/about?id=1'
       })
     },
     getUserInfo: function (e) {

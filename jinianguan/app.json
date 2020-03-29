@@ -14,7 +14,9 @@
     "pages/museum/photos/photos",
     "pages/museum/videos/videos",
     "pages/museum/article/article",
-    "pages/saomu/daisao/daisao"
+    "pages/museum/cutImg/cutImg",
+    "pages/suggest/suggest",
+    "pages/about/about"
   ],
   "window": {
     "navigationStyle": "custom"

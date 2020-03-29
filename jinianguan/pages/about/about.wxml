@@ -1,0 +1,4 @@
+<!--pages/about/about.wxml-->
+<cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
+  <view slot="content">关于</view>
+</cu-custom>

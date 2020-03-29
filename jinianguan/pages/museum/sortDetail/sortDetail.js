@@ -11,7 +11,7 @@ Page({
     giftNum: 0, 
     giftList:[],
     textJiyu: "无",
-    bgImg: app.globalData.server + "upload/2.jpg",
+    bgImg: app.globalData.server + "/upload/peoplebg.jpg",
     // avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
     huaImg: app.globalData.server + "upload/b.png",
     liImg: app.globalData.server + "upload/j.png",
@@ -55,40 +55,31 @@ Page({
   writeData(type){
     if (type == 3) {
       this.setData({
-        bgImg: app.globalData.server + "upload/3.jpg",
+        bgImg: app.globalData.server + "/upload/peoplebg.jpg",
         huaImg: app.globalData.server + "upload/a.png",
         liImg: app.globalData.server + "upload/j.png",
         liyiImg: app.globalData.server + "upload/e.png",
         jiyuImg: app.globalData.server + "upload/h.jpg",
-        jiyutext: "圣经",
-        huaTxt: "蜡盏",
-        liTxt: "十字架",
-        liyiTxt: "圣经"
+        jiyutext: "圣经"
       })
     }
     if (type == 2) {
       this.setData({
-        bgImg: app.globalData.server + "upload/1.jpg",
+        bgImg: app.globalData.server + "/upload/peoplebg.jpg",
         huaImg: app.globalData.server + "upload/k.png",
         liImg: app.globalData.server + "upload/f.png",
         liyiImg: app.globalData.server + "upload/l.png",
         jiyuImg: app.globalData.server + "upload/4.jpg",
-        jiyutext: "偈语",
-        huaTxt: "长蜡",
-        liTxt: "捧香",
-        liyiTxt: "香火钱"
+        jiyutext: "偈语"
       })
     } else {
       this.setData({
-        bgImg: app.globalData.server + "upload/2.jpg",
+        bgImg: app.globalData.server + "/upload/peoplebg.jpg",
         huaImg: app.globalData.server + "upload/b.png",
         liImg: app.globalData.server + "upload/j.png",
         liyiImg: app.globalData.server + "upload/d.png",
         jiyuImg: app.globalData.server + "upload/4.jpg",
-        jiyutext: "寄语",
-        huaTxt: "鲜花",
-        liTxt: "祭果",
-        liyiTxt: "祭拜"
+        jiyutext: "寄语"
       })
     }
   },
@@ -139,6 +130,7 @@ Page({
   onShow: function () {
     this.getMuseumGift(this.data.id);
     this.getMuseumInfo(this.data.id);
+    this.getListImgs();
   },
 
   /**
@@ -147,7 +139,27 @@ Page({
   onHide: function () {
 
   },
-
+  getListImgs() {
+    var that = this;
+    http({
+      url: "api/photodetail",
+      data: {
+        room_id: this.data.id
+      }
+    }).then(res => {
+      if (res.code == 1) {
+        if(res.data.length>0){
+          that.setData({
+            bgImg: res.data[0].detail[0].photo_url
+          })
+        }else{
+          that.setData({
+            bgImg: app.globalData.server + "/upload/peoplebg.jpg"
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */

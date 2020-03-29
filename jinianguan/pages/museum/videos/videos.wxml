@@ -19,7 +19,7 @@
             {{item.name}}
           </view>
           <view class='action'>
-            
+            <view class="lg text-red" data-id="{{item.id}}" catchtap="delVideo">删除</view>
           </view>
         </view>
         <video mode='aspectFill' src="{{item.video_path}}"></video>

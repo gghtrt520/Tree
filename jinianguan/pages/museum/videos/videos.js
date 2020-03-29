@@ -28,7 +28,38 @@ Page({
   onReady: function() {
 
   },
-
+  delVideo(e){
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '删除提示',
+      content: '确认要删除该视频吗？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(id)
+          http({
+            url: "api/videodelete",
+            data: { video_id: id }
+          }).then(res => {
+            if (res.code == 1) {
+              wx.showToast({
+                title: '操作成功',
+                icon: 'none'
+              })
+              that.getListVideo();
+            } else {
+              wx.showToast({
+                title: '请重试',
+                icon: 'none'
+              })
+            }
+          })
+        } else {
+          console.log('点击取消回调')
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -90,11 +121,11 @@ Page({
           }).then(res => {
             if (res.code == 1) {
               that.hideModal();
+              wx.hideLoading();
               wx.showToast({
                 title: '上传成功',
                 icon: 'none'
               })
-              wx.hideLoading()()
               that.getListVideo();
             }
           })
@@ -134,9 +165,11 @@ Page({
   },
   ChooseVedio() {
     var that = this;
+    console.log(11)
     wx.chooseVideo({
       sourceType: ['album', 'camera'],
-      maxDuration: 120,
+      compressed: false,
+      maxDuration: 60,
       camera: 'back',
       success: function(res) {
         if (res.size > 50 * 1024 * 1024) {
@@ -150,7 +183,15 @@ Page({
         that.setData({
           videosUpload: res.tempFilePath
         })
-      }
+      },
+      fail:function(err){
+        that.setData({
+          videosUpload: ""
+        })
+      },
+      complete: function (err) {
+        console.log(err)
+      },
     })
   },
   DelVedio() {

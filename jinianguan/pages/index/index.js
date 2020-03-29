@@ -32,7 +32,6 @@ Page({
                 userInfo: res.userInfo,
                 hasUserInfo: true
               })
-              wx.hideLoading()
               loginUser(res.userInfo, this)
             }
           })
@@ -121,32 +120,9 @@ Page({
   onShareAppMessage() {
     return {
       title: '云典',
-      imageUrl: '/images/share.jpg',
+      imageUrl: '/images/20200328005307.jpg',
       path: '/pages/index/index'
     }
-  },
-  getHomeData() {
-    var that = this;
-    http({
-      url: "api/show",
-      data: { category: ["时代人物"] }
-    }).then(res => {
-      if(res.code == 1){
-        that.setData({
-          homeData1:res.data
-        })
-      }
-    });
-    http({
-      url: "api/show",
-      data: { category: ["艺术人生"] }
-    }).then(res => {
-      if (res.code == 1) {
-        that.setData({
-          homeData2: res.data
-        })
-      }
-    })
   }
 })
 
@@ -176,7 +152,7 @@ function loginUser(userInfo, that) {
               app.globalData.user_id = data.data.user_id
               app.globalData.access_token = data.data.access_token
               console.log(app.globalData)
-              that.getHomeData()
+              // that.getHomeData()
             } else {
               wx.showToast({
                 icon: 'none',

@@ -1,5 +1,4 @@
 <!--pages/museum/details/details.wxml-->
-
 <view class="bg-white bigContent">
   <view style="background-image: url({{bgImg}})" class="v-header">
     <cu-custom bgColor="bg-gradual-white" isBack="{{true}}">
@@ -11,18 +10,14 @@
   <view class="scroll-content padding bg-white">
     <text class="jisao-nums">当前祭品数：{{giftNum}}</text>
     <view class="padding tongji">
-      <view class="item">
-        <view class="bg-img" style="background-image: url({{huaImg}})"></view>
+      <view class="item" bindtap='gotoPagePhotos'>
+        <view class="bg-img cuIcon-picfill"></view>
         <!-- <text>20</text> -->
-        <text>{{huaTxt}}</text>
+        <text>相册</text>
       </view>
-      <view class="item">
-        <view class="bg-img" style="background-image: url({{liImg}})"></view>
-        <text>{{liTxt}}</text>
-      </view>
-      <view class="item">
-        <view class="bg-img" style="background-image: url({{liyiImg}})"></view>
-        <text>{{liyiTxt}}</text>
+      <view class="item" bindtap='gotoPageVideos'>
+        <view class="bg-img cuIcon-recordfill"></view>
+        <text>视频</text>
       </view>
     </view>
     <view class="jiyu" style="background-image: url({{jiyuImg}})">
@@ -37,16 +32,5 @@
         <text>{{item.created_at}}</text>
       </view>
     </scroll-view>
-  </view>
-  <view class="toolbar">
-    <!-- <view class="v-tool" bindtap='gotoPageArticle'>
-      <text class="text-brown">祭文</text>
-    </view> -->
-    <view class="v-tool" bindtap='gotoPagePhotos'>
-      <text class="text-brown">相册</text>
-    </view>
-    <view class="v-tool" bindtap='gotoPageVideos'>
-      <text class="text-brown">视频</text>
-    </view>
   </view>
 </view>

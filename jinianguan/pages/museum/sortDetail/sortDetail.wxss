@@ -5,21 +5,6 @@
 .bigContent{
   position: relative;
   height: 100vh;
-  overflow: hidden;
-}
-.toolbar{
-  position: absolute;
-  top: 40%;
-  right: 2vw;
-}
-.v-tool{
-  background-color: rgba(200, 200, 200, 0.3);
-  padding: 10rpx 20rpx;
-  text-align: center;
-  border-radius: 50%;
-  font-size: 32rpx;
-  margin-bottom: 50rpx;
-  z-index: 1000;
 }
 .v-header {
   position: relative;
@@ -67,6 +52,7 @@
 .tongji .bg-img{
   width: 100rpx;
   height: 100rpx;
+  font-size: 80rpx;
   background-repeat: no-repeat;
   background-size: 200%;
   background-position: center center;

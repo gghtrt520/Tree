@@ -1,7 +1,6 @@
 <!--pages/list/list.wxml-->
-<view  style="background-image: url({{bgImg}});" class="page">
+<view class="page bg-white">
   <cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
-    <view slot="backText">返回</view>
     <view slot="content">{{title}}</view>
   </cu-custom>
   <view class="list">

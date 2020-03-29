@@ -14,13 +14,13 @@
   width: 100vw;
 }
 .bg-shidai{
-  top: 24%;
+  top: 30vh;
 }
 .bg-yishu{
-  top: 40%;
+  top: 45vh;
 }
 .bg-create{
-  top: 60%;
+  top: 64vh;
 }
 .pos-btn{
   width: 100%;

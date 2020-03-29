@@ -15,7 +15,7 @@ Component({
   },
   data: {
     cardCur: 0,
-    bgImg: app.globalData.server + '/upload/homebg.jpg',
+    bgImg: app.globalData.server + '/upload/homebg.jpg?a=1',
     btnImg1: app.globalData.server + '/upload/shidai.png',
     btnImg2: app.globalData.server + '/upload/yishu.png',
     btnCreate: app.globalData.server + '/upload/create.png',

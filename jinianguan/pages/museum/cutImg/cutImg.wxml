@@ -1,0 +1,2 @@
+<!--pages/museum/cutImg/cutImg.wxml-->
+<image-cropper id="image-cropper" limit_move="{{true}}" disable_width="{{true}}" disable_height="{{true}}" disable_rotate="{{true}}" width="{{width}}" height="{{height}}" imgSrc="{{srcImg}}" bindload="cropperload" bindimageload="loadimage" bindtapcut="clickcut"></image-cropper>

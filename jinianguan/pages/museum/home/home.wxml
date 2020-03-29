@@ -26,6 +26,7 @@
       <view wx:for="{{listImg}}" wx:key="*this" class="list-item" data-id="{{item.id}}" bindtap="goDetail">
         <image mode="aspectFill" src="{{item.avatar_url}}"></image>
         <view class="cu-tag text-blue" wx:if="{{item.is_show==0}}">审核中</view>
+        <view class="cu-tag text-red" wx:else data-id="{{item.id}}" catchtap="delMuseum">删除</view>
         <view class="item-text text-cut">{{item.name}}</view>
       </view>
     </view>

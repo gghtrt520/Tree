@@ -1,0 +1,18 @@
+<!--pages/suggest/suggest.wxml-->
+<cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
+  <view slot="content">意见反馈</view>
+</cu-custom>
+<view class="cu-bar bg-white solid-bottom">
+  <view class='action'>
+    <text class='cuIcon-titles text-brown '></text> 反馈信息
+  </view>
+  <view class='action'>
+
+  </view>
+</view>
+<view class="cu-form-group">
+  <textarea maxlength="100" bindinput="textareaAInput" value="{{textareaAValue}}" placeholder="请输入您的宝贵意见"></textarea>
+</view>
+<view class="padding flex flex-direction margin-top">
+  <button class="cu-btn lg bg-brown" bindtap="submitMessage">提交</button>
+</view>

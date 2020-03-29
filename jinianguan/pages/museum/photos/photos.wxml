@@ -15,6 +15,7 @@
     <view class="padding grid col-2 grid-square" wx:if="{{imgList.length>0}}">
       <view wx:for="{{imgList}}" wx:key="*this" class="list-item" data-index="{{index}}" bindtap="imgYu">
         <image mode="aspectFill" src="{{item.detail[0].photo_url}}"></image>
+        <view class="cu-tag lg text-red" data-id="{{item.id}}" catchtap="delPhotos">删除</view>
         <text class="item-text">{{item.name}}</text>
       </view>
     </view>
