@@ -77,8 +77,11 @@
 .list-liwu{
   line-height: 2;
   max-height: 300rpx;
-  margin: 0 10%;
+  padding: 0 10%;
   color: #111;
+}
+.v-text{
+  word-break: break-all;
 }
 .btn-video{
   position: absolute;

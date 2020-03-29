@@ -8,6 +8,7 @@ Page({
    */
   data: {
     id: null,
+    isMy: false,
     videosUpload: "",
     titleText: '',
     videoList: []
@@ -18,7 +19,8 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      id:options.id
+      id: options.id,
+      isMy: options.isMy == "false" ? false : true
     })
   },
 

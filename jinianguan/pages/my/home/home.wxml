@@ -7,15 +7,15 @@
       <text class="text-brown">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="cu-bar bg-white solid-bottom" bindtap="goToRegister">
+  <!-- <view class="cu-bar bg-white solid-bottom" bindtap="goToRegister">
     <view class='action'>
       <text class='cuIcon-profile text-gray'> 账号设置</text>
     </view>
     <view class='action'>
       <text class='cuIcon-right text-gray'></text>
     </view>
-  </view>
-  <view class="cu-bar bg-white solid-bottom" bindtap="goToSuggest">
+  </view> -->
+  <!-- <view class="cu-bar bg-white solid-bottom" bindtap="goToSuggest">
     <view class='action'>
       <text class='cuIcon-creative text-gray'> 意见反馈</text>
     </view>
@@ -24,10 +24,10 @@
         <text class='cuIcon-right text-gray'></text>
       </navigator>
     </view>
-  </view>
+  </view> -->
   <view class="cu-bar bg-white solid-bottom" bindtap="goToAbout">
     <view class='action'>
-      <text class='cuIcon-info text-gray'> 关于我们</text>
+      <text class='cuIcon-info text-gray'> 联系我们</text>
     </view>
     <view class='action'>
       <navigator url="/pages/list/list?title=时代人物" hover-class="none">

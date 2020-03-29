@@ -8,7 +8,7 @@
       <text class='cuIcon-titles text-brown '></text> 视频列表
     </view>
     <view class='action'>
-      <text class='cu-btn round bg-brown' bindtap="showModal" data-target="DialogModal1">上传视频</text>
+      <text wx:if="{{isMy}}" class='cu-btn round bg-brown' bindtap="showModal" data-target="DialogModal1">上传视频</text>
     </view>
   </view>
   <view class="list">
@@ -19,7 +19,7 @@
             {{item.name}}
           </view>
           <view class='action'>
-            <view class="lg text-red" data-id="{{item.id}}" catchtap="delVideo">删除</view>
+            <view wx:if="{{isMy}}" class="lg text-red" data-id="{{item.id}}" catchtap="delVideo">删除</view>
           </view>
         </view>
         <video mode='aspectFill' src="{{item.video_path}}"></video>

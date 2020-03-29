@@ -7,6 +7,7 @@ Page({
    */
   data: {
     id: null,
+    isMy: false,
     title: "",
     imgList: [],
     photos: []
@@ -16,7 +17,8 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      id: options.id
+      id: options.id,
+      isMy: options.isMy == "false" ? false : true
     })
   },
 
@@ -26,25 +28,27 @@ Page({
   onReady: function() {
 
   },
-  delPhotos(e){
+  delPhotos(e) {
     var that = this;
     var id = e.currentTarget.dataset.id;
     wx.showModal({
       title: '删除提示',
       content: '确认要删除该相册吗？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           http({
-            url:"api/photodelete",
-            data: { photo_id: id}
-          }).then(res=>{
-            if(res.code == 1){
+            url: "api/photodelete",
+            data: {
+              photo_id: id
+            }
+          }).then(res => {
+            if (res.code == 1) {
               wx.showToast({
                 title: '操作成功',
                 icon: 'none'
               })
               that.getListImgs();
-            }else{
+            } else {
               wx.showToast({
                 title: '请重试',
                 icon: 'none'
@@ -62,7 +66,7 @@ Page({
     var that = this;
     var inde = event.currentTarget.dataset.index; //
     var imgs = []; //
-    this.data.imgList[inde].detail.map(item=>{
+    this.data.imgList[inde].detail.map(item => {
       imgs.push(item.photo_url)
     })
     //图片预览

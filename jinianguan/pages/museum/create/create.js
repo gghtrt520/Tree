@@ -9,17 +9,19 @@ Page({
     CustomBar: app.globalData.CustomBar,
     id: null,
     sex: "0",
-    name:"",
-    jiyuText:"",
+    name: "",
+    jiyuText: "",
+    havedPay: false,
     religionInd: "0",
     authorityInd: "0",
     typeInd: "0",
+    roomPrice: 0,
     age: "",
     avatarUrl: null,
     picker: ['男', '女'],
-    type: ['免费'],
-    authority: ['仅自己可见','公开'],
-    religion: ['无', '道教', '佛教', '基督教'],
+    type: ['免费', '付费'],
+    authority: ['仅自己可见', '公开'],
+    religion: ['无', '传统', '佛教', '基督教'],
     date1: '1900-01-01',
     date2: '1900-01-01',
     region: ['北京市', '北京市', '东城区'],
@@ -50,13 +52,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    if(options.id){
+  onLoad: function (options) {
+    if (options.id) {
       this.setData({
         id: options.id
       })
       this.getMuseumInfo(options.id)
     }
+    this.getsetting();
 
     var day2 = new Date();
     day2.setTime(day2.getTime());
@@ -81,32 +84,48 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
-  getMuseumInfo(id){
+  getsetting() {
     var that = this;
     http({
-      url:"api/detail",
-      data:{id:id}
-    }).then(res=>{
-      if(res.code == 1){
+      url: "api/setting"
+    }).then(res => {
+      if (res.code == 1) {
+        that.data.roomPrice = res.data.price;
+      }
+    })
+  },
+  getMuseumInfo(id) {
+    var that = this;
+    http({
+      url: "api/detail",
+      data: { id: id }
+    }).then(res => {
+      if (res.code == 1) {
         that.setData({
-          age:res.data.age,
+          age: res.data.age,
           avatarUrl: res.data.avatar_url,
           name: res.data.name,
           sex: that.data.picker.indexOf(res.data.gender).toString(),
           jiyuText: res.data.description,
           date1: res.data.birthdate,
           date2: res.data.death,
-          region:[res.data.province,res.data.city,res.data.area],
+          typeInd: res.data.is_pay,
+          havedPay:res.data.is_pay == 1 ? true : false,
+          region: [res.data.province, res.data.city, res.data.area],
           religionInd: that.data.religion.indexOf(res.data.religion).toString(),
           authorityInd: res.data.rule
         })
       }
     })
   },
-  typePickerChange(e){},
+  typePickerChange(e) {
+    this.setData({
+      typeInd: e.detail.value
+    })
+  },
   sexPickerChange(e) {
     this.setData({
       sex: e.detail.value
@@ -123,7 +142,7 @@ Page({
     })
   },
   // 姓名
-  inputName(e){
+  inputName(e) {
     var value = e.detail.value
     this.setData({
       name: e.detail.value
@@ -136,10 +155,10 @@ Page({
       jiyuText: e.detail.value
     })
   },
-  // 保存
-  saveInfo(e){
+  // 保存2
+  saveInfo(e) {
     var _this = this
-    if(this.data.name == ""){
+    if (this.data.name == "") {
       wx.showToast({
         title: '请输入逝者姓名',
         icon: 'none'
@@ -186,15 +205,17 @@ Page({
       "area": _this.data.region[2],
       "religion": _this.data.religion[_this.data.religionInd],
       "category": _this.data.type[_this.data.typeInd],
+      "is_pay": _this.data.typeInd, // is_pay 0 免费  1 付费
       "rule": _this.data.authorityInd
     }
     if (_this.data.id) {
-      params.data.id = _this.data.id
-      params.url = "api/change"
+      params.data.id = _this.data.id;
+      params.url = "api/change";
     } else {
-      params.url = "api/add"
+      params.data.is_pay = 0;
+      params.url = "api/add";
     }
-    if (reg.test(_this.data.avatarUrl)){
+    if (reg.test(_this.data.avatarUrl)) {
       params.data["avatar_url"] = _this.data.avatarUrl
       _this.saveMuseum(params);
       return;
@@ -208,10 +229,10 @@ Page({
       },
       success: function (res) {
         var data = JSON.parse(res.data);
-        if(data.code == 1){
+        if (data.code == 1) {
           params.data["avatar_url"] = data.data.path;
           _this.saveMuseum(params);
-        }else{
+        } else {
           wx.hideLoading();
           wx.showToast({
             title: res.data.message,
@@ -221,9 +242,59 @@ Page({
       }
     })
   },
-  saveMuseum(params){
-    http(params).then(res => {
-      console.log(res)
+  // 保存
+  saveInfoStep(id, isEdit) {
+    var _this = this;
+    if (!_this.data.havedPay) {
+      http({
+        url: 'api/paysuccess',
+        data: {
+          type: 1, // type  付费产品 1: 房间 2: 背景 3: 贡品 4: 预约
+          pay_num: _this.data.roomPrice, // 支付金额
+          type_id: id,
+        }
+      }).then(res => {
+        if (res.code == 1) {
+          wx.requestPayment({
+            timeStamp: res.data.timeStamp,
+            nonceStr: res.data.nonceStr,
+            package: res.data.package,
+            signType: res.data.signType,
+            paySign: res.data.paySign,
+            success(res) {
+              wx.showToast({
+                title: "保存成功",
+                icon: 'none'
+              });
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: 1
+                })
+              }, 2000);
+            },
+            fail(res) {
+              if(!isEdit){
+                http({
+                  url: "api/roomdelete",
+                  data: { room_id: id }
+                }).then(res => {
+                  console.log(res);
+                })
+              }
+              wx.showToast({
+                title: "支付失败",
+                icon: 'none'
+              })
+            }
+          })
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'none'
+          })
+        }
+      });
+    } else {
       wx.showToast({
         title: "保存成功",
         icon: 'none'
@@ -233,6 +304,29 @@ Page({
           delta: 1
         })
       }, 2000);
+    }
+  },
+  saveMuseum(params) {
+    var that = this;
+    http(params).then(res => {
+      console.log(that)
+      if (params.data.category == "付费") {
+        if (params.data.id) {
+          that.saveInfoStep(params.data.id, true)
+        } else {
+          that.saveInfoStep(res.data.id, false)
+        }
+      } else {
+        wx.showToast({
+          title: "保存成功",
+          icon: 'none'
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 2000);
+      }
     })
   },
   PickerChange(e) {
@@ -244,10 +338,10 @@ Page({
     this.setData({
       date1: e.detail.value
     })
-    if(this.data.date2){
+    if (this.data.date2) {
       var age = GetAge(e.detail.value, this.data.date2);
       this.setData({
-        age:age
+        age: age
       })
     }
   },
@@ -262,15 +356,14 @@ Page({
       })
     }
   },
-  RegionChange: function(e) {
-    console.log(e)
+  RegionChange: function (e) {
     this.setData({
       region: e.detail.value
     })
   },
   ChooseImage() {
     var _this = this;
-    if(_this.data.id){
+    if (_this.data.id) {
       return false;
     }
     var coordinate = _this.data.coordinate;
@@ -318,7 +411,7 @@ Page({
     console.log("图片加载完成", e.detail);
     wx.hideLoading();
     //重置图片角度、缩放、位置
-    setTimeout(()=>{
+    setTimeout(() => {
       this.cropper.imgReset();
     })
   },
@@ -379,7 +472,7 @@ Page({
       })
     }
   },
-  cancelCut: function(){
+  cancelCut: function () {
     this.setData({
       showCut: false,
     })
@@ -458,46 +551,46 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })
-function GetAge(strBirthday,deathDay) {
+function GetAge(strBirthday, deathDay) {
   var returnAge,
     strBirthdayArr = strBirthday.split("-"),
     birthYear = strBirthdayArr[0],

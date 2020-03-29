@@ -7,9 +7,12 @@ Page({
    */
   data: {
     id:null,
+    isMy: false,
+    isMyself: false,
     title: "详情",
     giftNum: 0, 
-    giftList:[],
+    giftList: [],
+    commentList: [],
     textJiyu: "无",
     bgImg: app.globalData.server + "/upload/peoplebg.jpg",
     // avatarImg: app.globalData.server + "/upload/邵逸夫.jpg",
@@ -38,9 +41,25 @@ Page({
       data: { id: id }
     }).then(res => {
       if (res.code == 1) {
+        var autho = false;
+        if (res.data.user_id == app.globalData.user_id) {
+          autho = true;
+          that.setData({
+            isMyself: true
+          })
+        } else {
+          autho = false;
+          that.setData({
+            isMyself: false
+          })
+        }
+        if (res.data.is_pay == 0){
+          autho = false;
+        }
         that.setData({
           title: res.data.name,
-          textJiyu: res.data.description ? res.data.description : "无"
+          textJiyu: res.data.description ? res.data.description : "无",
+          isMy: autho
         })
         if (res.data.religion == "佛教"){
           that.writeData(2)
@@ -91,15 +110,15 @@ Page({
     }).then(res => {
       if (res.code == 1) {
         that.setData({
-          giftList:res.data,
-          giftNum:res.data.length
+          giftList: res.data.gift,
+          commentList: res.data.comment
         })
       }
     })
   },
   gotoPagePhotos(e){
     wx.navigateTo({
-      url: '/pages/museum/photos/photos?id='+this.data.id,
+      url: '/pages/museum/photos/photos?id='+this.data.id + '&isMy=' + this.data.isMy,
     })
   },
   gotoPageArticle(e) {
@@ -109,7 +128,7 @@ Page({
   },
   gotoPageVideos(e) {
     wx.navigateTo({
-      url: '/pages/museum/videos/videos?id=' + this.data.id,
+      url: '/pages/museum/videos/videos?id=' + this.data.id + '&isMy=' + this.data.isMy,
     })
   },
   goToEdit(e) {

@@ -1,11 +1,12 @@
 // pages/about/about.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    aboutImg: app.globalData.server + '/upload/about0000.png',
   },
 
   /**

@@ -2,6 +2,7 @@
 const app = getApp();
 const http = require("../../utils/http.js");
 var backMusic = wx.createInnerAudioContext();
+var flag = false;
 Page({
 
   /**
@@ -12,6 +13,11 @@ Page({
     id: null,
     modalName: null,
     showAnimation: false,
+    content: "",
+    is_pay: 0,
+    buybgID: null,
+    InputBottom: 0,
+    timerGetList: null,
     animationImg: "",
     writePosition: [50, 50], //默认定位参数
     writesize: [0, 0], // X Y 定位
@@ -39,6 +45,8 @@ Page({
       isMy: 1
     }],
     giftListArr: [],
+    giftList: [],
+    commentList: [],
     giftCountArr: [],
     bgListArr: []
   },
@@ -47,7 +55,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getSysdata();
+    // this.getSysdata();
     this.setData({
       id: options.id
     })
@@ -86,16 +94,37 @@ Page({
       }
     }).then(res => {
       if (res.code == 1) {
-        var bgImgUrl = app.globalData.server + '/admin/upload/background/2020-03-28/1585414302.7689.jpg';
+        var bgImgUrl = app.globalData.server + '/upload/20200329165948.jpg';
         that.data.bgListArr.map(item => {
           if (item.id == res.data.background_id) {
             bgImgUrl = item.background;
           }
         })
+        if (res.data.is_pay == 1) {
+          that.palyMusic();
+        }
         that.setData({
           avatarImg: res.data.avatar_url,
+          is_pay: res.data.is_pay,
           backImg: bgImgUrl,
+          buybgID: res.data.background_id,
           title: res.data.name
+        })
+      }
+    })
+  },
+  getMuseumGift(id) {
+    var that = this;
+    http({
+      url: "api/plist",
+      data: {
+        room_id: id
+      }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          giftList: res.data.gift,
+          commentList: res.data.comment
         })
       }
     })
@@ -137,7 +166,15 @@ Page({
       backMusic = wx.createInnerAudioContext();
     }
     this.getGiftList();
-    this.palyMusic();
+    // this.getMuseumGift(this.data.id);
+    if (!this.data.timerGetList) {
+      this.data.timerGetList = setInterval(res => {
+        this.getMuseumGift(this.data.id)
+      }, 3000);
+    }
+    if (this.data.is_pay == 1) {
+      this.palyMusic();
+    }
     this.presentcount();
   },
   presentcount: function() {
@@ -161,7 +198,47 @@ Page({
       url: '/pages/museum/sortDetail/sortDetail?id=' + this.data.id
     })
   },
-  sendGift: function(imgUrl, giftid) {
+  sendGift: function(imgUrl, giftid, price) {
+    console.log(price)
+    var that = this;
+    if (price > 0) {
+      http({
+        url: 'api/paysuccess',
+        data: {
+          type: 3, // type  付费产品 1: 房间 2: 背景 3: 贡品 4: 预约
+          pay_num: price, // 支付金额
+          type_id: giftid
+        }
+      }).then(res => {
+        if (res.code == 1) {
+          wx.requestPayment({
+            timeStamp: res.data.timeStamp,
+            nonceStr: res.data.nonceStr,
+            package: res.data.package,
+            signType: res.data.signType,
+            paySign: res.data.paySign,
+            success(res) {
+              that.httpSendGift(imgUrl, giftid);
+            },
+            fail(res) {
+              wx.showToast({
+                title: "支付失败",
+                icon: 'none'
+              })
+            }
+          })
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'none'
+          })
+        }
+      });
+    } else {
+      this.httpSendGift(imgUrl, giftid);
+    }
+  },
+  httpSendGift(imgUrl, giftid) {
     var that = this;
     http({
       url: "api/present",
@@ -181,6 +258,7 @@ Page({
             showAnimation: false
           })
           that.presentcount();
+          that.getMuseumGift(that.data.id);
         }, 2100);
       } else {
         wx.showToast({
@@ -193,8 +271,9 @@ Page({
   selectGiftImg(e) {
     let imgUrl = e.currentTarget.dataset.img;
     let giftid = e.currentTarget.dataset.giftid;
+    let price = e.currentTarget.dataset.price;
     this.hideModal()
-    this.sendGift(imgUrl, giftid);
+    this.sendGift(imgUrl, giftid, price);
   },
   //计算默认定位值
   getSysdata: function() {
@@ -220,6 +299,43 @@ Page({
         console.log(e);
       }
     });
+  },
+  sendMsgInput(e) {
+    this.setData({
+      content: e.detail.value,
+      InputBottom: 0
+    });
+  },
+  sendMsg(e) {
+    if (flag) {
+      return;
+    }
+    flag = true;
+    this.setData({
+      content: e.detail.value,
+      InputBottom: 0
+    });
+    var that = this;
+    http({
+      url: 'api/addcomment',
+      data: {
+        content: this.data.content,
+        room_id: this.data.id,
+        user_id: app.globalData.user_id
+      }
+    }).then(res => {
+      if (res.code == 1) {
+        that.setData({
+          content: ""
+        });
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: ''
+        })
+      }
+      flag = false;
+    })
   },
   //开始拖拽  
   touchmove: function(e) {
@@ -256,10 +372,68 @@ Page({
   selectBgImg(e) {
     let imgUrl = e.currentTarget.dataset.img;
     let id = e.currentTarget.dataset.bgid;
+    let price = e.currentTarget.dataset.price;
     this.hideModal()
-    this.swapBgImg(imgUrl, id);
+    this.swapBgImg(imgUrl, id, price);
   },
-  swapBgImg(imgUrl, id) {
+  InputFocus(e) {
+    this.setData({
+      InputBottom: e.detail.height
+    })
+  },
+  InputBlur(e) {
+    this.setData({
+      InputBottom: 0
+    })
+  },
+  swapBgImg(imgUrl, id, price) {
+    console.log(price)
+    if (this.data.buybgID == id) {
+      this.httpBgimg(imgUrl, id);
+      return;
+    }
+    var that = this;
+    if (price > 0) {
+      http({
+        url: 'api/paysuccess',
+        data: {
+          type: 2, // type  付费产品 1: 房间 2: 背景 3: 贡品 4: 预约
+          pay_num: price, // 支付金额
+          type_id: id
+        }
+      }).then(res => {
+        if (res.code == 1) {
+          wx.requestPayment({
+            timeStamp: res.data.timeStamp,
+            nonceStr: res.data.nonceStr,
+            package: res.data.package,
+            signType: res.data.signType,
+            paySign: res.data.paySign,
+            success(res) {
+              that.setData({
+                buybgID: id
+              });
+              that.httpBgimg(imgUrl, id);
+            },
+            fail(res) {
+              wx.showToast({
+                title: "支付失败",
+                icon: 'none'
+              })
+            }
+          })
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'none'
+          })
+        }
+      });
+    } else {
+      this.httpBgimg(imgUrl, id)
+    }
+  },
+  httpBgimg(imgUrl, id) {
     var that = this;
     http({
       url: "api/changepg",
@@ -288,6 +462,8 @@ Page({
     backMusic.destroy();
     backMusic = null;
     this.data.isPalaying = false;
+    clearInterval(this.data.timerGetList);
+    this.data.timerGetList = null;
   },
 
   /**
@@ -299,6 +475,8 @@ Page({
       backMusic = null;
       this.data.isPalaying = false;
     }
+    clearInterval(this.data.timerGetList);
+    this.data.timerGetList = null;
   },
 
   /**

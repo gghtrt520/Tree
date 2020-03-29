@@ -67,7 +67,7 @@
   </view>
   <view class="cu-form-group">
     <view class="title">类型</view>
-    <picker bindchange="typePickerChange" value="{{typeInd}}" range="{{type}}">
+    <picker bindchange="typePickerChange" disabled="{{havedPay}}" value="{{typeInd}}" range="{{type}}">
       <view class="picker">
         {{typeInd?type[typeInd]:'免费'}}
       </view>

@@ -9,7 +9,7 @@
     </view>
   </navigator>
   <view class="toolbar">
-    <view class="v-tool" bindtap='toggleMusic'>
+    <view class="v-tool" wx:if="{{is_pay==1}}" bindtap='toggleMusic'>
       <text class="{{isPalaying?'cuIcon-musicfill':'cuIcon-musicforbidfill'}} text-brown"></text>
     </view>
     <view class="v-tool" bindtap='gotoDetail'>
@@ -22,7 +22,7 @@
       <text class="cuIcon-present text-brown"></text>
     </view>
   </view>
-  <scroll-view scroll-y="true" class="padding gift-scroll">
+  <!-- <scroll-view scroll-y="true" class="padding gift-scroll">
     <view class="gift-list">
       <block wx:for="{{giftCountArr}}" wx:key="{{item.id}}">
         <view class='bg-img-gift' style="background-image: url({{item.style}});">
@@ -30,7 +30,24 @@
         </view>
       </block>
     </view>
-  </scroll-view>
+  </scroll-view> -->
+  <view class="gift-scroll">
+    <scroll-view scroll-y="true" class="list-liwu">
+      <view wx:for="{{giftList}}" wx:key="{{index}}">
+        <text class="text-white v-text">
+          <text>{{item.nick_name}}：献上了</text>
+          <text class="text-orange">{{item.name}}</text>
+          <text class="sendImgT" style="background-image: url({{item.style}});"></text>
+        </text>
+      </view>
+    </scroll-view>
+    <scroll-view scroll-y="true" class="list-pinlun">
+      <view wx:for="{{commentList}}" wx:key="{{index}}">
+        <text class="v-text"><text class="text-white">{{item.user}}：{{item.content}}</text></text>
+        <!-- <text> {{item.created_at}}</text> -->
+      </view>
+    </scroll-view>
+  </view>
   <!-- <block wx:for="{{liNums}}" wx:key="{{item.id}}">
     <view class='lipin' bindtouchmove="touchmove" data-isMy="" catch:touchmove style='left:{{write[0]}}px;top:{{write[1]}}px;'>鲜花</view>
   </block> -->
@@ -41,7 +58,7 @@
         <scroll-view scroll-x="true">
           <view class='scroll-img'>
             <block wx:for="{{bgListArr}}" wx:key="{{item.id}}">
-              <view class='bg-img-select' data-img="{{item.background}}" data-bgid="{{item.id}}" catchtap="selectBgImg" style="background-image: url({{item.background}});">
+              <view class='bg-img-select' data-img="{{item.background}}" data-bgid="{{item.id}}" catchtap="selectBgImg" data-price="{{item.price}}" style="background-image: url({{item.background}});">
                 <text>{{item.price>0 ? ("￥" + item.price) : "免费"}}</text>
               </view>
             </block>
@@ -57,7 +74,7 @@
         <scroll-view scroll-x="true">
           <view class='scroll-img'>
             <block wx:for="{{giftListArr}}" wx:key="{{item.id}}">
-              <view class='bg-img-select' data-img="{{item.style}}" data-giftid="{{item.id}}" catchtap="selectGiftImg" style="background-image: url({{item.style}});">
+              <view class='bg-img-select' data-img="{{item.style}}" data-giftid="{{item.id}}"  data-price="{{item.price}}" catchtap="selectGiftImg" style="background-image: url({{item.style}});">
                 <text>{{item.price>0 ? ("￥" + item.price) : "免费"}}</text>
               </view>
             </block>
@@ -67,4 +84,14 @@
     </view>
   </view>
   <view class='animationGift {{showAnimation?"view-gift":""}}' style="background-image: url({{animationImg}});"></view>
+  <view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom:{{InputBottom}}px">
+    <view class="action">
+
+    </view>
+    <input class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" adjust-position="{{false}}" focus="{{false}}" maxlength="300" confirm-type="send" value="{{content}}" placeholder="说点什么..." cursor-spacing="10" bindconfirm="sendMsg"></input>
+    <view class="action">
+
+    </view>
+    <!-- <view class="cu-btn bg-brown shadow" catchtap="sendMsg">发送</view> -->
+  </view>
 </movable-area>

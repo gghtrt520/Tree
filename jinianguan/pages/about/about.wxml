@@ -1,4 +1,21 @@
+<view class="content-about">
 <!--pages/about/about.wxml-->
 <cu-custom bgColor="bg-gradual-brown" isBack="{{true}}">
-  <view slot="content">关于</view>
+  <view slot="content">联系我们</view>
 </cu-custom>
+<view>
+  <view class="cu-bar bg-white solid-bottom">
+    <view class='action'>
+      <text class='cuIcon-titles text-brown '></text> 联系我们
+    </view>
+  </view>
+  <view class="text-v padding">
+    <view>地址：西安市鄠邑区文涝路与大庞路十字向西500米</view>
+    <view>客服电话：029-84851765</view>
+    <view>服务时间：9:00 ~ 17:00</view>
+    <view>邮箱：7064755@qq.com</view>
+    <view>微信公众号：</view>
+    <view class="erimg" style="background-image: url({{aboutImg}});"></view>
+  </view>
+</view>
+</view>

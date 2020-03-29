@@ -8,14 +8,14 @@
       <text class='cuIcon-titles text-brown '></text> 照片列表
     </view>
     <view class='action'>
-      <text class='cu-btn round bg-brown' bindtap="showModal" data-target="DialogModal1">上传照片</text>
+      <text wx:if="{{isMy}}" class='cu-btn round bg-brown' bindtap="showModal" data-target="DialogModal1">上传照片</text>
     </view>
   </view>
   <view class="list">
     <view class="padding grid col-2 grid-square" wx:if="{{imgList.length>0}}">
       <view wx:for="{{imgList}}" wx:key="*this" class="list-item" data-index="{{index}}" bindtap="imgYu">
         <image mode="aspectFill" src="{{item.detail[0].photo_url}}"></image>
-        <view class="cu-tag lg text-red" data-id="{{item.id}}" catchtap="delPhotos">删除</view>
+        <view class="cu-tag lg text-red" data-id="{{item.id}}" wx:if="{{isMy}}" catchtap="delPhotos">删除</view>
         <text class="item-text">{{item.name}}</text>
       </view>
     </view>
