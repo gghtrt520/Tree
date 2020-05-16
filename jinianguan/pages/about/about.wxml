@@ -15,7 +15,7 @@
     <view>服务时间：9:00 ~ 17:00</view>
     <view>邮箱：7064755@qq.com</view>
     <view>微信公众号：</view>
-    <view class="erimg" style="background-image: url({{aboutImg}});"></view>
+    <view class="erimg"> <image mode="scaleToFill" src="{{aboutImg}}"></image></view>
   </view>
 </view>
 </view>

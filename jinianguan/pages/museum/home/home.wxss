@@ -5,6 +5,7 @@
 .list-item{
   position: relative;
   text-align: center;
+  border: 6rpx solid brown;
 }
 .list-item .item-text{
   position: absolute;

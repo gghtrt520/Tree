@@ -10,6 +10,10 @@
   <view class="scroll-content padding bg-white">
     <text class="jisao-nums">当前祭品数：{{giftNum}}</text>
     <view class="padding tongji">
+      <view class="item" bindtap='uploadMusic'>
+        <view class="bg-img cuIcon-musicfill"></view>
+        <text>音乐</text>
+      </view>
       <view class="item" bindtap='gotoPagePhotos'>
         <view class="bg-img cuIcon-picfill"></view>
         <!-- <text>20</text> -->
@@ -27,11 +31,11 @@
       </view>
     </view>
     <scroll-view scroll-y="true" class="list-liwu">
-      <view wx:for="{{giftList}}" wx:key="{{index}}">
+      <view wx:for="{{giftList}}" wx:key="id">
         <text>{{item.nick_name}} 献上了 {{item.name}} </text>
         <text>{{item.created_at}}</text>
       </view>
-      <view wx:for="{{commentList}}" wx:key="{{index}}">
+      <view wx:for="{{commentList}}" wx:key="id">
         <text class="v-text"><text>{{item.user}}：{{item.content}}</text></text>
         <text> {{item.created_at}}</text>
       </view>

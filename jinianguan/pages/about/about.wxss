@@ -1,6 +1,7 @@
 /* pages/about/about.wxss */
 .text-v{
   line-height: 2;
+  font-size: 28rpx;
 }
 .content-about{
   height: 100vh;
@@ -13,4 +14,8 @@
   background-size: 100%;
   background-position: center center;
   overflow: hidden;
+}
+.erimg image{
+  width: 400rpx;
+  height: 400rpx;
 }

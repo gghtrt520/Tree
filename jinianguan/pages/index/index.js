@@ -22,6 +22,7 @@ Page({
           app.globalData.hasAtuo = true
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
+            withCredentials: true,
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               app.globalData.userInfo = res.userInfo
@@ -32,7 +33,7 @@ Page({
                 userInfo: res.userInfo,
                 hasUserInfo: true
               })
-              loginUser(res.userInfo, this)
+              loginUser(res, this)
             }
           })
         } else {
@@ -126,7 +127,7 @@ Page({
   }
 })
 
-function loginUser(userInfo, that) {
+function loginUser(encrypeInfo, that) {
   // 登录
   wx.login({
     success: res => {
@@ -138,9 +139,12 @@ function loginUser(userInfo, that) {
           url: app.globalData.server + 'api/login',
           method: 'post',
           data: {
-            nick_name: userInfo.nickName,
-            avatar_url: userInfo.avatarUrl,
-            gender: userInfo.gender,
+            nick_name: encrypeInfo.userInfo.nickName,
+            avatar_url: encrypeInfo.userInfo.avatarUrl,
+            gender: encrypeInfo.userInfo.gender,
+            data: encrypeInfo.encryptedData,
+            iv: encrypeInfo.iv,
+            signature: encrypeInfo.signature,
             js_code: res.code
           },
           success(response) {

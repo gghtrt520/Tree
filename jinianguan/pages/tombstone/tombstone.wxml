@@ -1,6 +1,6 @@
 <!--pages/tombstone/tombstone.wxml-->
 <movable-area class="content" style="height:100vh; background-image: url({{backImg}});">
-  <cu-custom bgColor="bg-gradual-white" isBack="{{true}}">
+  <cu-custom bgColor="bg-gradual-white" isCustom="{{true}}">
     <view slot="content"></view>
   </cu-custom>
   <navigator url="/pages/museum/sortDetail/sortDetail?id={{id}}" hover-class="none">
@@ -9,7 +9,7 @@
     </view>
   </navigator>
   <view class="toolbar">
-    <view class="v-tool" wx:if="{{is_pay==1}}" bindtap='toggleMusic'>
+    <view class="v-tool" bindtap='toggleMusic'>
       <text class="{{isPalaying?'cuIcon-musicfill':'cuIcon-musicforbidfill'}} text-brown"></text>
     </view>
     <view class="v-tool" bindtap='gotoDetail'>
@@ -33,7 +33,7 @@
   </scroll-view> -->
   <view class="gift-scroll">
     <scroll-view scroll-y="true" class="list-liwu">
-      <view wx:for="{{giftList}}" wx:key="{{index}}">
+      <view wx:for="{{giftList}}" wx:key="*this">
         <text class="text-white v-text">
           <text>{{item.nick_name}}：献上了</text>
           <text class="text-orange">{{item.name}}</text>
@@ -42,7 +42,7 @@
       </view>
     </scroll-view>
     <scroll-view scroll-y="true" class="list-pinlun">
-      <view wx:for="{{commentList}}" wx:key="{{index}}">
+      <view wx:for="{{commentList}}" wx:key="*this">
         <text class="v-text"><text class="text-white">{{item.user}}：{{item.content}}</text></text>
         <!-- <text> {{item.created_at}}</text> -->
       </view>
@@ -57,7 +57,7 @@
         <view class='margin-bottom'>实景切换</view>
         <scroll-view scroll-x="true">
           <view class='scroll-img'>
-            <block wx:for="{{bgListArr}}" wx:key="{{item.id}}">
+            <block wx:for="{{bgListArr}}" wx:key="*this">
               <view class='bg-img-select' data-img="{{item.background}}" data-bgid="{{item.id}}" catchtap="selectBgImg" data-price="{{item.price}}" style="background-image: url({{item.background}});">
                 <text>{{item.price>0 ? ("￥" + item.price) : "免费"}}</text>
               </view>
@@ -73,7 +73,7 @@
         <view class='margin-bottom'>赠送祭品</view>
         <scroll-view scroll-x="true">
           <view class='scroll-img'>
-            <block wx:for="{{giftListArr}}" wx:key="{{item.id}}">
+            <block wx:for="{{giftListArr}}" wx:key="*this">
               <view class='bg-img-select' data-img="{{item.style}}" data-giftid="{{item.id}}"  data-price="{{item.price}}" catchtap="selectGiftImg" style="background-image: url({{item.style}});">
                 <text>{{item.price>0 ? ("￥" + item.price) : "免费"}}</text>
               </view>

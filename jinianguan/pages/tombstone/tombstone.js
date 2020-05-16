@@ -59,6 +59,9 @@ Page({
     this.setData({
       id: options.id
     })
+    if(options.isShare == 1){
+      console.log("分享")
+    }
   },
   palyMusic: function() {
     backMusic.title = "音乐播放";
@@ -94,22 +97,33 @@ Page({
       }
     }).then(res => {
       if (res.code == 1) {
+        if (res.data.user_id !== app.globalData.user_id && res.data.rule == 0) {
+          wx.showToast({
+            title: '该纪念馆未开放',
+            icon: 'none'
+          })
+          setTimeout(res => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1000);
+          return;
+        }
         var bgImgUrl = app.globalData.server + '/upload/20200329165948.jpg';
         that.data.bgListArr.map(item => {
           if (item.id == res.data.background_id) {
             bgImgUrl = item.background;
           }
         })
-        if (res.data.is_pay == 1) {
-          that.palyMusic();
-        }
         that.setData({
           avatarImg: res.data.avatar_url,
           is_pay: res.data.is_pay,
-          backImg: bgImgUrl,
+          backImg: res.data.bg ? res.data.bg : bgImgUrl,
           buybgID: res.data.background_id,
+          musicUrl: res.data.music ? res.data.music: that.data.musicUrl,
           title: res.data.name
-        })
+        });
+        that.palyMusic();
       }
     })
   },
@@ -502,7 +516,7 @@ Page({
     return {
       title: title,
       imageUrl: imgUrl,
-      path: 'pages/tombstone/tombstone?id=' + this.data.id
+      path: 'pages/tombstone/tombstone?id=' + this.data.id + '&isShare=1'
     }
   }
 })

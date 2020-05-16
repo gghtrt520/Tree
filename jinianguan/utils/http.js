@@ -7,7 +7,12 @@ const http = (params) => {
   params.header = params.header ? params.header : { "Content-Type": "application/x-www-form-urlencoded" }
   // params.header["access_token"] = access_token
   // params.data.user_id = user_id
-  console.log(params)
+  if (!user_id){
+    wx.navigateTo({
+      url: '/pages/index/index',
+    })
+  }
+  // console.log(params)
   return new Promise((resolve, reject) => {
     wx.request({
       url: app.globalData.server + params.url + "?access_token=" + access_token,
@@ -18,11 +23,11 @@ const http = (params) => {
         if (res.statusCode === 200 || res.statusCode === 201 || res.statusCode === 204 || res.statusCode === 304) {
           resolve(res.data)
         }
-        console.log(res)
+        // console.log(res)
       },
       fail(err) {
         reject(err)
-        console.log(err)
+        // console.log(err)
       },
       complete() {
         wx.hideLoading()

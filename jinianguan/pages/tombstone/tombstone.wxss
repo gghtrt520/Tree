@@ -50,7 +50,8 @@
   margin-bottom: 50rpx;
 }
 
-.bg-gradual-white .cuIcon-back {
+.bg-gradual-white .cuIcon-back,
+.bg-gradual-white .cuIcon-homefill{
   color: white;
 }
 

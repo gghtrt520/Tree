@@ -28,8 +28,16 @@ Page({
   },
   goDetail(e) {
     let id = e.currentTarget.dataset.id
+    let is_show = e.currentTarget.dataset.is_show
+    if(is_show == 1){
+      wx.showToast({
+        title: '该纪念馆未开放',
+        icon: 'none'
+      });
+      return;
+    }
     wx.navigateTo({
-      url: "/pages/museum/sortDetail/sortDetail?id=" + id
+      url: "/pages/tombstone/tombstone?id=" + id
     })
   },
   /**

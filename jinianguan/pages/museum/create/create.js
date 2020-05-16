@@ -116,7 +116,7 @@ Page({
           havedPay:res.data.is_pay == 1 ? true : false,
           region: [res.data.province, res.data.city, res.data.area],
           religionInd: that.data.religion.indexOf(res.data.religion).toString(),
-          authorityInd: res.data.rule
+          authorityInd: res.data.rule + ""
         })
       }
     })
@@ -212,7 +212,11 @@ Page({
       params.data.id = _this.data.id;
       params.url = "api/change";
     } else {
-      params.data.is_pay = 0;
+      if (_this.data.roomPrice == 0 && params.data.category == "付费"){
+        params.data.is_pay = 1;
+      }else{
+        params.data.is_pay = 0;
+      }
       params.url = "api/add";
     }
     if (reg.test(_this.data.avatarUrl)) {
@@ -309,8 +313,7 @@ Page({
   saveMuseum(params) {
     var that = this;
     http(params).then(res => {
-      console.log(that)
-      if (params.data.category == "付费") {
+      if (params.data.category == "付费" && that.data.roomPrice != 0) {
         if (params.data.id) {
           that.saveInfoStep(params.data.id, true)
         } else {
